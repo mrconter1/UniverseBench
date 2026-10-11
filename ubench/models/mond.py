@@ -12,7 +12,11 @@ class MOND(GeneralRelativity):
     MOND theory (e.g. AeST, Skordis & Zlosnik 2021) that reduces to general
     relativity there; plain MOND makes no prediction of its own."""
     NAME = "MOND (a0 fitted to all tests)"
-    GLOBAL_PARAMS = {**UPS, **ELL, "a0_e10": (1.2, 0.3, 4.0)}   # a0 in 1e-10 m/s^2
+    # MOND has no standard cosmology: no predictions for the CMB, BAO,
+    # supernovae, H0 or structure growth. It does accept standard Big Bang
+    # nucleosynthesis, which only needs the baryon density.
+    GLOBAL_PARAMS = {**UPS, **ELL, "a0_e10": (1.2, 0.3, 4.0),     # a0 in 1e-10 m/s^2
+                     "ombh2": (0.0224, 0.010, 0.040)}
     LOCAL_PARAMS = dict(LOCAL_UPS)
 
     def a0(self, gp):
@@ -42,6 +46,10 @@ class MOND(GeneralRelativity):
             return s_iso
         return dispersion_from_mass(float(rar_nu(d.g_ext / a0)) * d.M_bar / 2, d.r_half)
 
+
+    def predict_bbn(self, gp):
+        from ..cosmology import Cosmology
+        return Cosmology(ombh2=gp["ombh2"]).bbn()
 
     def predict_lensing_vcirc(self, M_bar, R_kpc, gp):
         """Lensing assumed to follow the MOND field (as in relativistic MOND
@@ -73,7 +81,7 @@ class MONDFixed(MOND):
     """MOND as its proponents use it: a0 is a measured constant of nature
     (1.2e-10 m/s^2, McGaugh+ 2016), not tuned to this benchmark."""
     NAME = "MOND (a0 fixed at 1.2, as published)"
-    GLOBAL_PARAMS = {**UPS, **ELL}
+    GLOBAL_PARAMS = {**UPS, **ELL, "ombh2": (0.0224, 0.010, 0.040)}
 
     def a0(self, gp):
         return 1.2e-10 * A0_SI_TO_KPC

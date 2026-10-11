@@ -3,8 +3,9 @@
 per test (see each test module's docstring for the method it needs)."""
 from .lcdm import LCDM
 from .mond import MOND, MONDFixed
+from .newtonian import Newtonian
 from .visible import VisibleOnly
 
 
 def baselines():
-    return [VisibleOnly(), MOND(), MONDFixed(), LCDM()]
+    return [Newtonian(), VisibleOnly(), MOND(), MONDFixed(), LCDM()]

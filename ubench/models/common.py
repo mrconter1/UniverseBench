@@ -25,3 +25,30 @@ class GeneralRelativity:
 
     def predict_gravity(self, quantity, gp):
         return self.GR_VALUES.get(quantity, 0.0)
+
+
+# Cosmological parameters (Stage 3). Starting points near Planck 2018.
+COSMO = {"H0": (67.4, 50.0, 90.0),
+         "ombh2": (0.0224, 0.010, 0.040),
+         "ns": (0.965, 0.85, 1.10),
+         "ln10As": (3.044, 2.0, 4.0)}
+COSMO_CDM = {"omch2": (0.120, 0.01, 0.40)}
+
+
+class CosmologyMixin:
+    """Builds (and caches) a Cosmology from the global parameters. Subclasses
+    set COSMO_FIXED for parameters they hold fixed (e.g. omch2 = 0)."""
+    COSMO_FIXED = {}
+
+    def cosmology(self, gp):
+        from ..cosmology import Cosmology
+        keys = ("H0", "ombh2", "omch2", "ns", "ln10As", "w0", "wa", "mnu")
+        args = {k: gp[k] for k in keys if k in gp}
+        args.update(self.COSMO_FIXED)
+        key = tuple(sorted(args.items()))
+        cache = self.__dict__.setdefault("_cosmo_cache", {})
+        if key not in cache:
+            if len(cache) > 8:
+                cache.clear()
+            cache[key] = Cosmology(**args)
+        return cache[key]

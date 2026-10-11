@@ -4,12 +4,15 @@ problem: expected to fail wherever dark matter is invoked."""
 import numpy as np
 
 from ..physics import G, dispersion_from_mass
-from .common import GeneralRelativity, ELL, LOCAL_UPS, UPS, v_baryon_sq
+from .common import COSMO, CosmologyMixin, ELL, GeneralRelativity, LOCAL_UPS, UPS, v_baryon_sq
 
 
-class VisibleOnly(GeneralRelativity):
+class VisibleOnly(GeneralRelativity, CosmologyMixin):
+    """Cosmology: general relativity with baryons, radiation, neutrinos and a
+    cosmological constant, but no cold dark matter (omch2 = 0)."""
     NAME = "Standard gravity, visible matter only"
-    GLOBAL_PARAMS = {**UPS, **ELL}
+    GLOBAL_PARAMS = {**UPS, **ELL, **COSMO}
+    COSMO_FIXED = {"omch2": 0.0}
     LOCAL_PARAMS = dict(LOCAL_UPS)
 
     def predict(self, g, R, gp, lp):

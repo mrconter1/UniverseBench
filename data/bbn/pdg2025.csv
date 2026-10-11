@@ -1,0 +1,7 @@
+# Primordial light-element abundances adopted by the Particle Data Group, BBN review 2025 (Fields, Molaro & Sarkar), Eqs. 24.2-24.4.
+# theory_floor: uncertainty of the Steigman (2012) fitting formulas used for predictions, relative to modern BBN codes
+# (Yp ~0.002; D/H ~2.5% nuclear-rate uncertainty; Li ~10%). Li/H is the long-standing 'lithium problem' (CONTESTED point).
+quantity,value,sigma,theory_floor
+Yp,0.245,0.003,0.002
+D_H,2.508e-5,0.029e-5,0.06e-5
+Li_H,1.45e-10,0.25e-10,0.5e-10

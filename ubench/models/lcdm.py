@@ -13,12 +13,12 @@ import numpy as np
 
 from ..physics import (G, dispersion_from_mass, halo_mass_from_stars, nfw_concentration,
                        nfw_mass_enclosed, nfw_mass_projected, v_nfw)
-from .common import GeneralRelativity, ELL, LOCAL_UPS, UPS, v_baryon_sq
+from .common import COSMO, COSMO_CDM, CosmologyMixin, ELL, GeneralRelativity, LOCAL_UPS, UPS, v_baryon_sq
 
 
-class LCDM(GeneralRelativity):
+class LCDM(GeneralRelativity, CosmologyMixin):
     NAME = "Cold dark matter (ΛCDM)"
-    GLOBAL_PARAMS = {**UPS, **ELL,
+    GLOBAL_PARAMS = {**UPS, **ELL, **COSMO, **COSMO_CDM,
                      "f_b_cluster": (0.13, 0.03, 0.3),     # at r500, 1e13 Msun of baryons
                      "fb_mass_slope": (0.1, -0.5, 0.5),
                      "fb_radius_slope": (0.1, -0.5, 0.5)}

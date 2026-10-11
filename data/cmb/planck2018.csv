@@ -1,0 +1,10 @@
+# Compressed cosmic microwave background constraints.
+# theta100, omega_b, n_s, ln10As: Planck 2018 VI (A&A 641, A6, 2020), Table 2, TT,TE,EE+lowE+lensing (68%).
+# R (shift parameter): Chen, Huang & Wang 2019 (JCAP 02, 028; arXiv:1808.05724), Table I, LCDM, TT,TE,EE+lowE.
+# Caveat: these summaries were derived assuming near-standard physics; a radically different theory may need the full likelihood.
+quantity,value,sigma,engine_floor
+theta100,1.04110,0.00031,0.00005
+R,1.7502,0.0046,0.0005
+omega_b,0.02237,0.00015,0
+n_s,0.9649,0.0042,0
+ln10As,3.044,0.014,0
