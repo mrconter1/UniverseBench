@@ -21,3 +21,6 @@ class VisibleOnly:
 
     def predict_dwarf_dispersion(self, d, gp):
         return dispersion_from_mass(d.M_bar / 2, d.r_half)
+
+    def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
+        return 1.0

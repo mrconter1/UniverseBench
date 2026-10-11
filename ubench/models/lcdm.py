@@ -49,3 +49,6 @@ class LCDM:
         expectation."""
         m200, c = self.halo(d.M_bar)
         return dispersion_from_mass(d.M_bar / 2 + nfw_mass_enclosed(d.r_half, m200, c), d.r_half)
+
+    def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
+        return 1.0          # dark matter density is negligible inside a binary

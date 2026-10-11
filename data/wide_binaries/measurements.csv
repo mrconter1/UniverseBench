@@ -1,0 +1,9 @@
+# Wide binary star tests of gravity at low acceleration (Gaia DR3). CONTESTED: the analyses disagree.
+# boost = g_obs / g_Newton for binaries in the solar neighbourhood at Newtonian internal acceleration gN_si.
+# Chae 2023, ApJ 952, 128 (arXiv:2305.04613), abstract: g_obs/g_pred = 1.43 +/- 0.06 at g_N = 10^-10.15 m/s^2.
+# Banik et al. 2024, MNRAS 527, 4573 (arXiv:2311.03436), abstract: alpha_grav = -0.021 +0.065 -0.045 (0 = Newton, 1 = MOND).
+#   Converted here to a boost via boost = 1 + alpha_grav * (1.4 - 1), using the ~1.4 boost that MOND (AQUAL with the
+#   Galactic external field) predicts per Chae 2023; error = mean of the asymmetric errors * 0.4. This conversion is ours.
+source,gN_si,boost,boost_err
+Chae2023,7.08e-11,1.43,0.06
+Banik2024,7.08e-11,0.9916,0.022

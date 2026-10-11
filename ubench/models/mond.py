@@ -40,6 +40,13 @@ class MOND:
         return dispersion_from_mass(float(rar_nu(d.g_ext / a0)) * d.M_bar / 2, d.r_half)
 
 
+    def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
+        """Boost evaluated at the total (internal + Galactic) field, which
+        in the external-field-dominated regime approximates AQUAL."""
+        a0_si = self.a0(gp) / A0_SI_TO_KPC
+        return float(rar_nu(np.hypot(gN_si, g_ext_si) / a0_si))
+
+
 class MONDFixed(MOND):
     """MOND as its proponents use it: a0 is a measured constant of nature
     (1.2e-10 m/s^2, McGaugh+ 2016), not tuned to this benchmark."""
