@@ -1,74 +1,85 @@
 """
-Scorecard: every model on every test, scored on hidden data.
+Scorecard: every model on every test.
 
-    BENCH_SALT='my-private-secret' python score.py              # baselines
-    BENCH_SALT='my-private-secret' python score.py my_model.py  # + a candidate
-    python score.py --splits 5 --write                          # baselines averaged
-                                                                # over 5 public splits,
-                                                                # written to LEADERBOARD.md
+    python score.py                         # baselines, one split (BENCH_SALT)
+    python score.py my_model.py             # + a candidate (defines MODEL = ...)
+    python score.py --splits 5 --write      # average over 5 public demo splits,
+                                            # write LEADERBOARD.md
+    python score.py --tests 01,03,05        # only some tests (by number)
 
-A candidate file must define MODEL = <instance with the models.py interface>.
+Scores: % of hidden data points predicted within 2 sigma (a perfect theory
+scores about 95). Models are summarized by lowest / median / highest score
+across tests and ranked by lowest, then median.
 """
 import argparse
 import importlib.util
 import json
+import time
 
 import numpy as np
 
-import benchmark as B
-import clusters
-import milkyway
-import models as M
+from ubench import core
+from ubench.models import baselines
+from ubench.tests import all_tests
 
 ap = argparse.ArgumentParser()
 ap.add_argument("candidates", nargs="*")
-ap.add_argument("--splits", type=int, default=1,
-                help="average over N public demo splits (ignores BENCH_SALT)")
-ap.add_argument("--write", action="store_true", help="write LEADERBOARD.md")
+ap.add_argument("--splits", type=int, default=1)
+ap.add_argument("--write", action="store_true")
+ap.add_argument("--tests", default="")
 args = ap.parse_args()
 
-candidates = list(M.BASELINES)
+models = baselines()
 for path in args.candidates:
     spec = importlib.util.spec_from_file_location("candidate", path)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    candidates.append(mod.MODEL)
+    models.append(mod.MODEL)
 
-salts = [B.SPLIT_SALT] if args.splits == 1 else [f"public-split-{i}" for i in range(args.splits)]
-gals, cl, mw = B.load_all(), clusters.load_clusters(), milkyway.MilkyWay()
+tests = all_tests()
+if args.tests:
+    keep = {s.zfill(2) for s in args.tests.split(",")}
+    tests = [t for t in tests if t.ID[:2] in keep]
+salts = [core.SPLIT_SALT] if args.splits == 1 else [f"public-split-{i}" for i in range(args.splits)]
 
 rows = []
-for m in candidates:
-    runs = [B.run(m, gals, cl, mw, salt=s, verbose=False) for s in salts]
+for m in models:
+    t0 = time.time()
+    runs = [core.run(m, tests, salt=s) for s in salts]
     row = {"model": m.NAME, "knobs": f"{runs[0]['n_global_params']} global, "
-                                      f"{runs[0]['n_local_params']} per galaxy"}
-    for t in B.TESTS:
-        r = runs[0][t + "_hidden"]
-        row[t] = None if r.get("no_prediction") else \
-            float(np.mean([x[t + "_hidden"]["within_2sigma_pct"] for x in runs]))
-    vals = [row[t] or 0.0 for t in B.TESTS]
+                                      f"{runs[0]['n_local_params']} per galaxy", "runs": runs}
+    for t in tests:
+        r0 = runs[0]["tests"][t.ID]
+        row[t.ID] = None if r0.get("no_prediction") else \
+            float(np.mean([r["tests"][t.ID]["within_2sigma_pct"] for r in runs]))
+    vals = [row[t.ID] or 0.0 for t in tests]
     row["LOWEST"], row["MEDIAN"], row["HIGHEST"] = min(vals), float(np.median(vals)), max(vals)
-    row["runs"] = runs
     rows.append(row)
-# rank by weakest test, then median
+    print(f"  scored {m.NAME} in {time.time() - t0:.0f}s", flush=True)
 rows.sort(key=lambda r: (-r["LOWEST"], -r["MEDIAN"]))
 
 fmt = lambda v: "—" if v is None else f"{v:.0f}"
-head = ["#", "Model"] + [B.TEST_LABELS[t] for t in B.TESTS] + \
-       ["Lowest", "Median", "Highest", "Knobs"]
+mark = lambda t: t.LABEL + (" †" if t.STATUS == "contested" else "") + \
+    (" ‡" if not t.HIDDEN_SPLIT and t.USED_IN_FIT else "")
+
+# Wide table: tests as rows, models as columns (reads better with many tests)
+head = ["#", "Test"] + [r["model"] for r in rows]
 lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
-for i, r in enumerate(rows, 1):
-    cells = [str(i), r["model"]] + [fmt(r[t]) for t in B.TESTS] + \
-            [f"**{r['LOWEST']:.0f}**", f"{r['MEDIAN']:.0f}", f"{r['HIGHEST']:.0f}", r["knobs"]]
-    lines.append("| " + " | ".join(cells) + " |")
+for t in tests:
+    lines.append("| " + " | ".join([t.ID[:2], mark(t)] + [fmt(r[t.ID]) for r in rows]) + " |")
+for key in ("LOWEST", "MEDIAN", "HIGHEST"):
+    cells = [f"**{r[key]:.0f}**" if key == "LOWEST" else f"{r[key]:.0f}" for r in rows]
+    lines.append("| | **" + key.capitalize() + "** | " + " | ".join(cells) + " |")
+lines.append("| | Knobs | " + " | ".join(r["knobs"] for r in rows) + " |")
+lines.append("| | **Rank** | " + " | ".join(str(i) for i in range(1, len(rows) + 1)) + " |")
 table = "\n".join(lines)
 
-note = (f"Scores: % of hidden data points predicted within 2 sigma (a perfect theory "
-        f"scores about 95). Lowest / median / highest are taken across all tests; models "
-        f"are ranked by their lowest score (a theory is only as good as its worst failure), "
-        f"then by median. '—' = model makes no prediction for that test (counts as 0). "
-        f"{'Averaged over ' + str(len(salts)) + ' random public/hidden splits.' if len(salts) > 1 else ''}")
-print(table + "\n\n" + note)
+note = ("Scores: % of data points predicted within 2 sigma (a perfect theory scores "
+        "about 95). Models are ranked by their lowest test score (a theory is only as "
+        "good as its worst failure), then median. '—' = no prediction (counts as 0). "
+        "† = contested data. ‡ = too few numbers to hide: fitted and scored in-sample. "
+        + (f"Averaged over {len(salts)} random public/hidden splits." if len(salts) > 1 else ""))
+print("\n" + table + "\n\n" + note)
 
 if args.write:
     with open("LEADERBOARD.md", "w") as f:
