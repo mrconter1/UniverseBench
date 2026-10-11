@@ -27,6 +27,15 @@ this benchmark, from visible matter and a small set of universal constants.
   ellipticals, supernovae), part is **hidden** and only used for final scoring.
   You see the public part. Small tables are fully visible.
 * A test your model makes no prediction for scores 0 ("—").
+* Each test shows a **noise ceiling**: what the true laws of nature would
+  score given its error bars (about 95, with a wider range for small tests).
+  A test counts as passed when you reach what a perfect theory gets 95% of
+  the time. Ranking: lowest score, then substantive (non-guard-rail) tests passed,
+  then median.
+* **Guard rails** (◆: solar system, pulsars, gravitational waves, lab, black
+  holes, clocks, inflation, neutrinos, curvature, standard sirens, particle
+  searches) are gates: failing one sinks your lowest
+  score, but they don't inflate the median.
 
 See LEADERBOARD.md for the baselines (ΛCDM, two versions of MOND, visible
 matter only, pure Newtonian gravity) and ROADMAP.md for what each test is.
@@ -41,11 +50,25 @@ matter only, pure Newtonian gravity) and ROADMAP.md for what each test is.
    extrapolation test (their defaults are used everywhere else).
 3. Predict from **inputs only**: never use the observed answer (observed
    speeds, total masses, lensing masses) or look up objects by name.
-4. Approach the task honestly. Submissions are inspected; models that game
-   simplifications in the tests rather than doing physics will be discarded.
-5. Report: the physical idea in plain language, the equations (ideally a
-   Lagrangian or field equations), the number of constants, which open
-   questions it resolves, and a new observation that could prove it wrong.
+4. Approach the task as a scientist would: you are trusted to do physics, not
+   to exploit simplifications in the tests (the Bullet Cluster test, marked §,
+   is deliberately simple; model where your mass actually sits).
+5. Use the computer you have as wisely as you can: the practice scorer, the
+   literature, simulations, anything that helps you find a better theory.
+
+## What to hand in
+
+1. `my_model.py`: the model, runnable with `python score.py my_model.py`.
+2. `THEORY.md`, containing:
+   - the physical idea in plain language (a few paragraphs a non-physicist
+     could follow),
+   - the equations (ideally a Lagrangian or field equations) and how each
+     prediction method follows from them,
+   - every constant, its fitted value, and whether it is new or standard,
+   - your practice scores and where the theory still fails,
+   - your position on each open question (which side, and why),
+   - at least one **new prediction** that a future observation could confirm
+     or rule out, stated precisely enough to be checked.
 
 ## Model interface: one method per kind of prediction
 

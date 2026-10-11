@@ -63,6 +63,7 @@ class CosmicDipole(_Open):
 
 class DarkFlow(_Open):
     ID, LABEL, NUMBER = "33_dark_flow", "Dark flow (bulk motions)", "33"
+    N_BOUND = 1
 
     def residuals(self, model, gp, part, salt):
         c = _cosmo(model, gp)
@@ -77,6 +78,7 @@ class DarkFlow(_Open):
 
 class EarlyBlackHoles(_Open):
     ID, LABEL, NUMBER = "35_early_black_holes", "Early supermassive black holes", "35"
+    N_BOUND = 1
 
     def residuals(self, model, gp, part, salt):
         z_q = 7.642

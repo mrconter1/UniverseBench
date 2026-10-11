@@ -26,10 +26,18 @@ cites its source. Details per test: ROADMAP.md and the docstrings in
 
 ## Scoring
 
-* Per test: the % of data points predicted within 2 sigma. A perfect theory
-  scores about 95 (100 would mean fitting noise).
-* Per model: lowest, median and highest score over the **scored** tests,
-  ranked by the lowest. A theory is only as good as its worst failure.
+* Per test: the % of data points predicted within 2 sigma, shown next to the
+  test's **noise ceiling** (what a perfect theory would score given the error
+  bars: about 95, with a 5th-95th percentile range for small tests). A test is
+  passed when the score reaches that range.
+* Per model: ranked by the **lowest** score over the scored tests (a theory is
+  only as good as its worst failure), then by **substantive tests passed**, then by the
+  **median** over substantive tests.
+* **Guard rails** (◆: precision gravity, black holes, clocks, inflation,
+  neutrinos, curvature, standard sirens, particle searches) are gates every
+  viable theory must pass: they count
+  toward the lowest score but not the median, so automatic passes don't
+  inflate it.
 * Open questions: disputed or mutually contradictory data. Even a correct
   theory could not pass them all, so they are reported, never scored, and never
   used to fit constants.

@@ -6,7 +6,12 @@ data and are reported but never scored or used to fit constants. One rule
 holds everywhere: a theory gets one set of global constants for all tests.
 
 ‡ marks tests with too few numbers to hide (fitted and scored in-sample);
-the others have a secret public/hidden split.
+the others have a secret public/hidden split. Guard rails (precision gravity,
+black holes, clocks, inflation, neutrinos, curvature, standard sirens, particle
+searches) are gates: standard physics passes them automatically, and they exist
+to catch exotic theories. They count toward a model's lowest score but not its
+median or its count of substantive tests passed. Every test also reports a
+noise ceiling (what a perfect theory would score).
 
 ## Stage 1: galaxies and clusters
 
@@ -75,7 +80,6 @@ the others have a secret public/hidden split.
 
 - Fresh-data protocol: freeze submitted models and score them on new releases
   (Gaia DR4, Euclid, DESI DR3, LiteBIRD) they could not have seen.
-- Noise ceiling per test (what a perfect theory would score given the errors).
 - Full likelihoods (CMB spectra, lensing maps) for theories far from LCDM.
 - More baselines: warm/fuzzy/self-interacting dark matter, superfluid dark
   matter, MOND + sterile neutrinos, evolving dark energy, early dark energy,

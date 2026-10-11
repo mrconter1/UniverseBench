@@ -42,11 +42,20 @@ class _Cosmo(Test):
 
 
 class CMB(_Cosmo):
+    """The primordial-spectrum points (n_s, A_s) are used when fitting
+    constants, since they set the amplitude of structure for later tests,
+    but are not scored: any model with those two constants matches them
+    trivially."""
     ID, LABEL = "15_cmb", "Microwave background"
     DATA_DIRS = ("cmb",)
+    FIT_ONLY = ("n_s", "ln10As")
 
     def load(self):
         self.rows = _rows("cmb", "planck2018.csv")
+
+    def scored(self, z):
+        keep = [i for i, r in enumerate(self.rows) if r["quantity"] not in self.FIT_ONLY]
+        return z[keep] if len(z) == len(self.rows) else z
 
     def residuals(self, model, gp, part, salt):
         c = _cosmo(model, gp)
@@ -243,6 +252,7 @@ class LymanAlpha(_Cosmo):
     limit (> 5.7 keV, 95%), checked against model.dm_particle(gp) when the
     model declares a dark matter particle. Scored, never fitted."""
     ID, LABEL = "22_lyman_alpha", "Lyman-alpha forest"
+    N_BOUND = 1
     STATUS = "contested"
     USED_IN_FIT = False
     DATA_DIRS = ("lyman_alpha",)
@@ -282,6 +292,7 @@ class JWSTEarlyGalaxies(_Cosmo):
     stars than baryons available) fails, scaled by the 1-sigma error on eps.
     Scored, never fitted."""
     ID, LABEL = "23_jwst_early_galaxies", "JWST early galaxies"
+    N_BOUND = 2
     STATUS = "contested"
     USED_IN_FIT = False
     DATA_DIRS = ("jwst",)

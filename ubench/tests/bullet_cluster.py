@@ -52,6 +52,8 @@ class SubCluster:
 class BulletCluster(Test):
     ID = "09_bullet_cluster"
     LABEL = "Bullet Cluster"
+    SIMPLIFIED = ("mass-weighted peak position from aperture masses, not a fit to the "
+                  "lensing map; a faithful model should compute where its lensing mass sits")
     HIDDEN_SPLIT = False
     DATA_DIRS = ("bullet_cluster",)
 

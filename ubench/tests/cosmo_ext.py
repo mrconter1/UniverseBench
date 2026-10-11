@@ -61,12 +61,16 @@ def _get(c, model, gp, q):
 
 class _ExtTable(Test):
     STAGE = 3
+    GUARD_RAIL = True    # standard cosmologies pass these automatically; they catch exotic physics
     HIDDEN_SPLIT = False
     DATA_DIRS = ("extended",)
     NUMBER = ""
 
     def load(self):
         self.rows = [r for r in _rows("extended", "constraints.csv") if r["test"] == self.NUMBER]
+
+    def n_bound(self):
+        return sum(r["kind"] != "gauss" for r in self.rows)
 
     def residuals(self, model, gp, part, salt):
         c = _cosmo(model, gp)
@@ -93,6 +97,7 @@ class Neutrinos(_ExtTable):
 
 class NeutrinoSqueeze(_ExtTable):
     ID, LABEL, NUMBER = "29b_neutrino_squeeze", "Neutrino mass squeeze", "29b"
+    GUARD_RAIL = False
     STATUS = "contested"
     USED_IN_FIT = False
 

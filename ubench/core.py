@@ -65,6 +65,11 @@ class Test:
     HIDDEN_SPLIT = True  # False: too few points to hide; scored in-sample
     USED_IN_FIT = True   # False: pure out-of-sample test
     DATA_DIRS = ()       # folders under data/ this test reads
+    GUARD_RAIL = False   # True: a gate every viable theory must pass; counts
+                         # toward a model's lowest score but not its median
+    SIMPLIFIED = ""      # non-empty: a known simplification, flagged in the scorecard
+    N_BOUND = 0          # points that are one-sided limits (a perfect theory
+                         # always passes them); used for the noise ceiling
 
     def __init__(self):
         self._loaded = False
@@ -98,16 +103,40 @@ class Test:
         z = np.asarray(z, dtype=float)
         return float(np.mean(z**2)) if np.all(np.isfinite(z)) else 1e12
 
+    def n_bound(self):
+        return self.N_BOUND
+
+    def scored(self, z):
+        """Which residuals count toward the score (default: all). Tests may
+        keep some points for fitting only."""
+        return z
+
     def score(self, model, gp, salt):
         part = "hidden" if self.HIDDEN_SPLIT else "all"
         z = self.residuals(model, gp, part, salt)
         if z is None:
             return dict(NO_PREDICTION)
-        z = np.asarray(z, dtype=float)
+        z = np.asarray(self.scored(np.asarray(z, dtype=float)), dtype=float)
         z[~np.isfinite(z)] = 1e6
         out = summarize(z)
         out["in_sample"] = (not self.HIDDEN_SPLIT) and self.USED_IN_FIT
         return out
+
+    def noise_ceiling(self, n_points, sims=20000, seed=0):
+        """What a perfect theory would score on this test: Gaussian points
+        land within 2 sigma 95.4% of the time, one-sided limits always pass.
+        Returns the expected score and the 5th-95th percentile range, which
+        is wide for tests with only a few points."""
+        nb = min(self.n_bound(), n_points)
+        ng = n_points - nb
+        if n_points == 0:
+            return {"expected": 0.0, "p5": 0.0, "p95": 0.0}
+        rng = np.random.default_rng(seed)
+        inside = (np.abs(rng.standard_normal((sims, ng))) < 2).sum(axis=1) + nb
+        pct = 100.0 * inside / n_points
+        return {"expected": round(float(pct.mean()), 1),
+                "p5": round(float(np.percentile(pct, 5)), 1),
+                "p95": round(float(np.percentile(pct, 95)), 1)}
 
 
 def _vec_to_dict(x, spec):

@@ -40,6 +40,7 @@ def load_gravity():
 
 class _GravityTable(Test):
     HIDDEN_SPLIT = False
+    GUARD_RAIL = True
     STAGE = 2
     DATA_DIRS = ("gravity",)
     NUMBER = ""

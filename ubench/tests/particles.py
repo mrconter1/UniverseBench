@@ -25,6 +25,8 @@ from .cosmo import _rows
 
 class _Particle(Test):
     STAGE = 4
+    GUARD_RAIL = True
+    N_BOUND = 1
     HIDDEN_SPLIT = False
     DATA_DIRS = ("particles",)
     NUMBER = ""
