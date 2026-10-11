@@ -8,6 +8,8 @@ precision tests it shows why general relativity was needed:
   * no gravitational waves: binary pulsar orbits do not decay, and the
     gravitational-wave tests get no prediction,
   * no relativistic cosmology (no prediction for Stage 3).
+  * no black hole shadows, no relativistic precession of S2, and no
+    gravitational time dilation: clocks tick at the same rate everywhere.
 Laboratory tests (equivalence principle, inverse-square law) are passed.
 """
 from .visible import VisibleOnly
@@ -18,6 +20,11 @@ NEWTON_VALUES = {
     "pbdot_ratio_B1913+16": 0.0, "quadrupole_ratio_double_pulsar": 0.0,
     "gw_speed_minus_c_over_c": None, "graviton_mass_ev": None,
     "eotvos_eta_Ti_Pt": 0.0, "yukawa_alpha_at_40um": 0.0,
+    # no event horizons or shadows; no relativistic precession; clocks tick
+    # at the same rate everywhere (redshift deviation alpha = -1)
+    "sgrA_shadow_deviation": None, "m87_shadow_to_dynamics_mass_ratio": None,
+    "s2_schwarzschild_precession_fSP": 0.0, "s2_gravitational_redshift_f": 0.0,
+    "redshift_violation_alpha_galileo": -1.0, "redshift_violation_alpha_skytree": -1.0,
 }
 
 

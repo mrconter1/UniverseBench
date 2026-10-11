@@ -13,6 +13,11 @@ modified gravity. Each is a short table of measured quantities
      (GWTC-3).
   14 Laboratory: equivalence principle (MICROSCOPE) and the inverse-square
      law at 40 micrometres (Eot-Wash).
+  26 Black holes: the size of Sgr A*'s shadow (EHT), M87*'s shadow mass vs
+     its stellar-dynamics mass, and the orbit of the star S2 around Sgr A*
+     (relativistic precession and gravitational redshift, GRAVITY).
+  27 Clocks: gravitational time dilation measured with Galileo satellites
+     on eccentric orbits and optical clocks on Tokyo Skytree.
 
 Bounds are converted to Gaussian uncertainties (see the CSV notes). Too few
 numbers to hide: scored in-sample.
@@ -68,3 +73,11 @@ class GravitationalWaves(_GravityTable):
 
 class LabGravity(_GravityTable):
     ID, LABEL, NUMBER = "14_lab_gravity", "Laboratory gravity", "14"
+
+
+class BlackHoles(_GravityTable):
+    ID, LABEL, NUMBER = "26_black_holes", "Black holes", "26"
+
+
+class Clocks(_GravityTable):
+    ID, LABEL, NUMBER = "27_clocks", "Clocks and time dilation", "27"

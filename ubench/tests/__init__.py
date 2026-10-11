@@ -4,7 +4,8 @@ from .bullet_cluster import BulletCluster
 from .clusters import ClusterMasses
 from .cosmo import (BAO, BBN, CMB, ClusterCounts, JWSTEarlyGalaxies, Lithium, LymanAlpha, HubbleTension, S8Tension, Supernovae)
 from .galaxy_lensing import GalaxyLensing
-from .gravity import BinaryPulsars, GravitationalWaves, LabGravity, SolarSystem
+from .gravity import (BinaryPulsars, BlackHoles, Clocks, GravitationalWaves, LabGravity,
+                      SolarSystem)
 from .dm_deficient import DMDeficientGalaxies
 from .dwarfs import DwarfSpheroidals
 from .ellipticals import Ellipticals
@@ -20,4 +21,4 @@ def all_tests():
             SolarSystem(), BinaryPulsars(), GravitationalWaves(), LabGravity(),
             CMB(), BBN(), Lithium(), BAO(), Supernovae(), HubbleTension(), S8Tension(),
             ClusterCounts(), LymanAlpha(),
-            JWSTEarlyGalaxies()]
+            JWSTEarlyGalaxies(), BlackHoles(), Clocks()]

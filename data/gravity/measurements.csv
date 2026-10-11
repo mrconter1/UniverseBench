@@ -11,3 +11,9 @@ test,quantity,value,sigma,gr,source,note
 13,graviton_mass_ev,0,1.47e-23,0,LVK 2021 arXiv:2112.06861 (GWTC-3),m_g <= 2.42e-23 eV (90%) -> sigma = bound/1.645
 14,eotvos_eta_Ti_Pt,-1.5e-15,2.75e-15,0,Touboul+ 2022 PRL 129 121102 (MICROSCOPE),stat 2.3 and syst 1.5 added in quadrature
 14,yukawa_alpha_at_40um,0,0.5,0,Lee+ 2020 PRL 124 101101 (Eot-Wash),|alpha|=1 excluded for lambda > 38.6 um (95%) -> |alpha| < ~1 at 40 um
+26,sgrA_shadow_deviation,0,0.10,0,EHT Collaboration 2022 ApJL 930 L17 (Sgr A* paper VI),image size 'within ~10% of the Kerr predictions' taken as 1 sigma
+26,m87_shadow_to_dynamics_mass_ratio,0.985,0.124,1,EHT 2019 ApJL 875 L6 (6.5 +/- 0.73 e9) vs Gebhardt+ 2011 ApJ 729 119 (6.6 +/- 0.4 e9),GR: the shadow implies the same mass as stellar dynamics; errors propagated
+26,s2_schwarzschild_precession_fSP,1.10,0.19,1,GRAVITY Collaboration 2020 A&A 636 L5,star S2 orbiting Sgr A*
+26,s2_gravitational_redshift_f,0.90,0.175,1,GRAVITY Collaboration 2018 A&A 615 L15,0.09 stat and 0.15 sys added in quadrature
+27,redshift_violation_alpha_galileo,0.19e-5,2.48e-5,0,Delva+ 2018 PRL 121 231101 (eccentric Galileo satellites),
+27,redshift_violation_alpha_skytree,1.4e-5,9.1e-5,0,Takamoto+ 2020 Nat Photon 14 411 (optical lattice clocks; value as quoted in arXiv:2502.06104),
