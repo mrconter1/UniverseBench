@@ -29,7 +29,8 @@ quoted errors leave out.
                    stars (see clusters.py).
 
 Headline per test: percentage of hidden points predicted within 2 sigma
-(a perfect model scores about 95). Total = mean of the tests.
+(a perfect model scores about 95). Each model is summarized by its lowest,
+median and highest test score; models are ranked by the lowest.
 Also reported: median reduced chi^2 and the public-vs-hidden gap.
 
 Global constants are fitted jointly on the public data of ALL tests: a
@@ -237,7 +238,9 @@ def run(model, gals=None, cl=None, mw=None, salt=SPLIT_SALT, verbose=True):
         "C_clusters": test_clusters(model, chid, gp),
         "D_milkyway": test_milkyway(model, mw or milkyway.MilkyWay(), gp),
     }
-    total = round(float(np.mean([res[t]["within_2sigma_pct"] for t in TESTS])), 1)
+    vals = [res[t]["within_2sigma_pct"] for t in TESTS]
+    summary = {"LOWEST": min(vals), "MEDIAN": round(float(np.median(vals)), 1),
+               "HIGHEST": max(vals)}
     out = {
         "model": model.NAME,
         "global_params": {k: round(v, 4) for k, v in gp.items()},
@@ -246,9 +249,11 @@ def run(model, gals=None, cl=None, mw=None, salt=SPLIT_SALT, verbose=True):
         **{t + "_hidden": res[t] for t in TESTS},
         "A_predict_public": test_predict(model, pub, gp)[0],
         "C_clusters_public": test_clusters(model, cpub, gp),
-        "TOTAL": total,
+        **summary,
     }
     if verbose:
         s = "  ".join(f"{t.split('_')[0]}={res[t]['within_2sigma_pct']:5.1f}" for t in TESTS)
-        print(f"{model.NAME:30s} {s}  TOTAL={total:5.1f}   {out['global_params']}")
+        print(f"{model.NAME:30s} {s}  lowest={summary['LOWEST']:5.1f} "
+              f"median={summary['MEDIAN']:5.1f} highest={summary['HIGHEST']:5.1f}   "
+              f"{out['global_params']}")
     return out

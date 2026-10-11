@@ -46,22 +46,27 @@ for m in candidates:
         r = runs[0][t + "_hidden"]
         row[t] = None if r.get("no_prediction") else \
             float(np.mean([x[t + "_hidden"]["within_2sigma_pct"] for x in runs]))
-    row["TOTAL"] = float(np.mean([row[t] or 0.0 for t in B.TESTS]))
+    vals = [row[t] or 0.0 for t in B.TESTS]
+    row["LOWEST"], row["MEDIAN"], row["HIGHEST"] = min(vals), float(np.median(vals)), max(vals)
     row["runs"] = runs
     rows.append(row)
-rows.sort(key=lambda r: -r["TOTAL"])
+# rank by weakest test, then median
+rows.sort(key=lambda r: (-r["LOWEST"], -r["MEDIAN"]))
 
 fmt = lambda v: "—" if v is None else f"{v:.0f}"
-head = ["#", "Model"] + [B.TEST_LABELS[t] for t in B.TESTS] + ["Total", "Knobs"]
+head = ["#", "Model"] + [B.TEST_LABELS[t] for t in B.TESTS] + \
+       ["Lowest", "Median", "Highest", "Knobs"]
 lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
 for i, r in enumerate(rows, 1):
     cells = [str(i), r["model"]] + [fmt(r[t]) for t in B.TESTS] + \
-            [f"**{r['TOTAL']:.0f}**", r["knobs"]]
+            [f"**{r['LOWEST']:.0f}**", f"{r['MEDIAN']:.0f}", f"{r['HIGHEST']:.0f}", r["knobs"]]
     lines.append("| " + " | ".join(cells) + " |")
 table = "\n".join(lines)
 
 note = (f"Scores: % of hidden data points predicted within 2 sigma (a perfect theory "
-        f"scores about 95). '—' = model makes no prediction for that test (counts as 0). "
+        f"scores about 95). Lowest / median / highest are taken across all tests; models "
+        f"are ranked by their lowest score (a theory is only as good as its worst failure), "
+        f"then by median. '—' = model makes no prediction for that test (counts as 0). "
         f"{'Averaged over ' + str(len(salts)) + ' random public/hidden splits.' if len(salts) > 1 else ''}")
 print(table + "\n\n" + note)
 

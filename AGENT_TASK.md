@@ -32,7 +32,8 @@ something new, that predicts both from the visible matter.
 3. `GLOBAL_PARAMS` are shared by every galaxy and are tuned automatically on
    the public galaxies. `LOCAL_PARAMS` are per-galaxy knobs; their defaults
    are used in the pure prediction test.
-4. Four tests, averaged into a total:
+4. Four tests. You are summarized by your lowest, median and highest test
+   score, and **ranked by your lowest**, so a theory must work everywhere:
    - **Predict**: global parameters only; predict whole rotation curves.
    - **Extrapolate**: your per-galaxy knobs are tuned on the inner 60% of each
      hidden galaxy; predict the outer 40%. Extra knobs only help if they
@@ -53,9 +54,10 @@ something new, that predicts both from the visible matter.
 
 ## Baselines to beat (hidden data, averaged over 5 splits)
 
-See LEADERBOARD.md for the current table. In short: cold dark matter scores
-about 66 (wins clusters), MOND as published about 64 (wins galaxies and the
-Milky Way), and visible matter alone about 12. Nothing yet wins everywhere.
+See LEADERBOARD.md for the current table. In short: cold dark matter's
+lowest test is about 37 (rotation-curve extrapolation), MOND as published
+wins galaxies and the Milky Way but its lowest is about 12 (clusters).
+Nothing yet works everywhere.
 
 A perfect model would score about 95.
 

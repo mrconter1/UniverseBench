@@ -40,8 +40,9 @@ inclination uncertainty. Score = % of hidden points within 2 sigma
 (perfect is about 95). Test A predicts whole curves with global
 parameters only; test B tunes per-galaxy knobs on the inner 60% and
 predicts the outer 40%. Test C predicts cluster total masses from gas plus
-stars (15% quoted error floor). Test D predicts the Milky Way out of sample (3% systematic floor). Total =
-average. Global constants are fitted jointly on the public data of tests A-C.
+stars (15% quoted error floor). Test D predicts the Milky Way out of sample (3% systematic floor). Each model
+is summarized by its lowest, median and highest test score and ranked by the
+lowest: a theory is only as good as its worst failure. Global constants are fitted jointly on the public data of tests A-C.
 
 ## Known simplifications
 
