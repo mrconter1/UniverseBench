@@ -1,0 +1,11 @@
+# Particle-search guard rails (tests 24, 25, 36).
+# 24: LZ 2024 (arXiv:2410.17036): spin-independent WIMP-nucleon cross section < 2.2e-48 cm^2 at 40 GeV (90%).
+#     For other masses the limit is scaled as ~mass/40 GeV above 40 GeV (heavier WIMPs are fewer per volume) and taken as
+#     flat-ish below; a rough envelope of the published curve (ours).
+# 25: Fermi-LAT dwarf spheroidals, Ackermann et al. 2015 PRL 115 231301 (arXiv:1503.02641): limits lie below the canonical
+#     thermal-relic annihilation cross section (~3e-26 cm^3/s) for dark matter masses <~100 GeV (quark and tau channels).
+# 36: BESS-Polar, Abe et al. 2012 PRL 108 131301 (arXiv:1201.2967): antihelium/helium < 6.9e-8 (95%).
+test,quantity,limit,ref_mass_GeV
+24,sigma_SI_cm2,2.2e-48,40
+25,sigma_v_cm3s,3e-26,100
+36,antihelium_to_helium,6.9e-8,

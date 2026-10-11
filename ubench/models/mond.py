@@ -70,6 +70,9 @@ class MOND(GeneralRelativity):
         dominated by the gas (no unseen matter in pure MOND)."""
         return s.M_gas / (s.M_gas + s.M_star)
 
+    def dm_particle(self, gp):
+        return None          # no dark matter particle: no signal in any detector
+
     def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
         """Boost evaluated at the total (internal + Galactic) field, which
         in the external-field-dominated regime approximates AQUAL."""

@@ -36,3 +36,6 @@ class VisibleOnly(GeneralRelativity, CosmologyMixin):
 
     def predict_bullet_offset(self, s, gp):
         return s.M_gas / (s.M_gas + s.M_star)          # mass follows the baryons
+
+    def dm_particle(self, gp):
+        return None          # no dark matter particle: no signal in any detector
