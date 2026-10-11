@@ -116,29 +116,75 @@ def _vec_to_dict(x, spec):
 
 def fit_global(model, tests, salt):
     """Fit GLOBAL_PARAMS jointly on the public data of all tests. Each test
-    contributes its mean chi^2 per point, so tests weigh equally."""
+    contributes its mean chi^2 per point, so tests weigh equally.
+    Independent groups of constants (see _param_groups) are fitted
+    separately, which is exact and much faster."""
     spec = getattr(model, "GLOBAL_PARAMS", {})
     if not spec:
         return {}
+    tests = [t for t in tests if t.USED_IN_FIT]
+    x = np.array([v[0] for v in spec.values()], dtype=float)
+    bounds_all = [(lo, hi) for (_, lo, hi) in spec.values()]
 
-    def f(x):
-        gp = _vec_to_dict(x, spec)
-        total = 0.0
-        for t in tests:
-            term = t.fit_term(model, gp, salt)
-            if term is not None:
-                total += term
-        return total
+    for idx, group_tests in _param_groups(model, tests, salt, spec, x):
+        if not group_tests:
+            continue
 
-    x0 = np.array([v[0] for v in spec.values()], dtype=float)
-    bounds = [(lo, hi) for (_, lo, hi) in spec.values()]
-    best = minimize(f, x0, method="Powell", bounds=bounds,
-                    options={"maxiter": 20000, "xtol": 1e-5, "ftol": 1e-7})
-    # polish with Nelder-Mead from Powell's answer
-    nm = minimize(f, best.x, method="Nelder-Mead",
-                  options={"maxiter": 4000, "xatol": 1e-6, "fatol": 1e-8})
-    x = nm.x if nm.fun < best.fun else best.x
+        def f(sub, idx=idx, group_tests=group_tests):
+            xx = x.copy()
+            xx[idx] = sub
+            gp = _vec_to_dict(xx, spec)
+            total = 0.0
+            for t in group_tests:
+                term = t.fit_term(model, gp, salt)
+                if term is not None:
+                    total += term
+            return total
+
+        bounds = [bounds_all[i] for i in idx]
+        best = minimize(f, x[idx], method="Powell", bounds=bounds,
+                        options={"maxfev": 6000, "xtol": 1e-4, "ftol": 1e-7})
+        # polish with Nelder-Mead from Powell's answer
+        nm = minimize(f, best.x, method="Nelder-Mead",
+                      options={"maxfev": 3000, "xatol": 1e-5, "fatol": 1e-8})
+        x[idx] = nm.x if nm.fun < best.fun else best.x
     return _vec_to_dict(x, spec)
+
+
+def _param_groups(model, tests, salt, spec, x0):
+    """Split the global constants into independent groups: two constants
+    belong together if some test responds to both. Detected by nudging each
+    constant and recording which tests' fit terms change."""
+    base_gp = _vec_to_dict(x0, spec)
+    base = {t.ID: t.fit_term(model, base_gp, salt) for t in tests}
+    touches = []
+    for i, (_, lo, hi) in enumerate(spec.values()):
+        step = 0.013 * (hi - lo)
+        x = np.array(x0, dtype=float)
+        x[i] = x0[i] + step if x0[i] + step <= hi else x0[i] - step
+        gp = _vec_to_dict(x, spec)
+        hit = set()
+        for t in tests:
+            b, v = base[t.ID], t.fit_term(model, gp, salt)
+            if (b is None) != (v is None) or (b is not None and abs(v - b) > 1e-12 * max(1.0, abs(b))):
+                hit.add(t.ID)
+        touches.append(hit)
+    parent = list(range(len(touches)))
+
+    def find(a):
+        while parent[a] != a:
+            a = parent[a]
+        return a
+
+    for i in range(len(touches)):
+        for j in range(i + 1, len(touches)):
+            if touches[i] & touches[j]:
+                parent[find(i)] = find(j)
+    groups = {}
+    for i in range(len(touches)):
+        groups.setdefault(find(i), []).append(i)
+    return [(idx, [t for t in tests if t.ID in set().union(*(touches[i] for i in idx))])
+            for idx in groups.values()]
 
 
 def run(model, tests, salt=SPLIT_SALT, verbose=False):

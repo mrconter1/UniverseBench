@@ -1,65 +1,68 @@
-# Task: explain how galaxies rotate
+# Task: explain the dark universe
 
-You are given rotation curves for a set of real galaxies (SPARC catalog) in
-`data/all/`. Each file lists, at several radii R (kpc):
+About 95% of the universe's content is "dark": matter we cannot see and an
+energy driving cosmic acceleration. The standard model of cosmology (ΛCDM)
+explains most observations with cold dark matter plus a cosmological constant,
+but strains in some places (galaxy-scale regularities, several tensions).
+Modified-gravity ideas such as MOND explain galaxies well but fail clusters and
+the early universe. Nothing yet works everywhere.
 
-- `Vobs`, `errV`: the measured orbital speed of gas and stars (km/s) and its error
-- `Vgas`, `Vdisk`, `Vbul`: the speed that the *visible* gas, stellar disk and
-  bulge would produce alone under ordinary Newtonian gravity. Disk and bulge
-  assume a mass-to-light ratio of 1; scale their squares by your chosen
-  mass-to-light ratio.
-- `SBdisk`, `SBbul`: surface brightness (Lsun/pc^2)
+Your job: propose **one physical model** (new dark matter, modified gravity,
+or something else) and implement it so that it predicts every measurement in
+this benchmark, from visible matter and a small set of universal constants.
 
-You are also given galaxy clusters in `data/clusters/` (loaded by
-`clusters.py`): for each cluster and radius, the visible (gas + stellar)
-mass inside that radius and the measured total mass.
+## How you are scored
 
-You are also given the Milky Way's rotation curve (`milkyway.py`), which is a
-pure out-of-sample test: it is never used to fit your constants and allows no
-per-galaxy tuning. Its stellar masses are already real masses
-(`ups_fixed = True`), so no mass-to-light ratio may be applied to it.
+* **27 scored tests** (settled data) spanning galaxies, clusters, precision
+  gravity, black holes, the early universe and cosmic expansion. The score for
+  each is the % of data points you predict within 2 sigma (a perfect theory
+  scores about 95; 100% would mean you fitted the noise).
+* You are summarized by your **lowest, median and highest** score across the
+  scored tests and **ranked by your lowest**: a theory is only as good as its
+  worst failure.
+* **11 open questions** (disputed or self-contradictory data, e.g. the Hubble
+  tension) are reported alongside but never scored or used to fit constants.
+  Say which side your theory takes and why.
+* Where datasets are large (rotation curves, clusters, dwarf galaxies, lensing
+  ellipticals, supernovae), part is **hidden** and only used for final scoring.
+  You see the public part. Small tables are fully visible.
+* A test your model makes no prediction for scores 0 ("—").
 
-Visible matter alone cannot explain the observed speeds or cluster masses.
-Your job is to propose a physical model, dark matter, modified gravity or
-something new, that predicts both from the visible matter.
+See LEADERBOARD.md for the baselines (ΛCDM, two versions of MOND, visible
+matter only, pure Newtonian gravity) and ROADMAP.md for what each test is.
 
 ## Rules
 
-1. Implement your model in a file `my_model.py` with the same interface as the
-   classes in `models.py`, ending with `MODEL = YourClass()`.
-2. Your model will be scored on **galaxies you have not seen**. You only have
-   the public half. Overfitting the public galaxies will hurt you.
-3. `GLOBAL_PARAMS` are shared by every galaxy and are tuned automatically on
-   the public galaxies. `LOCAL_PARAMS` are per-galaxy knobs; their defaults
-   are used in the pure prediction test.
-4. Four tests. You are summarized by your lowest, median and highest test
-   score, and **ranked by your lowest**, so a theory must work everywhere:
-   - **Predict**: global parameters only; predict whole rotation curves.
-   - **Extrapolate**: your per-galaxy knobs are tuned on the inner 60% of each
-     hidden galaxy; predict the outer 40%. Extra knobs only help if they
-     capture real physics.
-   - **Clusters**: implement `predict_cluster_mass(c, gp)` returning total
-     mass (Msun) inside `c.r_kpc`, given visible mass `c.M_bar`. A model
-     without this method scores 0 on this test.
-   - **Milky Way**: predict our galaxy with your constants, no tuning.
-5. **One set of constants for everything.** Global parameters are fitted
-   jointly on galaxies and clusters. A constant that appears in both must take
-   one value.
-6. The model must be physically meaningful: no lookup tables of galaxy or
-   cluster names, no using observed speeds or total masses inside your
-   predictions, and it must reduce to ordinary Newtonian gravity where
-   gravity is strong (the solar system).
-7. Use `benchmark.run(MODEL)` on the public data to develop. The score you see
-   there uses a practice split of the public data and is NOT your final score.
+1. Write your model in `my_model.py`, ending with `MODEL = YourClass()`.
+   Score it with `python score.py my_model.py`.
+2. **One set of constants for everything.** `GLOBAL_PARAMS = {name: (start,
+   lo, hi)}` are fitted once, jointly, on the public data of every scored test.
+   `LOCAL_PARAMS` are per-galaxy knobs, allowed only in the rotation-curve
+   extrapolation test (their defaults are used everywhere else).
+3. Predict from **inputs only**: never use the observed answer (observed
+   speeds, total masses, lensing masses) or look up objects by name.
+4. Approach the task honestly. Submissions are inspected; models that game
+   simplifications in the tests rather than doing physics will be discarded.
+5. Report: the physical idea in plain language, the equations (ideally a
+   Lagrangian or field equations), the number of constants, which open
+   questions it resolves, and a new observation that could prove it wrong.
 
-## Baselines to beat (hidden data, averaged over 5 splits)
+## Model interface: one method per kind of prediction
 
-See LEADERBOARD.md for the current table. In short: cold dark matter's
-lowest test is about 37 (rotation-curve extrapolation), MOND as published
-wins galaxies and the Milky Way but its lowest is about 12 (clusters).
-Nothing yet works everywhere.
+| Method | Tests | Returns |
+|---|---|---|
+| `predict(g, R, gp, lp)` | 01, 02, 04 | rotation speed (km/s) at radii R (kpc) for galaxy `g` (`Vgas`, `Vdisk`, `Vbul` = Newtonian speeds of the visible parts for mass-to-light 1; `ups_fixed` means masses are already real; `stellar_mass(ups)`) |
+| `predict_cluster_mass(c, gp)` | 03 | total mass (Msun) inside `c.r_kpc`, given visible mass `c.M_bar`, `c.z`, `c.delta` |
+| `predict_dwarf_dispersion(d, gp)` | 05, 10 | stellar velocity dispersion (km/s) given `d.M_bar`, `d.r_half` (3D, kpc), host field `d.g_ext` ((km/s)²/kpc), `d.D_host` |
+| `predict_wide_binary_boost(gN_si, g_ext_si, gp)` | 06 | g_observed / g_Newton for a wide binary star |
+| `predict_lensing_vcirc(M_bar, R_kpc, gp)` | 07 | circular speed (km/s) around an isolated galaxy, 50–1000 kpc |
+| `predict_lens_mass(L, gp)` | 08 | projected mass (Msun) inside `L.r_Ein` given stars `L.Mstar_proj_chab`, `L.Mstar_chab` |
+| `predict_bullet_offset(s, gp)` | 09 | lensing-peak position between galaxies (0) and gas (1), given `s.M_gas`, `s.M_star` |
+| `predict_gravity(quantity, gp)` | 11–14, 26, 27, 34 | value of a precision-gravity quantity (see `data/gravity/measurements.csv`); inherit `models.common.GeneralRelativity` for GR |
+| `cosmology(gp)` | 15–23, 28–35 | an object with the interface of `ubench.cosmology.Cosmology` (distances, sound horizon, θ*, growth, power spectrum, σ8, halo mass function, BBN yields, curvature, r, f_NL, N_eff, neutrino masses). Subclass it to change the physics |
+| `predict_bbn(gp)` (optional) | 16 | dict of Yp, D_H, Li_H if you have no full cosmology |
+| `dm_particle(gp)` | 22, 24, 25 | dict (`mass_GeV`, `sigma_SI_cm2`, `sigma_v_cm3s`, `wdm_mass_keV`) or `None` for "no dark matter particle" |
+| optional overrides | 32, 35, 36 | `predict_number_count_dipole(gp)`, `predict_max_bh_mass(z, gp)`, `predict_antihelium_ratio(gp)` |
 
-A perfect model would score about 95.
-
-Report: your model's physical idea in plain language, its equations, how
-many parameters it uses, and what new observation could prove it wrong.
+The baselines in `ubench/models/` implement all of these and are good
+templates. Each test module in `ubench/tests/` documents its data and units.
