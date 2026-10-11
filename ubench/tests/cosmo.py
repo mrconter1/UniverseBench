@@ -201,3 +201,25 @@ class S8Tension(_Cosmo):
         s8 = c.S8(0.5)
         return np.array([_asym_z(s8, float(r["S8"]), float(r["err_plus"]), float(r["err_minus"]),
                                  S8_ENGINE_FLOOR) for r in self.rows])
+
+
+class ClusterCounts(_Cosmo):
+    """21: the number of massive galaxy clusters, which constrains the
+    growth of structure (S8) and the matter density (eROSITA eRASS1, SPT
+    with DES/HST lensing)."""
+    ID, LABEL = "21_cluster_counts", "Galaxy cluster counts"
+    DATA_DIRS = ("cluster_counts",)
+
+    def load(self):
+        self.rows = _rows("cluster_counts", "surveys.csv")
+
+    def residuals(self, model, gp, part, salt):
+        c = _cosmo(model, gp)
+        if c is None:
+            return None
+        if c == "bad":
+            return np.full(len(self.rows), 1e6)
+        pred = {"S8": c.S8(0.5), "Omega_m": c.om}
+        floor = {"S8": S8_ENGINE_FLOOR, "Omega_m": 0.0}
+        return np.array([_asym_z(pred[r["quantity"]], float(r["value"]), float(r["err_plus"]),
+                                 float(r["err_minus"]), floor[r["quantity"]]) for r in self.rows])

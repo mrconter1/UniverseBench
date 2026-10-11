@@ -1,0 +1,8 @@
+# Cosmology from the abundance of galaxy clusters (flat LCDM analyses); S8 = sigma8 * sqrt(Omega_m / 0.3).
+# eROSITA eRASS1: Ghirardini et al. 2024, A&A 689, A298 (arXiv:2402.08458): Om = 0.29 +0.01 -0.02, S8 = 0.86 +/- 0.01
+# SPT + DES/HST weak lensing: Bocquet et al. 2024, PRD 110, 083510 (arXiv:2401.02075): Om = 0.286 +/- 0.032, S8 = 0.795 +/- 0.029
+source,quantity,value,err_plus,err_minus
+eRASS1,S8,0.86,0.01,0.01
+eRASS1,Omega_m,0.29,0.01,0.02
+SPT2024,S8,0.795,0.029,0.029
+SPT2024,Omega_m,0.286,0.032,0.032
