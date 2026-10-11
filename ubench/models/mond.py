@@ -54,6 +54,11 @@ class MOND:
         gN = G * Ms / L.r_Ein**2
         return Ms * float(rar_nu(gN / self.a0(gp)))
 
+    def predict_bullet_offset(self, s, gp):
+        """MOND's extra pull follows the baryon distribution, which is
+        dominated by the gas (no unseen matter in pure MOND)."""
+        return s.M_gas / (s.M_gas + s.M_star)
+
     def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
         """Boost evaluated at the total (internal + Galactic) field, which
         in the external-field-dominated regime approximates AQUAL."""

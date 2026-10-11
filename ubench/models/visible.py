@@ -30,3 +30,6 @@ class VisibleOnly:
 
     def predict_lens_mass(self, L, gp):
         return gp["imf_ell"] * L.Mstar_proj_chab
+
+    def predict_bullet_offset(self, s, gp):
+        return s.M_gas / (s.M_gas + s.M_star)          # mass follows the baryons

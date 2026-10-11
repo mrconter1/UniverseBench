@@ -38,10 +38,7 @@ class LCDM:
         return np.sqrt(np.clip(vb2 + v_nfw(R, m200, c) ** 2, 0, None))
 
     def predict_cluster_mass(self, c, gp):
-        fb = (gp["f_b_cluster"]
-              * (c.M_bar / 1e13) ** gp["fb_mass_slope"]
-              * (c.delta / 500) ** (-gp["fb_radius_slope"]))
-        return c.M_bar / fb
+        return c.M_bar / self.cluster_baryon_fraction(c.M_bar, gp, c.delta)
 
     def predict_dwarf_dispersion(self, d, gp):
         """Stars plus an NFW halo from abundance matching (extrapolated to
@@ -69,3 +66,14 @@ class LCDM:
         adiabatic contraction."""
         m200, c = self.halo(L.Mstar_chab)
         return gp["imf_ell"] * L.Mstar_proj_chab + nfw_mass_projected(L.r_Ein, m200, c)
+
+    def cluster_baryon_fraction(self, M_bar, gp, delta=500):
+        return (gp["f_b_cluster"] * (M_bar / 1e13) ** gp["fb_mass_slope"]
+                * (delta / 500) ** (-gp["fb_radius_slope"]))
+
+    def predict_bullet_offset(self, s, gp):
+        """Collisionless dark matter travels with the galaxies. Its amount
+        follows from the model's own cluster baryon fraction."""
+        M_bar = s.M_gas + s.M_star
+        dm = M_bar * (1 / self.cluster_baryon_fraction(M_bar, gp) - 1)
+        return s.M_gas / (s.M_gas + s.M_star + dm)

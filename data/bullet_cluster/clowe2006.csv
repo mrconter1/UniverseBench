@@ -1,0 +1,9 @@
+# Bullet Cluster 1E0657-558 (z = 0.296): Clowe et al. 2006, ApJ 648, L109 (arXiv:astro-ph/0608407), Table 2.
+# Masses in 100 kpc apertures (1e12 Msun). kappa = mean lensing convergence (for plasma peaks: residual after
+# subtracting BCG-centred profiles). Lensing peaks are offset from the plasma peaks at ~8 sigma and lie within
+# ~2 sigma of the BCGs.
+component,ra,dec,M_gas,M_gas_err,M_star,M_star_err,kappa,kappa_err
+main_BCG,06:58:35.3,-55:56:56.3,5.5,0.6,0.54,0.08,0.36,0.06
+main_plasma,06:58:30.2,-55:56:35.9,6.6,0.7,0.23,0.02,0.05,0.06
+sub_BCG,06:58:16.0,-55:56:35.1,2.7,0.3,0.58,0.09,0.20,0.05
+sub_plasma,06:58:21.2,-55:56:30.0,5.8,0.6,0.12,0.01,0.02,0.06
