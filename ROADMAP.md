@@ -23,37 +23,54 @@ Each test is tagged:
 | 2 | Rotation curves, extrapolate outer parts | SPARC | Punishes per-galaxy overfitting | Settled | S | Done |
 | 3 | Galaxy cluster masses from X-ray gas | Chandra relaxed clusters | Guard rail: MOND is known to fall short by about 2x | Settled | S | Done |
 | 4 | Milky Way rotation curve | Gaia (Eilers+ 2019 curve) | Our own galaxy, very precise | Settled | S | Done |
-| 5 | Dwarf spheroidal galaxies | Local Group velocity dispersions | Dark-matter-dominated; tests MOND's external field effect | Mostly settled | M | **Next** |
-| 6 | Wide binary stars | Gaia DR3 | Gravity at ultra-low acceleration | **Contested** | M | Planned |
-| 7 | Weak lensing around galaxies | KiDS lensing acceleration relation | Rotation-curve test extended 10x further out | Settled-ish | M | Planned |
-| 8 | Strong lensing plus dynamics of elliptical galaxies | SLACS | Mass in galaxy centers, other galaxy types | Settled | M | Planned |
-| 9 | Bullet Cluster and other merging clusters | Lensing vs X-ray maps | Guard rail: mass separated from gas | Settled | M | Planned |
-| 10 | Galaxies apparently lacking dark matter | NGC 1052-DF2/DF4 | Hard case for both camps | **Contested** | S | Planned |
+| 5 | Dwarf spheroidal galaxies | Local Group velocity dispersions | Dark-matter-dominated; tests MOND's external field effect | Mostly settled | M | Done |
+| 6 | Wide binary stars | Gaia DR3 | Gravity at ultra-low acceleration | **Contested** | M | Done |
+| 7 | Weak lensing around galaxies | KiDS lensing acceleration relation | Rotation-curve test extended 10x further out | Settled-ish | M | Done |
+| 8 | Strong lensing plus dynamics of elliptical galaxies | SLACS | Mass in galaxy centers, other galaxy types | Settled | M | Done |
+| 9 | Bullet Cluster and other merging clusters | Lensing vs X-ray maps | Guard rail: mass separated from gas | Settled | M | Done |
+| 10 | Galaxies apparently lacking dark matter | NGC 1052-DF2/DF4 | Hard case for both camps | **Contested** | S | Done |
 
 ## Stage 2: gravity guard rails
 
 | # | Test | Data | Role | Status | Effort | State |
 |---|---|---|---|---|---|---|
-| 11 | Solar system | Planetary ephemerides, Cassini, lunar laser ranging | Any change to gravity must vanish here | Settled | S | Planned |
-| 12 | Binary pulsars | Hulse-Taylor, double pulsar | Strong-field gravity, gravitational radiation | Settled | S | Planned |
-| 13 | Gravitational waves | GW170817 speed, LIGO/Virgo waveform tests | Killed many modified-gravity theories | Settled | S | Planned |
-| 14 | Laboratory gravity | Torsion balances, equivalence principle | Short-range and composition tests | Settled | S | Planned |
+| 11 | Solar system | Planetary ephemerides, Cassini, lunar laser ranging | Any change to gravity must vanish here | Settled | S | Done |
+| 12 | Binary pulsars | Hulse-Taylor, double pulsar | Strong-field gravity, gravitational radiation | Settled | S | Done |
+| 13 | Gravitational waves | GW170817 speed, LIGO/Virgo waveform tests | Killed many modified-gravity theories | Settled | S | Done |
+| 14 | Laboratory gravity | Torsion balances, equivalence principle | Short-range and composition tests | Settled | S | Done |
 | 26 | Black holes | EHT shadows of M87* and Sgr A*; star S2 around Sgr A* (GRAVITY); merger ringdown | Strongest-field tests of gravity | Settled | S | Planned |
 | 27 | Clocks and time dilation | Gravity Probe A, optical clocks at different heights | Gravitational redshift of time | Settled | S | Planned |
 
-## Stage 3: cosmology (needs a physics code per theory)
+## Stage 3: cosmology (tables of numbers; predictions from ubench/cosmology.py)
 
 | # | Test | Data | Role | Status | Effort | State |
 |---|---|---|---|---|---|---|
-| 15 | Cosmic microwave background | Planck, ACT, SPT | Strongest evidence for non-baryonic matter | Settled | L | Planned |
-| 16 | Big Bang nucleosynthesis | Primordial He, D, Li | Independent count of ordinary matter; lithium anomaly | Settled + contested Li | S | Planned |
-| 17 | Baryon acoustic oscillations | DESI | Expansion history; hints of evolving dark energy | Partly contested | M | Planned |
-| 18 | Supernova distances | Pantheon+, DES-SN | Expansion history, dark energy | Settled | M | Planned |
-| 19 | Local expansion rate | SH0ES, TRGB | Hubble tension | **Contested** | S | Planned |
-| 20 | Weak lensing clumpiness (S8) | DES, KiDS | Growth of structure; mild tension | **Contested** | L | Planned |
-| 21 | Galaxy cluster counts | SPT, eROSITA | Growth of structure | Settled-ish | L | Planned |
-| 22 | Lyman-alpha forest | Quasar spectra | Small-scale structure; warm/fuzzy dark matter | Settled-ish | L | Planned |
-| 23 | Early massive galaxies | JWST | Possible tension, messy astrophysics | **Contested** | L | Planned |
+| 15 | Cosmic microwave background | Planck, ACT, SPT | Strongest evidence for non-baryonic matter | Settled | L | Done |
+| 16 | Big Bang nucleosynthesis | Primordial He, D, Li | Independent count of ordinary matter; lithium anomaly | Settled + contested Li | S | Done |
+| 17 | Baryon acoustic oscillations | DESI | Expansion history; hints of evolving dark energy | Partly contested | M | Done |
+| 18 | Supernova distances | Pantheon+, DES-SN | Expansion history, dark energy | Settled | M | Done |
+| 19 | Local expansion rate | SH0ES, TRGB | Hubble tension | **Contested** | S | Done |
+| 20 | Weak lensing clumpiness (S8) | DES, KiDS | Growth of structure; mild tension | **Contested** | L | Done |
+| 21 | Galaxy cluster counts | SPT, eROSITA | Growth of structure | Settled-ish | L | Done |
+| 22 | Lyman-alpha forest | Quasar spectra | Small-scale structure; warm/fuzzy dark matter | Settled-ish | L | Done |
+| 23 | Early massive galaxies | JWST | Possible tension, messy astrophysics | **Contested** | L | **In progress** |
+
+## Stage 3b: extended cosmology (queued from the list of unsolved problems in physics)
+
+| # | Test | Data | Role | Status | Effort | State |
+|---|---|---|---|---|---|---|
+| 28 | Inflation signatures | Primordial gravitational waves r < 0.036 (BICEP/Keck), non-Gaussianity f_NL and running of n_s (Planck) | Tests the earliest moments; constrains alternatives to inflation | Settled | S | Queued |
+| 29 | Neutrino masses and extra species | Sum of masses from DESI + CMB vs oscillation minimum (~0.06 eV); KATRIN direct limit; N_eff from CMB and BBN | Cosmology vs particle physics; sterile neutrinos | Partly contested | S | Queued |
+| 30 | Curvature and topology | Existing CMB/BAO/supernova distances with curvature allowed in the engine; Planck limits on a finite (multiply connected) universe | Shape of the universe | Settled | M | Queued |
+| 31 | Growth rate of structure | f sigma8 from redshift-space distortions (BOSS/eBOSS, DESI); models may vary dark energy w0, wa | Gravity on cosmic scales; dynamical dark energy | Settled | M | Queued |
+| 32 | Cosmological principle | Quasar and radio-galaxy number-count dipole vs CMB kinematic dipole; large-scale homogeneity scale | Is the universe isotropic and homogeneous? | **Contested** | S | Queued |
+| 33 | Dark flow | Bulk flows from the kinetic Sunyaev-Zel'dovich effect (Planck) and peculiar-velocity surveys | Large-scale motions beyond LCDM expectations | **Contested** | S | Queued |
+| 34 | Gravitational-wave standard sirens | GW170817 distance vs electromagnetic distance (leakage into extra dimensions; GW friction); siren H0 | Extra dimensions; gravity propagation over cosmic distances | Settled | S | Queued |
+| 35 | Early supermassive black holes | Billion-solar-mass quasars at z > 7; JWST broad-line AGN at z > 5 | How fast cosmic structure grew | **Contested** | M | Queued |
+| 36 | Cosmic antimatter | Absence of antimatter domains (gamma-ray background), AMS-02 antinuclei limits | Guard rail for exotic early-universe models | Settled | S | Queued (optional) |
+
+Not queued (outside the cosmology focus): Lorentz-invariance tests with gamma-ray bursts, the flyby and Pioneer anomalies, the neutron lifetime puzzle (noted as a BBN systematic), and particle-physics anomalies.
+Not testable with data (left out on purpose): theory of everything, values of constants, quantum gravity mechanism, black hole information paradox, holography, problem of time, the cosmological constant and coincidence *problems* (why, not what), and the size of the universe beyond the observable part.
 
 ## Stage 4: optional particle constraints
 
