@@ -1,6 +1,7 @@
 """
-Galaxy Benchmark, phase 1: can a theory of gravity / dark matter
-predict how fast stars and gas orbit in 175 real galaxies (SPARC)?
+UniverseBench: can a theory of gravity / dark matter predict how fast
+stars and gas orbit in 175 real galaxies (SPARC), and how massive galaxy
+clusters are?
 
 Data: SPARC (Lelli, McGaugh & Schombert 2016, AJ 152, 157).
 Each galaxy file gives, per radius: observed rotation speed Vobs with

@@ -1,4 +1,6 @@
-# Galaxy Benchmark
+# UniverseBench
+
+*95% of the universe is dark and unexplained. Can AI explain it?*
 
 Can a theory of gravity or dark matter predict, from visible matter alone,
 how 165 real galaxies rotate and how massive 13 galaxy clusters are, on data
@@ -49,3 +51,13 @@ jointly on the public data of all tests.
   and radius trends rather than simulated halos.
 - Only 13 clusters, so the cluster score moves noticeably between splits.
 - No solar system, lensing or cosmology tests yet.
+
+## Related work
+
+- Gravity-Bench (Koblischke et al., ICML 2025, arXiv:2501.18411): agents
+  discover gravitational physics in simulated environments, some with
+  deliberately non-standard laws. UniverseBench is the complement: real
+  data and a real open problem.
+- GAMBIT and Cobaya: global fits of physics models to many datasets, built
+  for human researchers. UniverseBench adds hidden data, an agent-facing
+  task, and one set of constants across all scales.
