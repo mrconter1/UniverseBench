@@ -11,7 +11,7 @@ fraction rises with mass and radius. Two global trend slopes model that
 known gas physics (fitted, not hand-set)."""
 import numpy as np
 
-from ..physics import (dispersion_from_mass, halo_mass_from_stars, nfw_concentration,
+from ..physics import (G, dispersion_from_mass, halo_mass_from_stars, nfw_concentration,
                        nfw_mass_enclosed, v_nfw)
 from .common import LOCAL_UPS, UPS, v_baryon_sq
 
@@ -52,3 +52,13 @@ class LCDM:
 
     def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
         return 1.0          # dark matter density is negligible inside a binary
+
+    def predict_lensing_vcirc(self, M_bar, R_kpc, gp):
+        """Baryons plus the galaxy's own NFW halo (abundance matching). The
+        data give only baryonic mass, used here as the stellar mass, which
+        overestimates halo masses for gas-rich (or hot-gas-rich) galaxies.
+        Naive: no contribution from neighbouring halos (two-halo term),
+        which matters beyond ~300 kpc."""
+        R = np.asarray(R_kpc)
+        m200, c = self.halo(M_bar)
+        return np.sqrt(G * (M_bar + nfw_mass_enclosed(R, m200, c)) / R)

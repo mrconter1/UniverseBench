@@ -60,13 +60,25 @@ _MH_GRID = np.logspace(7, 15, 4000)
 _MS_GRID = moster_mstar(_MH_GRID)
 
 
+MSTAR_SCATTER_DEX = 0.15           # scatter of log M* at fixed halo mass (Moster+ 2013)
+
+
 def halo_mass_from_stars(mstar):
-    """Invert Moster+2013 on its low-mass (monotonic) branch. Below the
-    calibrated range (~1e8 Msun of stars) this is an extrapolation."""
-    mstar = max(float(mstar), 1e2)
-    i = np.searchsorted(_MS_GRID, mstar)
-    i = min(max(i, 1), len(_MH_GRID) - 1)
-    return float(_MH_GRID[i])
+    """Typical (log-mean) halo mass hosting a central galaxy of stellar mass
+    mstar. Naively inverting the mean M*(Mh) relation is biased high where
+    that relation is flat (massive galaxies), because small halos vastly
+    outnumber big ones. So we average over halo mass with weight
+    halo abundance x P(M* | Mh), using dn/dlnMh ~ Mh^-0.9 exp(-Mh/2e14)
+    and 0.15 dex lognormal scatter. Below ~1e8 Msun of stars Moster+2013
+    is an extrapolation."""
+    lm = np.log10(max(float(mstar), 1e2))
+    lmh = np.log10(_MH_GRID)
+    prior = _MH_GRID ** -0.9 * np.exp(-_MH_GRID / 2e14)
+    like = np.exp(-0.5 * ((np.log10(_MS_GRID) - lm) / MSTAR_SCATTER_DEX) ** 2)
+    w = prior * like
+    if w.sum() <= 0:
+        return float(_MH_GRID[np.argmin(np.abs(np.log10(_MS_GRID) - lm))])
+    return float(10 ** (np.sum(w * lmh) / np.sum(w)))
 
 
 def nfw_concentration(m200, h=0.7):

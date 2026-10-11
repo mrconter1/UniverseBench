@@ -3,7 +3,7 @@ only. No dark matter, no modified gravity. The original 'missing mass'
 problem: expected to fail wherever dark matter is invoked."""
 import numpy as np
 
-from ..physics import dispersion_from_mass
+from ..physics import G, dispersion_from_mass
 from .common import LOCAL_UPS, UPS, v_baryon_sq
 
 
@@ -24,3 +24,6 @@ class VisibleOnly:
 
     def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
         return 1.0
+
+    def predict_lensing_vcirc(self, M_bar, R_kpc, gp):
+        return np.sqrt(G * M_bar / np.asarray(R_kpc))    # all baryons well inside 50 kpc

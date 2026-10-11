@@ -1,0 +1,14 @@
+# Weak-lensing circular velocities of isolated galaxies (KiDS-1000): Mistele, McGaugh, Lelli, Schombert & Li 2024,
+# ApJL 969, L3 (arXiv:2406.09685), Table 2, lensing rows for the 'All' sample.
+# Vflat = mean circular velocity over 50 kpc < R < R_max (km/s, statistical errors). log10_Mb = baryonic mass (stars + gas
+# from scaling relations). The paper adds a 0.1 dex systematic on stellar mass-to-light.
+# Disputed in a published comment (arXiv:2407.18263) on isolation / two-halo contamination.
+R_min_kpc,R_max_kpc,log10_Mb,Vflat,Vflat_err
+50,300,10.10,137.3,11.5
+50,300,10.66,182.1,10.8
+50,300,10.96,204.7,8.2
+50,300,11.29,260.2,6.2
+50,1000,10.11,135.8,9.6
+50,1000,10.66,175.3,9.3
+50,1000,10.96,211.0,6.6
+50,1000,11.29,259.4,5.1

@@ -40,6 +40,13 @@ class MOND:
         return dispersion_from_mass(float(rar_nu(d.g_ext / a0)) * d.M_bar / 2, d.r_half)
 
 
+    def predict_lensing_vcirc(self, M_bar, R_kpc, gp):
+        """Lensing assumed to follow the MOND field (as in relativistic MOND
+        theories). Isolated galaxies: no external field."""
+        R = np.asarray(R_kpc)
+        gN = G * M_bar / R**2
+        return np.sqrt(gN * rar_nu(gN / self.a0(gp)) * R)
+
     def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
         """Boost evaluated at the total (internal + Galactic) field, which
         in the external-field-dominated regime approximates AQUAL."""
