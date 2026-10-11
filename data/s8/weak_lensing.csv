@@ -1,0 +1,8 @@
+# Weak-lensing measurements of S8 = sigma8 * sqrt(Omega_m / 0.3) (flat LCDM analyses). CONTESTED: the 'S8 tension'.
+# DES Y3 3x2pt: DES Collaboration 2022, PRD 105, 023520 (arXiv:2105.13549): 0.776 +0.017 -0.017
+# KiDS-Legacy cosmic shear: Wright et al. 2025, A&A (arXiv:2503.19441): 0.815 +0.016 -0.021 (0.73 sigma from Planck)
+# HSC Y3 cosmic shear power spectra: Dalal et al. 2023, PRD 108, 123519 (arXiv:2304.00701): 0.776 +0.032 -0.033
+source,S8,err_plus,err_minus
+DESY3_3x2pt,0.776,0.017,0.017
+KiDS_Legacy,0.815,0.016,0.021
+HSCY3_shear,0.776,0.032,0.033

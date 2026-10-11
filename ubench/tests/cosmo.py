@@ -169,3 +169,35 @@ class HubbleTension(_Cosmo):
         if c == "bad":
             return np.full(len(self.rows), 1e6)
         return np.array([(c.H0 - float(r["H0"])) / float(r["sigma"]) for r in self.rows])
+
+
+S8_ENGINE_FLOOR = 0.005    # engine sigma8 accuracy (~0.5% vs Planck's Boltzmann code)
+
+
+def _asym_z(pred, obs, err_plus, err_minus, floor=0.0):
+    err = err_plus if pred > obs else err_minus
+    return (pred - obs) / np.hypot(err, floor)
+
+
+class S8Tension(_Cosmo):
+    """20 (CONTESTED): how clumpy matter is today, S8 = sigma8 sqrt(Om/0.3),
+    from weak gravitational lensing (DES Y3, KiDS-Legacy, HSC Y3). Earlier
+    surveys found less clumping than the CMB predicts; the newest KiDS
+    result agrees with Planck. Scored, never fitted."""
+    ID, LABEL = "20_s8", "Clumpiness S8 (lensing)"
+    STATUS = "contested"
+    USED_IN_FIT = False
+    DATA_DIRS = ("s8",)
+
+    def load(self):
+        self.rows = _rows("s8", "weak_lensing.csv")
+
+    def residuals(self, model, gp, part, salt):
+        c = _cosmo(model, gp)
+        if c is None:
+            return None
+        if c == "bad":
+            return np.full(len(self.rows), 1e6)
+        s8 = c.S8(0.5)
+        return np.array([_asym_z(s8, float(r["S8"]), float(r["err_plus"]), float(r["err_minus"]),
+                                 S8_ENGINE_FLOOR) for r in self.rows])
