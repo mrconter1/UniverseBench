@@ -1,0 +1,10 @@
+# Open questions in cosmology (tests 32, 33, 35). Scored for information only.
+# 32: Secrest et al. 2021, ApJL 908, L51 (arXiv:2009.14826): CatWISE quasar number-count dipole D = 0.01554, 'over twice
+#     as large as expected' (kinematic ~0.007 from the CMB dipole), 4.9 sigma. sigma_D = (0.01554 - 0.0072) / 4.9 (ours).
+# 33: Planck Intermediate XIII 2014, A&A 561, A97 (arXiv:1303.5090): bulk flow of clusters < 254 km/s (95%), Gpc scales.
+#     Kashlinsky et al. (arXiv:0910.4958) report a large coherent 'dark flow' out to >= 800 Mpc (amplitude not in abstract).
+# 35: Wang et al. 2021, ApJL 907, L1 (arXiv:2101.03179): quasar J0313-1806 at z = 7.642 with M_BH = (1.6 +/- 0.4)e9 Msun.
+test,quantity,kind,value,err,note
+32,quasar_dipole_amplitude,gauss,0.01554,0.0017,expected kinematic value ~0.0072 in any FLRW universe
+33,bulk_flow_kms_R2000Mpc,upper,254,,95% upper limit; model gives the rms linear-theory bulk flow in a 2 Gpc sphere
+35,log10_MBH_at_z7.642,lower_reach,9.204,0.11,model must be able to grow this mass from a 100 Msun seed at z=30 (Eddington; 50 Myr e-folding)
