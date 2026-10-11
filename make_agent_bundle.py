@@ -19,8 +19,11 @@ pub, hid = B.split(gals)
 for g in pub:
     shutil.copy(os.path.join(B.HERE, "data", "all", f"{g.name}_rotmod.dat"),
                 os.path.join(out, "data", "all"))
-for f in ("models.py", "clusters.py", "AGENT_TASK.md"):
+for f in ("models.py", "clusters.py", "milkyway.py", "AGENT_TASK.md", "LEADERBOARD.md"):
     shutil.copy(os.path.join(B.HERE, f), out)
+
+# Milky Way: fully public (it is never used for fitting)
+shutil.copytree(os.path.join(B.HERE, "data", "milkyway"), os.path.join(out, "data", "milkyway"))
 
 # clusters: copy only rows for public clusters
 os.makedirs(os.path.join(out, "data", "clusters"))

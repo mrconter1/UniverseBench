@@ -1,40 +1,72 @@
 """
-Score models on the HIDDEN galaxies (run this yourself, never the agent).
+Scorecard: every model on every test, scored on hidden data.
 
     BENCH_SALT='my-private-secret' python score.py              # baselines
     BENCH_SALT='my-private-secret' python score.py my_model.py  # + a candidate
+    python score.py --splits 5 --write                          # baselines averaged
+                                                                # over 5 public splits,
+                                                                # written to LEADERBOARD.md
 
 A candidate file must define MODEL = <instance with the models.py interface>.
 """
+import argparse
 import importlib.util
 import json
-import sys
+
+import numpy as np
 
 import benchmark as B
+import clusters
+import milkyway
 import models as M
 
+ap = argparse.ArgumentParser()
+ap.add_argument("candidates", nargs="*")
+ap.add_argument("--splits", type=int, default=1,
+                help="average over N public demo splits (ignores BENCH_SALT)")
+ap.add_argument("--write", action="store_true", help="write LEADERBOARD.md")
+args = ap.parse_args()
+
 candidates = list(M.BASELINES)
-for path in sys.argv[1:]:
+for path in args.candidates:
     spec = importlib.util.spec_from_file_location("candidate", path)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     candidates.append(mod.MODEL)
 
-gals = B.load_all()
-pub, hid = B.split(gals)
-print(f"{len(gals)} galaxies: {len(pub)} public, {len(hid)} hidden\n")
-results = [B.run(m, gals) for m in candidates]
-results.sort(key=lambda r: -r["TOTAL"])
+salts = [B.SPLIT_SALT] if args.splits == 1 else [f"public-split-{i}" for i in range(args.splits)]
+gals, cl, mw = B.load_all(), clusters.load_clusters(), milkyway.MilkyWay()
 
-print("\nLEADERBOARD (hidden data, % of points within 2 sigma; ~95 = perfect)")
-for i, r in enumerate(results, 1):
-    gap = r["A_predict_public"]["within_2sigma_pct"] - r["A_predict_hidden"]["within_2sigma_pct"]
-    print(f"{i}. {r['model']:30s} TOTAL {r['TOTAL']:5.1f}   "
-          f"predict {r['A_predict_hidden']['within_2sigma_pct']:5.1f}   "
-          f"extrapolate {r['B_extrapolate_hidden']['within_2sigma_pct']:5.1f}   "
-          f"clusters {r['C_clusters_hidden']['within_2sigma_pct']:5.1f}   "
-          f"overfit gap {gap:+.1f}   knobs: {r['n_global_params']} global, "
-          f"{r['n_local_params']} per galaxy")
+rows = []
+for m in candidates:
+    runs = [B.run(m, gals, cl, mw, salt=s, verbose=False) for s in salts]
+    row = {"model": m.NAME, "knobs": f"{runs[0]['n_global_params']} global, "
+                                      f"{runs[0]['n_local_params']} per galaxy"}
+    for t in B.TESTS:
+        r = runs[0][t + "_hidden"]
+        row[t] = None if r.get("no_prediction") else \
+            float(np.mean([x[t + "_hidden"]["within_2sigma_pct"] for x in runs]))
+    row["TOTAL"] = float(np.mean([row[t] or 0.0 for t in B.TESTS]))
+    row["runs"] = runs
+    rows.append(row)
+rows.sort(key=lambda r: -r["TOTAL"])
 
+fmt = lambda v: "—" if v is None else f"{v:.0f}"
+head = ["#", "Model"] + [B.TEST_LABELS[t] for t in B.TESTS] + ["Total", "Knobs"]
+lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
+for i, r in enumerate(rows, 1):
+    cells = [str(i), r["model"]] + [fmt(r[t]) for t in B.TESTS] + \
+            [f"**{r['TOTAL']:.0f}**", r["knobs"]]
+    lines.append("| " + " | ".join(cells) + " |")
+table = "\n".join(lines)
+
+note = (f"Scores: % of hidden data points predicted within 2 sigma (a perfect theory "
+        f"scores about 95). '—' = model makes no prediction for that test (counts as 0). "
+        f"{'Averaged over ' + str(len(salts)) + ' random public/hidden splits.' if len(salts) > 1 else ''}")
+print(table + "\n\n" + note)
+
+if args.write:
+    with open("LEADERBOARD.md", "w") as f:
+        f.write("# UniverseBench leaderboard\n\n" + table + "\n\n" + note + "\n")
 with open("results.json", "w") as f:
-    json.dump(results, f, indent=1)
+    json.dump([r["runs"] for r in rows], f, indent=1, default=str)

@@ -11,13 +11,17 @@ Data: SPARC rotation curves, Lelli, McGaugh & Schombert (2016), AJ 152, 157
 github.com/villano-lab/galactic-spin-W1.
 Clusters: Vikhlinin et al. (2006), ApJ 640, 691, Tables 1 and 3 (Chandra;
 13 clusters, 23 mass measurements at r2500 and r500).
+Milky Way: Eilers et al. (2019), ApJ 871, 120, Table 1 (Gaia/APOGEE rotation
+curve, 5-25 kpc), with visible matter from McMillan (2017), MNRAS 465, 76.
 
 ## Files
 
 - `benchmark.py`: data loading, secret hidden split, the tests, scoring
 - `clusters.py`: cluster data and test C
+- `milkyway.py`: Milky Way data, its visible-matter model, and test D
 - `models.py`: baselines (Newton, MOND, cold dark matter with NFW halos)
-- `score.py`: leaderboard on hidden galaxies; pass candidate model files
+- `score.py`: scorecard of every model on every test; `--splits 5 --write`
+  regenerates LEADERBOARD.md
 - `make_agent_bundle.py`: builds `agent_bundle/` with public galaxies only
 - `AGENT_TASK.md`: instructions for an AI agent
 
@@ -36,8 +40,8 @@ inclination uncertainty. Score = % of hidden points within 2 sigma
 (perfect is about 95). Test A predicts whole curves with global
 parameters only; test B tunes per-galaxy knobs on the inner 60% and
 predicts the outer 40%. Test C predicts cluster total masses from gas plus
-stars (15% quoted error floor). Total = average. Global constants are fitted
-jointly on the public data of all tests.
+stars (15% quoted error floor). Test D predicts the Milky Way out of sample (3% systematic floor). Total =
+average. Global constants are fitted jointly on the public data of tests A-C.
 
 ## Known simplifications
 
@@ -50,6 +54,8 @@ jointly on the public data of all tests.
 - The dark matter cluster model uses an empirical baryon fraction with mass
   and radius trends rather than simulated halos.
 - Only 13 clusters, so the cluster score moves noticeably between splits.
+- The Milky Way's stellar disc masses (McMillan 2017) were fitted alongside a
+  dark matter halo, so they are not fully independent of that hypothesis.
 - No solar system, lensing or cosmology tests yet.
 
 ## Related work

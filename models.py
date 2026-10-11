@@ -20,7 +20,11 @@ A0_SI_TO_KPC = 1.0 / 3.0857e-14    # m/s^2 -> (km/s)^2/kpc
 
 def v_baryon_sq(g, ups_disk, ups_bul):
     """Newtonian speed^2 from visible matter. Signed squares: SPARC's
-    gas term can be negative in central holes (net outward pull)."""
+    gas term can be negative in central holes (net outward pull).
+    Galaxies with ups_fixed (the Milky Way) already have real stellar
+    masses, so no mass-to-light ratio is applied."""
+    if getattr(g, "ups_fixed", False):
+        ups_disk = ups_bul = 1.0
     s = lambda v: v * np.abs(v)
     return s(g.Vgas) + ups_disk * s(g.Vdisk) + ups_bul * s(g.Vbul)
 
@@ -48,7 +52,7 @@ class MOND:
     """Modified gravity (MOND), using the McGaugh 2016 radial
     acceleration relation as interpolating function. One universal
     acceleration scale a0 replaces dark matter entirely."""
-    NAME = "MOND (one universal a0)"
+    NAME = "MOND (a0 fitted to all tests)"
     GLOBAL_PARAMS = {**UPS, "a0_e10": (1.2, 0.3, 4.0)}   # a0 in 1e-10 m/s^2
     LOCAL_PARAMS = dict(LOCAL_UPS)
 
@@ -65,6 +69,20 @@ class MOND:
         a0 = gp["a0_e10"] * 1e-10 * A0_SI_TO_KPC
         gobs = gbar / (1.0 - np.exp(-np.sqrt(gbar / a0)))
         return gobs * c.r_kpc**2 / G
+
+
+class MONDFixed(MOND):
+    """MOND as its proponents use it: a0 is a measured constant of nature
+    (1.2e-10 m/s^2, McGaugh+ 2016), not tuned to this benchmark. Clusters are
+    left as they fall (MOND's known cluster deficit is not papered over)."""
+    NAME = "MOND (a0 fixed at 1.2, as published)"
+    GLOBAL_PARAMS = dict(UPS)
+
+    def predict(self, g, R, gp, lp):
+        return super().predict(g, R, {**gp, "a0_e10": 1.2}, lp)
+
+    def predict_cluster_mass(self, c, gp):
+        return super().predict_cluster_mass(c, {**gp, "a0_e10": 1.2})
 
 
 def _moster_mstar(mh):
@@ -127,12 +145,11 @@ class LCDM_NFW:
 
     def predict(self, g, R, gp, lp):
         u = gp["ups_disk"] * lp["ups_scale"]
-        Ld, Lb = g.luminosity()
-        mstar = u * Ld + 1.4 * u * Lb
+        mstar = g.stellar_mass(u)
         m200 = halo_mass_from_stars(mstar) * 10 ** lp["dlogM"]
         c = concentration(m200) * 10 ** lp["dlogc"]
         vb2 = v_baryon_sq(g, u, 1.4 * u)
         return np.sqrt(np.clip(vb2 + v_nfw(R, m200, c) ** 2, 0, None))
 
 
-BASELINES = [Newton(), MOND(), LCDM_NFW()]
+BASELINES = [Newton(), MOND(), MONDFixed(), LCDM_NFW()]

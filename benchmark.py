@@ -43,6 +43,7 @@ import numpy as np
 from scipy.optimize import minimize
 
 import clusters
+import milkyway
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FLOOR = 0.05
@@ -69,6 +70,11 @@ class Galaxy:
         dR = np.gradient(R_pc)
         ring = 2 * np.pi * R_pc * dR
         return float(np.sum(ring * self.SBdisk)), float(np.sum(ring * self.SBbul))
+
+    def stellar_mass(self, ups_disk):
+        """Stellar mass [Msun] for a disk mass-to-light ratio (bulge 1.4x)."""
+        Ld, Lb = self.luminosity()
+        return ups_disk * Ld + 1.4 * ups_disk * Lb
 
     def subset(self, mask):
         g = object.__new__(Galaxy)
@@ -195,17 +201,31 @@ def split_clusters(pts, salt=SPLIT_SALT):
 def test_clusters(model, pts, gp):
     z = clusters.residuals(model, pts, gp)
     if z is None:  # model has no cluster prediction: scores zero
-        return _summ([np.full(len(pts), np.inf)], len({c.name for c in pts}))
+        out = _summ([np.full(len(pts), np.inf)], len({c.name for c in pts}))
+        out["no_prediction"] = True
+        return out
     out = _summ([z], len({c.name for c in pts}))
     out["mean_ratio_pred_over_obs"] = round(float(np.mean(
         [model.predict_cluster_mass(c, gp) / c.M_tot for c in pts])), 3)
     return out
 
 
-TESTS = ("A_predict", "B_extrapolate", "C_clusters")
+def test_milkyway(model, mw, gp):
+    """Pure out-of-sample: never used for fitting, no per-galaxy tuning."""
+    z = milkyway.residuals(model, mw, gp)
+    return _summ([z], 1)
 
 
-def run(model, gals=None, cl=None, salt=SPLIT_SALT, verbose=True):
+TESTS = ("A_predict", "B_extrapolate", "C_clusters", "D_milkyway")
+TEST_LABELS = {
+    "A_predict": "Rotation curves: predict",
+    "B_extrapolate": "Rotation curves: extrapolate",
+    "C_clusters": "Galaxy clusters",
+    "D_milkyway": "Milky Way",
+}
+
+
+def run(model, gals=None, cl=None, mw=None, salt=SPLIT_SALT, verbose=True):
     gals = gals or load_all()
     cl = cl if cl is not None else clusters.load_clusters()
     pub, hid = split(gals, salt)
@@ -215,6 +235,7 @@ def run(model, gals=None, cl=None, salt=SPLIT_SALT, verbose=True):
         "A_predict": test_predict(model, hid, gp)[0],
         "B_extrapolate": test_extrapolate(model, hid, gp)[0],
         "C_clusters": test_clusters(model, chid, gp),
+        "D_milkyway": test_milkyway(model, mw or milkyway.MilkyWay(), gp),
     }
     total = round(float(np.mean([res[t]["within_2sigma_pct"] for t in TESTS])), 1)
     out = {

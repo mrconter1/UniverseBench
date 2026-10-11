@@ -22,8 +22,8 @@ Each test is tagged:
 | 1 | Rotation curves, predict | SPARC, 165 galaxies | Core MOND-vs-dark-matter test | Settled | S | Done |
 | 2 | Rotation curves, extrapolate outer parts | SPARC | Punishes per-galaxy overfitting | Settled | S | Done |
 | 3 | Galaxy cluster masses from X-ray gas | Chandra relaxed clusters | Guard rail: MOND is known to fall short by about 2x | Settled | S | Done |
-| 4 | Milky Way rotation curve and local dark matter density | Gaia (Eilers+ 2019 curve) | Our own galaxy, very precise | Settled | S | **Next** |
-| 5 | Dwarf spheroidal galaxies | Local Group velocity dispersions | Dark-matter-dominated; tests MOND's external field effect | Mostly settled | M | Planned |
+| 4 | Milky Way rotation curve | Gaia (Eilers+ 2019 curve) | Our own galaxy, very precise | Settled | S | Done |
+| 5 | Dwarf spheroidal galaxies | Local Group velocity dispersions | Dark-matter-dominated; tests MOND's external field effect | Mostly settled | M | **Next** |
 | 6 | Wide binary stars | Gaia DR3 | Gravity at ultra-low acceleration | **Contested** | M | Planned |
 | 7 | Weak lensing around galaxies | KiDS lensing acceleration relation | Rotation-curve test extended 10x further out | Settled-ish | M | Planned |
 | 8 | Strong lensing plus dynamics of elliptical galaxies | SLACS | Mass in galaxy centers, other galaxy types | Settled | M | Planned |
@@ -63,6 +63,11 @@ Each test is tagged:
 ## Benchmark infrastructure (alongside the tests)
 
 - Joint fitting of global parameters across all tests (enforces the one-constant rule). Done.
+- Scorecard of every model on every test, '—' for no prediction. Done.
 - Weighted total score: settled tests full weight, contested tests reduced.
+- Noise ceiling per test (what a perfect theory would score).
+- Planned baselines: warm/fuzzy/self-interacting dark matter, superfluid dark
+  matter, MOND + sterile neutrinos, evolving dark energy, early dark energy,
+  emergent gravity, relativistic MOND (AeST).
 - Per-test report of which known anomalies a model resolves.
 - Agent bundle per stage, with hidden data never leaving the scorer.
