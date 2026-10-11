@@ -4,10 +4,10 @@ problem: expected to fail wherever dark matter is invoked."""
 import numpy as np
 
 from ..physics import G, dispersion_from_mass
-from .common import ELL, LOCAL_UPS, UPS, v_baryon_sq
+from .common import GeneralRelativity, ELL, LOCAL_UPS, UPS, v_baryon_sq
 
 
-class VisibleOnly:
+class VisibleOnly(GeneralRelativity):
     NAME = "Standard gravity, visible matter only"
     GLOBAL_PARAMS = {**UPS, **ELL}
     LOCAL_PARAMS = dict(LOCAL_UPS)

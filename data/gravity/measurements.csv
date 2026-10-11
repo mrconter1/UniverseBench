@@ -1,0 +1,13 @@
+# Strong-field / precision gravity measurements. Bounds converted to Gaussians as noted. GR predicts the 'gr' column.
+# test,quantity,value,sigma,gr,source,note
+test,quantity,value,sigma,gr,source,note
+11,gamma_minus_1,2.1e-5,2.3e-5,0,Bertotti+ 2003 Nature 425 374 (Cassini Shapiro delay),
+11,beta_minus_1,-2.7e-5,3.9e-5,0,Park+ 2017 AJ 153 121 (MESSENGER ranging; arXiv abstract),
+11,nordtvedt_eta,4.4e-4,4.5e-4,0,Williams Turyshev & Boggs 2004 PRL 93 261101 (lunar laser ranging),
+11,gdot_over_g_per_yr,4e-13,9e-13,0,Williams Turyshev & Boggs 2004 PRL 93 261101 (lunar laser ranging),
+12,pbdot_ratio_B1913+16,0.9983,0.0016,1,Weisberg & Huang 2016 ApJ 829 55 (Hulse-Taylor pulsar),
+12,quadrupole_ratio_double_pulsar,1.0,6.6e-5,1,Kramer+ 2021 PRX 11 041050,GR validated at 1.3e-4 (95%) -> sigma = 1.3e-4/1.96
+13,gw_speed_minus_c_over_c,-1.15e-15,0.925e-15,0,Abbott+ 2017 ApJL 848 L13 (GW170817),interval [-3e-15 +7e-16] taken as +/-2 sigma
+13,graviton_mass_ev,0,1.47e-23,0,LVK 2021 arXiv:2112.06861 (GWTC-3),m_g <= 2.42e-23 eV (90%) -> sigma = bound/1.645
+14,eotvos_eta_Ti_Pt,-1.5e-15,2.75e-15,0,Touboul+ 2022 PRL 129 121102 (MICROSCOPE),stat 2.3 and syst 1.5 added in quadrature
+14,yukawa_alpha_at_40um,0,0.5,0,Lee+ 2020 PRL 124 101101 (Eot-Wash),|alpha|=1 excluded for lambda > 38.6 um (95%) -> |alpha| < ~1 at 40 um

@@ -4,10 +4,13 @@ acceleration scale a0 replaces dark matter entirely."""
 import numpy as np
 
 from ..physics import A0_SI_TO_KPC, G, dispersion_from_mass, rar_nu
-from .common import ELL, LOCAL_UPS, UPS, v_baryon_sq
+from .common import GeneralRelativity, ELL, LOCAL_UPS, UPS, v_baryon_sq
 
 
-class MOND:
+class MOND(GeneralRelativity):
+    """Strong-field and relativistic tests (11-14) assume a relativistic
+    MOND theory (e.g. AeST, Skordis & Zlosnik 2021) that reduces to general
+    relativity there; plain MOND makes no prediction of its own."""
     NAME = "MOND (a0 fitted to all tests)"
     GLOBAL_PARAMS = {**UPS, **ELL, "a0_e10": (1.2, 0.3, 4.0)}   # a0 in 1e-10 m/s^2
     LOCAL_PARAMS = dict(LOCAL_UPS)
