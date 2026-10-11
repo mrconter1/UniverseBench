@@ -46,10 +46,14 @@ def _nu_ratio(y):
 
 class Cosmology:
     def __init__(self, H0=67.36, ombh2=0.02237, omch2=0.1200, mnu=0.06, Neff=3.046,
-                 ns=0.9649, ln10As=3.044, w0=-1.0, wa=0.0):
+                 ns=0.9649, ln10As=3.044, w0=-1.0, wa=0.0, omk=0.0, r=0.0, f_NL=0.0,
+                 topology_Ri_over_chi_rec=float("inf")):
         self.H0, self.h = H0, H0 / 100.0
         self.ombh2, self.omch2, self.mnu, self.Neff = ombh2, omch2, mnu, Neff
         self.ns, self.ln10As, self.w0, self.wa = ns, ln10As, w0, wa
+        self.omk = omk                              # spatial curvature (Omega_K > 0: open)
+        self.r, self.f_NL = r, f_NL                 # primordial tensors, non-Gaussianity
+        self.topology_Ri_over_chi_rec = topology_Ri_over_chi_rec
         self.As = np.exp(ln10As) * 1e-10
         h2 = self.h**2
         self.og = OMEGA_GAMMA_H2 / h2
@@ -62,7 +66,7 @@ class Cosmology:
         self.om = self.ocb + self.omnuh2 / h2        # matter today (neutrinos non-relativistic)
         onu_massive_today = self.onu_rel_each * float(_nu_ratio(mnu / T_NU_EV)) if mnu > 0 \
             else self.onu_rel_each
-        self.ode = 1.0 - self.ocb - self.og - self.onu_massless - onu_massive_today
+        self.ode = 1.0 - self.ocb - self.og - self.onu_massless - onu_massive_today - omk
         self._build_distance_table()
 
     # ------------------------------------------------------------ background
@@ -75,7 +79,7 @@ class Cosmology:
         else:
             nu = self.onu_rel_each * a**-4
         de = self.ode * a ** (-3 * (1 + self.w0 + self.wa)) * np.exp(-3 * self.wa * (1 - a))
-        return np.sqrt(rad + nu + self.ocb * a**-3 + de)
+        return np.sqrt(rad + nu + self.ocb * a**-3 + self.omk * a**-2 + de)
 
     def H(self, z):
         return self.H0 * self.E(z)
@@ -87,7 +91,12 @@ class Cosmology:
         self._dc = C_KMS / self.H0 * cumulative_trapezoid(integrand, z, initial=0.0)
 
     def D_M(self, z):
-        return np.interp(z, self._z, self._dc)
+        dc = np.interp(z, self._z, self._dc)
+        if abs(self.omk) < 1e-8:
+            return dc
+        dh0 = C_KMS / self.H0
+        x = np.sqrt(abs(self.omk)) * dc / dh0
+        return dh0 / np.sqrt(abs(self.omk)) * (np.sinh(x) if self.omk > 0 else np.sin(x))
 
     def D_H(self, z):
         return C_KMS / self.H(z)
@@ -144,7 +153,7 @@ class Cosmology:
             # the 'D = a in matter domination' normalisation assumes no radiation
             om_tot = self.om
             de = lambda a: (1 - om_tot) * a ** (-3 * (1 + self.w0 + self.wa)) * np.exp(-3 * self.wa * (1 - a))
-            Eg = lambda a: np.sqrt(om_tot * a**-3 + de(a))
+            Eg = lambda a: np.sqrt(om_tot * a**-3 + self.omk * a**-2 + de(a) - self.omk)
 
             def rhs(lna, y):
                 a = np.exp(lna)
@@ -208,7 +217,21 @@ class Cosmology:
         return out if np.ndim(R_mpc) else float(out[0])
 
     def sigma8(self, z=0.0):
+        if z == 0.0:
+            if not hasattr(self, "_sigma8_0"):
+                self._sigma8_0 = self.sigma_R(8.0 / self.h, 0.0)
+            return self._sigma8_0
         return self.sigma_R(8.0 / self.h, z)
+
+    def fsigma8(self, z):
+        """Growth rate times the amplitude of fluctuations at redshift z."""
+        return float(self.growth_rate(z) * self.sigma8() * self.growth(z) / self.growth(0.0))
+
+    def age_gyr(self, z=0.0):
+        """Cosmic time at redshift z [Gyr]."""
+        f = lambda a: 1.0 / (a * self.H(1 / a - 1))
+        t = quad(f, 1e-9, 1 / (1 + z), limit=200)[0]          # Mpc s / km
+        return t * 3.0857e19 / 3.15576e16                     # -> Gyr
 
     def S8(self, alpha=0.5):
         return self.sigma8() * (self.om / 0.3) ** alpha

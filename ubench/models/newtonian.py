@@ -25,6 +25,7 @@ NEWTON_VALUES = {
     "sgrA_shadow_deviation": None, "m87_shadow_to_dynamics_mass_ratio": None,
     "s2_schwarzschild_precession_fSP": 0.0, "s2_gravitational_redshift_f": 0.0,
     "redshift_violation_alpha_galileo": -1.0, "redshift_violation_alpha_skytree": -1.0,
+    "spacetime_dimensions": None,
 }
 
 

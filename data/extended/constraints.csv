@@ -1,0 +1,13 @@
+# Extended cosmology constraints (tests 28, 29, 29b, 30, 34). kind: gauss (value +/- err), upper/lower (bound at the stated level).
+test,quantity,kind,value,err_plus,err_minus,source
+28,tensor_to_scalar_r,upper,0.036,,,BICEP/Keck 2021 PRL 127 151301 (arXiv:2110.00483): r_0.05 < 0.036 (95%)
+28,f_NL_local,gauss,-0.9,5.1,5.1,Planck 2018 IX A&A 641 A9 (arXiv:1905.05697): -0.9 +/- 5.1 (68%)
+29,N_eff,gauss,2.99,0.17,0.17,Planck 2018 VI abstract (arXiv:1807.06209): 2.99 +/- 0.17 (Planck + BAO)
+29,sum_mnu_eV,upper,1.35,,,KATRIN 2025 Science (arXiv:2406.13516): m_nu < 0.45 eV (90%); x3 for the sum of quasi-degenerate masses
+29,sum_mnu_eV,lower,0.059,,,Neutrino oscillations: minimum sum for normal ordering from the measured mass splittings (approximate)
+29b,sum_mnu_eV,upper,0.0642,,,DESI DR2 BAO + CMB (arXiv:2503.14744): < 0.0642 eV (95%) in LCDM; authors note it breaches the oscillation limit
+29b,sum_mnu_eV,upper,0.12,,,Planck 2018 VI abstract: < 0.12 eV (95%)
+30,Omega_K,gauss,0.001,0.002,0.002,Planck 2018 VI abstract (arXiv:1807.06209): 0.001 +/- 0.002 (Planck + BAO)
+30,topology_Ri_over_chi_rec,lower,0.97,,,Planck 2015 XVIII (arXiv:1502.01593): cubic-torus inscribed radius > 0.97 chi_rec
+34,H0_siren,gauss,70.0,12.0,8.0,LIGO/Virgo et al. 2017 Nature 551 85 (arXiv:1710.05835): 70.0 +12.0 -8.0 (GW170817 standard siren)
+34,spacetime_dimensions,gauss,3.98,0.07,0.09,Pardo et al. 2018 JCAP 07 048 (arXiv:1801.08160): D = 3.98 +0.07 -0.09 (Planck H0; 4.02 with SH0ES)

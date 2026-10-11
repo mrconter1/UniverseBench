@@ -23,7 +23,7 @@ class GeneralRelativity:
     (11-14): every PPN deviation is 0 and every ratio to GR is 1."""
     GR_VALUES = {"pbdot_ratio_B1913+16": 1.0, "quadrupole_ratio_double_pulsar": 1.0,
                  "m87_shadow_to_dynamics_mass_ratio": 1.0, "s2_schwarzschild_precession_fSP": 1.0,
-                 "s2_gravitational_redshift_f": 1.0}
+                 "s2_gravitational_redshift_f": 1.0, "spacetime_dimensions": 4.0}
 
     def predict_gravity(self, quantity, gp):
         return self.GR_VALUES.get(quantity, 0.0)
