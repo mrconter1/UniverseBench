@@ -3,7 +3,7 @@ radial acceleration relation as interpolating function. One universal
 acceleration scale a0 replaces dark matter entirely."""
 import numpy as np
 
-from ..physics import A0_SI_TO_KPC, G, rar_nu
+from ..physics import A0_SI_TO_KPC, G, dispersion_from_mass, rar_nu
 from .common import LOCAL_UPS, UPS, v_baryon_sq
 
 
@@ -25,6 +25,19 @@ class MOND:
         # same law, same a0: spherical baryon mass -> Newtonian g -> MOND g
         gbar = G * c.M_bar / c.r_kpc**2
         return c.M_bar * float(rar_nu(gbar / self.a0(gp)))
+
+    def predict_dwarf_dispersion(self, d, gp):
+        """Isolated deep-MOND: sigma^4 = (4/81) G M a0 (Milgrom 1994). If the
+        host's field dominates, the dwarf is quasi-Newtonian with an
+        effective G boosted by nu(g_ext/a0) (external field effect). Regime
+        test as in McGaugh & Milgrom 2013: the external field dominates when
+        it exceeds the dwarf's internal acceleration g_in = 3 sigma_iso^2 / r."""
+        a0 = self.a0(gp)
+        s_iso = (4.0 / 81.0 * G * d.M_bar * a0) ** 0.25
+        g_in = 3.0 * s_iso**2 / d.r_half
+        if d.g_ext <= g_in:
+            return s_iso
+        return dispersion_from_mass(float(rar_nu(d.g_ext / a0)) * d.M_bar / 2, d.r_half)
 
 
 class MONDFixed(MOND):

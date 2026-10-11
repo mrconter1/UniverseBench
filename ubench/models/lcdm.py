@@ -11,7 +11,8 @@ fraction rises with mass and radius. Two global trend slopes model that
 known gas physics (fitted, not hand-set)."""
 import numpy as np
 
-from ..physics import halo_mass_from_stars, nfw_concentration, v_nfw
+from ..physics import (dispersion_from_mass, halo_mass_from_stars, nfw_concentration,
+                       nfw_mass_enclosed, v_nfw)
 from .common import LOCAL_UPS, UPS, v_baryon_sq
 
 
@@ -41,3 +42,10 @@ class LCDM:
               * (c.M_bar / 1e13) ** gp["fb_mass_slope"]
               * (c.delta / 500) ** (-gp["fb_radius_slope"]))
         return c.M_bar / fb
+
+    def predict_dwarf_dispersion(self, d, gp):
+        """Stars plus an NFW halo from abundance matching (extrapolated to
+        these tiny stellar masses), no tidal stripping: the naive standard
+        expectation."""
+        m200, c = self.halo(d.M_bar)
+        return dispersion_from_mass(d.M_bar / 2 + nfw_mass_enclosed(d.r_half, m200, c), d.r_half)

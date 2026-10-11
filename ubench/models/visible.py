@@ -3,6 +3,7 @@ only. No dark matter, no modified gravity. The original 'missing mass'
 problem: expected to fail wherever dark matter is invoked."""
 import numpy as np
 
+from ..physics import dispersion_from_mass
 from .common import LOCAL_UPS, UPS, v_baryon_sq
 
 
@@ -17,3 +18,6 @@ class VisibleOnly:
 
     def predict_cluster_mass(self, c, gp):
         return c.M_bar
+
+    def predict_dwarf_dispersion(self, d, gp):
+        return dispersion_from_mass(d.M_bar / 2, d.r_half)

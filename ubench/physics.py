@@ -87,3 +87,10 @@ def nfw_mass_enclosed(r, m200, c):
 
 def v_nfw(R, m200, c):
     return np.sqrt(G * nfw_mass_enclosed(R, m200, c) / np.asarray(R))
+
+
+def dispersion_from_mass(M_half, r_half):
+    """Line-of-sight velocity dispersion of a dispersion-supported system
+    whose mass inside the 3D half-light radius is M_half (Wolf+ 2010:
+    M_half = 3 sigma^2 r_half / G). Msun, kpc -> km/s."""
+    return np.sqrt(G * M_half / (3.0 * r_half))
