@@ -3,6 +3,7 @@ its data source and the model method it requires."""
 from .clusters import ClusterMasses
 from .galaxy_lensing import GalaxyLensing
 from .dwarfs import DwarfSpheroidals
+from .ellipticals import Ellipticals
 from .milkyway import MilkyWayTest
 from .wide_binaries import WideBinaries
 from .rotation import RotationExtrapolate, RotationPredict
@@ -10,4 +11,5 @@ from .rotation import RotationExtrapolate, RotationPredict
 
 def all_tests():
     return [RotationPredict(), RotationExtrapolate(), ClusterMasses(), MilkyWayTest(),
-            DwarfSpheroidals(), WideBinaries(), GalaxyLensing()]
+            DwarfSpheroidals(), WideBinaries(), GalaxyLensing(),
+            Ellipticals()]

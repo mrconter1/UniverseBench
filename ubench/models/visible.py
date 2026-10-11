@@ -4,12 +4,12 @@ problem: expected to fail wherever dark matter is invoked."""
 import numpy as np
 
 from ..physics import G, dispersion_from_mass
-from .common import LOCAL_UPS, UPS, v_baryon_sq
+from .common import ELL, LOCAL_UPS, UPS, v_baryon_sq
 
 
 class VisibleOnly:
     NAME = "Standard gravity, visible matter only"
-    GLOBAL_PARAMS = dict(UPS)
+    GLOBAL_PARAMS = {**UPS, **ELL}
     LOCAL_PARAMS = dict(LOCAL_UPS)
 
     def predict(self, g, R, gp, lp):
@@ -27,3 +27,6 @@ class VisibleOnly:
 
     def predict_lensing_vcirc(self, M_bar, R_kpc, gp):
         return np.sqrt(G * M_bar / np.asarray(R_kpc))    # all baryons well inside 50 kpc
+
+    def predict_lens_mass(self, L, gp):
+        return gp["imf_ell"] * L.Mstar_proj_chab

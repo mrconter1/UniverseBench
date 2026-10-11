@@ -12,13 +12,13 @@ known gas physics (fitted, not hand-set)."""
 import numpy as np
 
 from ..physics import (G, dispersion_from_mass, halo_mass_from_stars, nfw_concentration,
-                       nfw_mass_enclosed, v_nfw)
-from .common import LOCAL_UPS, UPS, v_baryon_sq
+                       nfw_mass_enclosed, nfw_mass_projected, v_nfw)
+from .common import ELL, LOCAL_UPS, UPS, v_baryon_sq
 
 
 class LCDM:
     NAME = "Cold dark matter (ΛCDM)"
-    GLOBAL_PARAMS = {**UPS,
+    GLOBAL_PARAMS = {**UPS, **ELL,
                      "f_b_cluster": (0.13, 0.03, 0.3),     # at r500, 1e13 Msun of baryons
                      "fb_mass_slope": (0.1, -0.5, 0.5),
                      "fb_radius_slope": (0.1, -0.5, 0.5)}
@@ -62,3 +62,10 @@ class LCDM:
         R = np.asarray(R_kpc)
         m200, c = self.halo(M_bar)
         return np.sqrt(G * (M_bar + nfw_mass_enclosed(R, m200, c)) / R)
+
+    def predict_lens_mass(self, L, gp):
+        """Stars plus the projected mass of an NFW halo from abundance
+        matching (Chabrier stellar masses, as in Moster+ 2013). No
+        adiabatic contraction."""
+        m200, c = self.halo(L.Mstar_chab)
+        return gp["imf_ell"] * L.Mstar_proj_chab + nfw_mass_projected(L.r_Ein, m200, c)

@@ -72,13 +72,22 @@ def halo_mass_from_stars(mstar):
     and 0.15 dex lognormal scatter. Below ~1e8 Msun of stars Moster+2013
     is an extrapolation."""
     lm = np.log10(max(float(mstar), 1e2))
+    return float(10 ** np.interp(lm, _LMS_TABLE, _LMH_TABLE))
+
+
+def _mean_log_halo(lm):
     lmh = np.log10(_MH_GRID)
     prior = _MH_GRID ** -0.9 * np.exp(-_MH_GRID / 2e14)
     like = np.exp(-0.5 * ((np.log10(_MS_GRID) - lm) / MSTAR_SCATTER_DEX) ** 2)
     w = prior * like
     if w.sum() <= 0:
-        return float(_MH_GRID[np.argmin(np.abs(np.log10(_MS_GRID) - lm))])
-    return float(10 ** (np.sum(w * lmh) / np.sum(w)))
+        return float(lmh[np.argmin(np.abs(np.log10(_MS_GRID) - lm))])
+    return float(np.sum(w * lmh) / np.sum(w))
+
+
+# precomputed once: log M* -> mean log Mh
+_LMS_TABLE = np.arange(2.0, 12.6, 0.005)
+_LMH_TABLE = np.array([_mean_log_halo(x) for x in _LMS_TABLE])
 
 
 def nfw_concentration(m200, h=0.7):
@@ -106,3 +115,18 @@ def dispersion_from_mass(M_half, r_half):
     whose mass inside the 3D half-light radius is M_half (Wolf+ 2010:
     M_half = 3 sigma^2 r_half / G). Msun, kpc -> km/s."""
     return np.sqrt(G * M_half / (3.0 * r_half))
+
+
+def nfw_mass_projected(R, m200, c):
+    """Mass inside a cylinder of projected radius R [kpc] for an NFW halo
+    (Bartelmann 1996; Golse & Kneib 2002)."""
+    rs = nfw_r200(m200) / c
+    x = np.atleast_1d(np.asarray(R, dtype=float)) / rs
+    g = np.empty_like(x)
+    lo, hi, eq = x < 1 - 1e-8, x > 1 + 1e-8, np.abs(x - 1) <= 1e-8
+    g[lo] = np.log(x[lo] / 2) + 2 / np.sqrt(1 - x[lo]**2) * np.arctanh(np.sqrt((1 - x[lo]) / (1 + x[lo])))
+    g[hi] = np.log(x[hi] / 2) + 2 / np.sqrt(x[hi]**2 - 1) * np.arctan(np.sqrt((x[hi] - 1) / (1 + x[hi])))
+    g[eq] = 1 + np.log(0.5)
+    mu_c = np.log(1 + c) - c / (1 + c)
+    out = m200 / mu_c * g
+    return out if np.ndim(R) else float(out[0])

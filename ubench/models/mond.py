@@ -4,12 +4,12 @@ acceleration scale a0 replaces dark matter entirely."""
 import numpy as np
 
 from ..physics import A0_SI_TO_KPC, G, dispersion_from_mass, rar_nu
-from .common import LOCAL_UPS, UPS, v_baryon_sq
+from .common import ELL, LOCAL_UPS, UPS, v_baryon_sq
 
 
 class MOND:
     NAME = "MOND (a0 fitted to all tests)"
-    GLOBAL_PARAMS = {**UPS, "a0_e10": (1.2, 0.3, 4.0)}   # a0 in 1e-10 m/s^2
+    GLOBAL_PARAMS = {**UPS, **ELL, "a0_e10": (1.2, 0.3, 4.0)}   # a0 in 1e-10 m/s^2
     LOCAL_PARAMS = dict(LOCAL_UPS)
 
     def a0(self, gp):
@@ -47,6 +47,13 @@ class MOND:
         gN = G * M_bar / R**2
         return np.sqrt(gN * rar_nu(gN / self.a0(gp)) * R)
 
+    def predict_lens_mass(self, L, gp):
+        """Lensing follows the MOND field. Approximation: boost the projected
+        stellar mass by nu evaluated at the stars' Newtonian field at r_Ein."""
+        Ms = gp["imf_ell"] * L.Mstar_proj_chab
+        gN = G * Ms / L.r_Ein**2
+        return Ms * float(rar_nu(gN / self.a0(gp)))
+
     def predict_wide_binary_boost(self, gN_si, g_ext_si, gp):
         """Boost evaluated at the total (internal + Galactic) field, which
         in the external-field-dominated regime approximates AQUAL."""
@@ -58,7 +65,7 @@ class MONDFixed(MOND):
     """MOND as its proponents use it: a0 is a measured constant of nature
     (1.2e-10 m/s^2, McGaugh+ 2016), not tuned to this benchmark."""
     NAME = "MOND (a0 fixed at 1.2, as published)"
-    GLOBAL_PARAMS = dict(UPS)
+    GLOBAL_PARAMS = {**UPS, **ELL}
 
     def a0(self, gp):
         return 1.2e-10 * A0_SI_TO_KPC
