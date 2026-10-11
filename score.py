@@ -52,21 +52,23 @@ for m in models:
         r0 = runs[0]["tests"][t.ID]
         row[t.ID] = None if r0.get("no_prediction") else \
             float(np.mean([r["tests"][t.ID]["within_2sigma_pct"] for r in runs]))
-    vals = [row[t.ID] or 0.0 for t in tests]
+    # the score uses SETTLED tests only; contested ones go to the open-questions report
+    vals = [row[t.ID] or 0.0 for t in tests if t.STATUS == "settled"] or [0.0]
     row["LOWEST"], row["MEDIAN"], row["HIGHEST"] = min(vals), float(np.median(vals)), max(vals)
     rows.append(row)
     print(f"  scored {m.NAME} in {time.time() - t0:.0f}s", flush=True)
 rows.sort(key=lambda r: (-r["LOWEST"], -r["MEDIAN"]))
 
 fmt = lambda v: "—" if v is None else f"{v:.0f}"
-mark = lambda t: t.LABEL + (" †" if t.STATUS == "contested" else "") + \
-    (" ‡" if not t.HIDDEN_SPLIT and t.USED_IN_FIT else "")
+mark = lambda t: t.LABEL + (" ‡" if not t.HIDDEN_SPLIT and t.USED_IN_FIT else "")
+settled = [t for t in tests if t.STATUS == "settled"]
+contested = [t for t in tests if t.STATUS != "settled"]
 
 # Wide table: tests as rows, models as columns (reads better with many tests)
 head = ["#", "Test"] + [r["model"] for r in rows]
 lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
-for t in tests:
-    lines.append("| " + " | ".join([t.ID[:2], mark(t)] + [fmt(r[t.ID]) for r in rows]) + " |")
+for t in settled:
+    lines.append("| " + " | ".join([t.ID.split("_")[0], mark(t)] + [fmt(r[t.ID]) for r in rows]) + " |")
 for key in ("LOWEST", "MEDIAN", "HIGHEST"):
     cells = [f"**{r[key]:.0f}**" if key == "LOWEST" else f"{r[key]:.0f}" for r in rows]
     lines.append("| | **" + key.capitalize() + "** | " + " | ".join(cells) + " |")
@@ -74,15 +76,26 @@ lines.append("| | Knobs | " + " | ".join(r["knobs"] for r in rows) + " |")
 lines.append("| | **Rank** | " + " | ".join(str(i) for i in range(1, len(rows) + 1)) + " |")
 table = "\n".join(lines)
 
+oq = ["| # | Open question (not scored) | " + " | ".join(r["model"] for r in rows) + " |",
+      "|" + "---|" * (len(rows) + 2)]
+for t in contested:
+    oq.append("| " + " | ".join([t.ID.split("_")[0], t.LABEL] + [fmt(r[t.ID]) for r in rows]) + " |")
+open_table = "\n".join(oq)
+
 note = ("Scores: % of data points predicted within 2 sigma (a perfect theory scores "
-        "about 95). Models are ranked by their lowest test score (a theory is only as "
-        "good as its worst failure), then median. '—' = no prediction (counts as 0). "
-        "† = contested data. ‡ = too few numbers to hide: fitted and scored in-sample. "
+        "about 95). The benchmark score uses settled tests only: models are ranked by "
+        "their lowest settled-test score (a theory is only as good as its worst failure), "
+        "then median. '—' = no prediction (counts as 0). ‡ = too few numbers to hide: "
+        "fitted and scored in-sample. "
         + (f"Averaged over {len(salts)} random public/hidden splits." if len(salts) > 1 else ""))
-print("\n" + table + "\n\n" + note)
+oq_note = ("Open questions: tests whose data are disputed or contradict each other, so "
+           "even a correct theory could not pass them all. Reported, never scored, never "
+           "used to fit constants.")
+print("\n" + table + "\n\n" + note + "\n\n" + open_table + "\n\n" + oq_note)
 
 if args.write:
     with open("LEADERBOARD.md", "w") as f:
-        f.write("# UniverseBench leaderboard\n\n" + table + "\n\n" + note + "\n")
+        f.write("# UniverseBench leaderboard\n\n## Benchmark (settled tests)\n\n" + table
+                + "\n\n" + note + "\n\n## Open questions\n\n" + open_table + "\n\n" + oq_note + "\n")
 with open("results.json", "w") as f:
     json.dump([r["runs"] for r in rows], f, indent=1, default=str)

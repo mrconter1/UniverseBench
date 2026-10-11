@@ -64,9 +64,10 @@ class CMB(_Cosmo):
 class BBN(_Cosmo):
     ID, LABEL = "16_bbn", "Big Bang nucleosynthesis"
     DATA_DIRS = ("bbn",)
+    QUANTITIES = ("Yp", "D_H")
 
     def load(self):
-        self.rows = _rows("bbn", "pdg2025.csv")
+        self.rows = [r for r in _rows("bbn", "pdg2025.csv") if r["quantity"] in self.QUANTITIES]
 
     def residuals(self, model, gp, part, salt):
         if hasattr(model, "predict_bbn"):
@@ -80,6 +81,16 @@ class BBN(_Cosmo):
             y = c.bbn()
         return np.array([(y[r["quantity"]] - float(r["value"]))
                          / np.hypot(float(r["sigma"]), float(r["theory_floor"])) for r in self.rows])
+
+
+class Lithium(BBN):
+    """16b (CONTESTED): the primordial lithium-7 abundance. Standard BBN
+    predicts about 3x more than is observed in old stars (the 'lithium
+    problem'); it may be stellar astrophysics rather than cosmology."""
+    ID, LABEL = "16b_lithium", "Lithium problem"
+    STATUS = "contested"
+    USED_IN_FIT = False
+    QUANTITIES = ("Li_H",)
 
 
 class BAO(_Cosmo):
@@ -257,4 +268,45 @@ class LymanAlpha(_Cosmo):
                 p = model.dm_particle(gp) if hasattr(model, "dm_particle") else None
                 m = (p or {}).get("wdm_mass_keV", np.inf)
                 z.append(0.0 if m >= float(r["value"]) else 3.0)
+        return np.array(z)
+
+
+class JWSTEarlyGalaxies(_Cosmo):
+    """23 (CONTESTED): JWST's surprisingly massive galaxy candidates at
+    z ~ 7-10 (Labbe+ 2023). Following Boylan-Kolchin (2023), the observed
+    stellar mass density above a threshold is compared with the most a
+    model's halos could contain if a fraction eps of their baryons became
+    stars. Observed densities are reconstructed from the paper's required
+    efficiencies under its Planck cosmology; each model's required eps is
+    then computed with its own cosmology. eps <= 1 passes; eps > 1 (more
+    stars than baryons available) fails, scaled by the 1-sigma error on eps.
+    Scored, never fitted."""
+    ID, LABEL = "23_jwst_early_galaxies", "JWST early galaxies"
+    STATUS = "contested"
+    USED_IN_FIT = False
+    DATA_DIRS = ("jwst",)
+
+    def load(self):
+        from ..cosmology import boylan_kolchin_cosmology, max_stellar_density
+        self.rows = _rows("jwst", "early_massive_galaxies.csv")
+        ref = boylan_kolchin_cosmology()
+        for r in self.rows:
+            r["Mstar"] = 10 ** float(r["log_Mstar_min"])
+            r["rho_obs"] = max_stellar_density(ref, r["Mstar"], float(r["z"]), float(r["eps_req"]))
+
+    def residuals(self, model, gp, part, salt):
+        from ..cosmology import required_efficiency
+        c = _cosmo(model, gp)
+        if c is None:
+            return None
+        if c == "bad":
+            return np.full(len(self.rows), 1e6)
+        z = []
+        for r in self.rows:
+            if c.omch2 <= 0:
+                z.append(1e3)          # no dark matter halos to host these galaxies
+                continue
+            eps = required_efficiency(c, r["Mstar"], float(r["z"]), r["rho_obs"])
+            sig = float(r["eps_req"]) - float(r["eps_lo"])
+            z.append(max(0.0, (eps - 1.0) / sig))
         return np.array(z)

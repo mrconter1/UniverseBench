@@ -173,7 +173,9 @@ class Cosmology:
         theta = T_CMB / 2.7
         s = 44.5 * np.log(9.83 / om0h2) / np.sqrt(1 + 10 * self.ombh2**0.75)
         alpha = 1 - 0.328 * np.log(431 * om0h2) * fb + 0.38 * np.log(22.3 * om0h2) * fb**2
-        gamma_eff = om0h2 / self.h * (alpha + (1 - alpha) / (1 + (0.43 * k * s) ** 4))
+        # (the fit was built for universes with dark matter; for baryon-only
+        # universes alpha can go negative, so Gamma_eff is kept positive)
+        gamma_eff = np.maximum(om0h2 / self.h * (alpha + (1 - alpha) / (1 + (0.43 * k * s) ** 4)), 1e-4)
         q = k / self.h * theta**2 / gamma_eff            # EH98 Eq. 28
         L0 = np.log(2 * np.e + 1.8 * q)
         C0 = 14.2 + 731 / (1 + 62.5 * q)
@@ -264,3 +266,44 @@ def lya_compressed(c, z=3.0, k_skm=0.009):
     lp = np.log(c.P_linear(np.array([k * (1 - eps), k * (1 + eps)]), z))
     n_eff = (lp[1] - lp[0]) / (np.log(1 + eps) - np.log(1 - eps))
     return d2, float(n_eff)
+
+
+def rho_m_above(c, M_halo, z):
+    """Comoving mass density in halos above M_halo [Msun / Mpc^3] at z,
+    from the Sheth-Tormen mass function."""
+    lnM = np.linspace(np.log(M_halo), np.log(1e16), 120)
+    M = np.exp(lnM)
+    return float(np.trapezoid(M * c.halo_mass_function(M, z), lnM))
+
+
+def max_stellar_density(c, Mstar, z, eps):
+    """Boylan-Kolchin (2023): cumulative stellar mass density above Mstar if
+    a fraction eps of each halo's cosmic baryon share became stars."""
+    fb = c.ombh2 / (c.ombh2 + c.omch2)
+    return eps * fb * rho_m_above(c, Mstar / (eps * fb), z)
+
+
+def required_efficiency(c, Mstar, z, rho_obs):
+    """Smallest eps for which max_stellar_density reaches rho_obs (> 1 means
+    impossible even turning every baryon into stars). Bisection in log eps."""
+    lo, hi = -4.0, np.log(50.0)
+    if max_stellar_density(c, Mstar, z, np.exp(hi)) < rho_obs:
+        return np.exp(hi)
+    for _ in range(40):
+        mid = 0.5 * (lo + hi)
+        if max_stellar_density(c, Mstar, z, np.exp(mid)) >= rho_obs:
+            hi = mid
+        else:
+            lo = mid
+    return float(np.exp(hi))
+
+
+def boylan_kolchin_cosmology():
+    """Planck 2018 cosmology used by Boylan-Kolchin 2023, with A_s tuned so
+    that this engine reproduces their sigma8 = 0.8120."""
+    h = 0.6732
+    ombh2 = 0.02238
+    omch2 = 0.3158 * h**2 - ombh2 - 0.06 / NU_MASS_CONV
+    c = Cosmology(H0=67.32, ombh2=ombh2, omch2=omch2, ns=0.96605)
+    ln10As = c.ln10As + 2 * np.log(0.8120 / c.sigma8())
+    return Cosmology(H0=67.32, ombh2=ombh2, omch2=omch2, ns=0.96605, ln10As=ln10As)

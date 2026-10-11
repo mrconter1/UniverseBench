@@ -1,0 +1,10 @@
+# Massive galaxy candidates at z ~ 7-10 from JWST (Labbe et al. 2023, Nature 616, 266), as analysed by
+# Boylan-Kolchin 2023, Nature Astronomy 7, 731 (arXiv:2208.01611). CONTESTED: later spectroscopy revised many masses
+# downward and attributes some light to active black holes.
+# eps_req: star-formation efficiency (fraction of a halo's baryons turned into stars) needed to explain the observed
+# cumulative stellar mass density above Mstar_min, under Planck 2018 LCDM with the Sheth-Tormen mass function
+# (H0 = 67.32, Om = 0.3158, ns = 0.96605, sigma8 = 0.8120, fb = 0.156). eps_lo: 1-sigma lower end at z ~ 9 ('marginally
+# consistent for eps >= 0.57'); the paper gives no error at z ~ 7.5, so the same fractional error is assumed (our choice).
+z,log_Mstar_min,eps_req,eps_lo
+9.1,10.5,0.99,0.57
+7.5,11.0,0.84,0.486
