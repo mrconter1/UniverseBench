@@ -1,0 +1,6 @@
+# Local (distance-ladder) measurements of the Hubble constant, km/s/Mpc. CONTESTED: the 'Hubble tension'.
+# SH0ES: Riess et al. 2022, ApJL 934, L7 (arXiv:2112.04510): 73.04 +/- 1.04 (Cepheids); 5 sigma from Planck + LCDM.
+# CCHP:  Freedman et al. 2025, ApJ (arXiv:2408.06153): 70.39 +/- 1.22 (stat) +/- 1.33 (sys) (TRGB, JWST); combined in quadrature.
+source,H0,sigma
+SH0ES2022,73.04,1.04
+CCHP2024,70.39,1.80

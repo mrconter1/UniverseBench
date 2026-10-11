@@ -2,7 +2,7 @@
 its data source and the model method it requires."""
 from .bullet_cluster import BulletCluster
 from .clusters import ClusterMasses
-from .cosmo import BAO, BBN, CMB, Supernovae
+from .cosmo import BAO, BBN, CMB, HubbleTension, Supernovae
 from .galaxy_lensing import GalaxyLensing
 from .gravity import BinaryPulsars, GravitationalWaves, LabGravity, SolarSystem
 from .dm_deficient import DMDeficientGalaxies
@@ -18,4 +18,4 @@ def all_tests():
             DwarfSpheroidals(), WideBinaries(), GalaxyLensing(),
             Ellipticals(), BulletCluster(), DMDeficientGalaxies(),
             SolarSystem(), BinaryPulsars(), GravitationalWaves(), LabGravity(),
-            CMB(), BBN(), BAO(), Supernovae()]
+            CMB(), BBN(), BAO(), Supernovae(), HubbleTension()]

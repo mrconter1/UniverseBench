@@ -147,3 +147,25 @@ class Supernovae(_Cosmo):
         ref = ~hid if part != "all" else np.ones_like(hid)
         M = np.sum(w[ref] * (self.m - mu)[ref]) / np.sum(w[ref])
         return ((mu + M - self.m) / self.err)[sel]
+
+
+class HubbleTension(_Cosmo):
+    """19 (CONTESTED): the local expansion rate from the distance ladder
+    (SH0ES, Cepheids: 73.0; CCHP, tip of the red giant branch with JWST:
+    70.4) versus the value a model infers from everything else. Scored but
+    never used to fit constants, so the early universe decides H0."""
+    ID, LABEL = "19_hubble_tension", "Hubble constant (local)"
+    STATUS = "contested"
+    USED_IN_FIT = False
+    DATA_DIRS = ("hubble",)
+
+    def load(self):
+        self.rows = _rows("hubble", "local_h0.csv")
+
+    def residuals(self, model, gp, part, salt):
+        c = _cosmo(model, gp)
+        if c is None:
+            return None
+        if c == "bad":
+            return np.full(len(self.rows), 1e6)
+        return np.array([(c.H0 - float(r["H0"])) / float(r["sigma"]) for r in self.rows])
