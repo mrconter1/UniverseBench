@@ -38,6 +38,8 @@ Each test is tagged:
 | 12 | Binary pulsars | Hulse-Taylor, double pulsar | Strong-field gravity, gravitational radiation | Settled | S | Planned |
 | 13 | Gravitational waves | GW170817 speed, LIGO/Virgo waveform tests | Killed many modified-gravity theories | Settled | S | Planned |
 | 14 | Laboratory gravity | Torsion balances, equivalence principle | Short-range and composition tests | Settled | S | Planned |
+| 26 | Black holes | EHT shadows of M87* and Sgr A*; star S2 around Sgr A* (GRAVITY); merger ringdown | Strongest-field tests of gravity | Settled | S | Planned |
+| 27 | Clocks and time dilation | Gravity Probe A, optical clocks at different heights | Gravitational redshift of time | Settled | S | Planned |
 
 ## Stage 3: cosmology (needs a physics code per theory)
 
