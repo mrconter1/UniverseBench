@@ -77,3 +77,9 @@ class LCDM(GeneralRelativity, CosmologyMixin):
         M_bar = s.M_gas + s.M_star
         dm = M_bar * (1 / self.cluster_baryon_fraction(M_bar, gp) - 1)
         return s.M_gas / (s.M_gas + s.M_star + dm)
+
+    def dm_particle(self, gp):
+        """Generic cold dark matter: effectively infinite thermal-relic mass,
+        no specified couplings (so no predicted direct-detection signal)."""
+        return {"type": "cold", "wdm_mass_keV": float("inf"), "sigma_SI_cm2": 0.0,
+                "sigma_v_cm3s": 0.0, "mass_GeV": None}

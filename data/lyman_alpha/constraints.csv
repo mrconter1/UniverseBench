@@ -1,0 +1,9 @@
+# Lyman-alpha forest constraints on small-scale structure. Partly CONTESTED (authors report tension with Planck).
+# Fernandez, Bird & Ho 2024, JCAP (arXiv:2309.03943), PRIYA simulations + eBOSS DR14 1D flux power, at z = 3, k = 0.009 s/km:
+#   Delta2_L = 0.302 +0.024 -0.027 ; n_eff = -2.264 +0.026 -0.018
+# Villasenor et al. 2023, PRD 108, 023502 (arXiv:2309.04533): thermal-relic warm dark matter mass > 5.7 keV (95% C.L.)
+# engine_floor: accuracy of the Eisenstein-Hu power spectrum at this scale (~3.5% in amplitude).
+quantity,value,err_plus,err_minus,engine_floor
+Delta2_L,0.302,0.024,0.027,0.012
+n_eff,-2.264,0.026,0.018,0.01
+wdm_mass_keV_min,5.7,,,

@@ -223,3 +223,38 @@ class ClusterCounts(_Cosmo):
         floor = {"S8": S8_ENGINE_FLOOR, "Omega_m": 0.0}
         return np.array([_asym_z(pred[r["quantity"]], float(r["value"]), float(r["err_plus"]),
                                  float(r["err_minus"]), floor[r["quantity"]]) for r in self.rows])
+
+
+class LymanAlpha(_Cosmo):
+    """22 (CONTESTED): small-scale matter clumping at redshift 3 from the
+    Lyman-alpha forest in quasar spectra (PRIYA / eBOSS: amplitude and slope
+    of the linear power at k = 0.009 s/km), plus the warm dark matter mass
+    limit (> 5.7 keV, 95%), checked against model.dm_particle(gp) when the
+    model declares a dark matter particle. Scored, never fitted."""
+    ID, LABEL = "22_lyman_alpha", "Lyman-alpha forest"
+    STATUS = "contested"
+    USED_IN_FIT = False
+    DATA_DIRS = ("lyman_alpha",)
+
+    def load(self):
+        self.rows = _rows("lyman_alpha", "constraints.csv")
+
+    def residuals(self, model, gp, part, salt):
+        from ..cosmology import lya_compressed
+        c = _cosmo(model, gp)
+        if c is None:
+            return None
+        if c == "bad":
+            return np.full(len(self.rows), 1e6)
+        d2, neff = lya_compressed(c)
+        pred = {"Delta2_L": d2, "n_eff": neff}
+        z = []
+        for r in self.rows:
+            if r["quantity"] in pred:
+                z.append(_asym_z(pred[r["quantity"]], float(r["value"]), float(r["err_plus"]),
+                                 float(r["err_minus"]), float(r["engine_floor"])))
+            else:   # warm dark matter bound: pass (z = 0) unless the particle is too light
+                p = model.dm_particle(gp) if hasattr(model, "dm_particle") else None
+                m = (p or {}).get("wdm_mass_keV", np.inf)
+                z.append(0.0 if m >= float(r["value"]) else 3.0)
+        return np.array(z)

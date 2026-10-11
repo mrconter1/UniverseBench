@@ -252,3 +252,15 @@ def validate():
             "theta100": 100 * c.theta_star(), "R": p["R"], "sigma8": c.sigma8(), "Omega_m": c.om}
     return {k: (round(float(ours[k]), 5), PLANCK_2018[k],
                 f"{100 * (float(ours[k]) / PLANCK_2018[k] - 1):+.3f}%") for k in ours}
+
+
+def lya_compressed(c, z=3.0, k_skm=0.009):
+    """Linear power amplitude Delta^2_L and logarithmic slope n_eff at the
+    Lyman-alpha pivot (k = 0.009 s/km, z = 3), as used by McDonald+ 2005 and
+    the PRIYA analysis. Converts k from s/km to 1/Mpc with H(z)/(1+z)."""
+    k = k_skm * float(c.H(z)) / (1 + z)
+    d2 = float(c.delta2_linear(k, z))
+    eps = 0.01
+    lp = np.log(c.P_linear(np.array([k * (1 - eps), k * (1 + eps)]), z))
+    n_eff = (lp[1] - lp[0]) / (np.log(1 + eps) - np.log(1 - eps))
+    return d2, float(n_eff)
