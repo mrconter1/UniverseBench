@@ -1,0 +1,9 @@
+# Ultra-diffuse galaxies apparently lacking dark matter, in the NGC 1052 group. CONTESTED (distance and kinematics disputed;
+# Trujillo+ 2019 argue for D ~ 13 Mpc; TRGB distances 22.1 +/- 1.2 Mpc for DF2 (Shen+ 2021) and ~20 Mpc for DF4).
+# DF2: Danieli et al. 2019, ApJL 874, L12 (arXiv:1901.03711): sigma = 8.4 +/- 2.1 km/s; M*(< r_half) = 1.0e8 so total 2.0e8;
+#      r_half = 2.7 kpc. Projected distance from NGC 1052 ~80 kpc (half that of DF4, per van Dokkum+ 2019).
+# DF4: van Dokkum et al. 2019, ApJL 874, L5 (arXiv:1901.05973): sigma = 4.2 +4.4 -2.2 km/s; M* = (1.5 +/- 0.4)e8;
+#      R_e = 1.6 kpc (projected) -> 3D r_half ~ 4/3 R_e = 2.13 kpc; 165 kpc projected from NGC 1052.
+name,M_star,log_M_err,r_half_kpc,D_host_kpc,sigma,sigma_err_lo,sigma_err_hi
+NGC1052-DF2,2.0e8,0.08,2.7,80,8.4,2.1,2.1
+NGC1052-DF4,1.5e8,0.11,2.13,165,4.2,2.2,4.4
