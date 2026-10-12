@@ -93,6 +93,17 @@ class Test:
             shutil.copytree(data_path(d), os.path.join(dest_data, d), dirs_exist_ok=True)
 
     # ---- used by the framework
+    def fit_chi2(self, model, gp, salt):
+        """(sum of chi^2, number of points) on the fitting part, or None."""
+        if not self.USED_IN_FIT:
+            return None
+        part = "public" if self.HIDDEN_SPLIT else "all"
+        z = self.residuals(model, gp, part, salt)
+        if z is None or len(z) == 0:
+            return None
+        z = np.asarray(z, dtype=float)
+        return (float(np.sum(z**2)) if np.all(np.isfinite(z)) else 1e12 * len(z), len(z))
+
     def fit_term(self, model, gp, salt):
         if not self.USED_IN_FIT:
             return None
@@ -143,9 +154,35 @@ def _vec_to_dict(x, spec):
     return {k: float(np.clip(v, lo, hi)) for v, (k, (_, lo, hi)) in zip(x, spec.items())}
 
 
+# Cosmology data sets are one joint likelihood: inside this block every data
+# point weighs the same (summed chi^2), so Planck's 616 spectral points are
+# not outvoted by 13 BAO numbers when constants are inferred. The block as a
+# whole keeps the weight it would have under equal per-test weighting.
+# (Lesson from idea 8, analysis/RESULTS.md: equal per-test weighting made a
+# worse summed fit look preferred.)
+JOINT_IDS = {"15_cmb", "16_bbn", "17_bao", "18_supernovae", "21_cluster_counts", "28_inflation",
+             "29_neutrinos", "30_curvature", "31_growth_rate", "34_standard_sirens"}
+
+
+def _objective(terms):
+    """terms: list of (test ID, (chi2_sum, n) or None)."""
+    total, js, jn, jk = 0.0, 0.0, 0, 0
+    for tid, v in terms:
+        if v is None:
+            continue
+        if tid in JOINT_IDS:
+            js, jn, jk = js + v[0], jn + v[1], jk + 1
+        else:
+            total += v[0] / v[1]
+    if jn:
+        total += jk * js / jn
+    return total
+
+
 def fit_global(model, tests, salt):
     """Fit GLOBAL_PARAMS jointly on the public data of all tests. Each test
-    contributes its mean chi^2 per point, so tests weigh equally.
+    contributes its mean chi^2 per point, so tests weigh equally, except the
+    cosmology data sets (JOINT_IDS), which form one summed likelihood.
 
     Independent groups of constants (see _param_groups) are fitted
     separately, which is exact and much faster. Within a group, each test's
@@ -185,7 +222,7 @@ def fit_global(model, tests, salt):
             xx = x.copy()
             xx[idx] = sub
             gp = None
-            total = 0.0
+            terms = []
             for t in group_tests:
                 key = tuple(np.round(sub[deps[t.ID]], 12))
                 c = cache[t.ID]
@@ -194,9 +231,9 @@ def fit_global(model, tests, salt):
                         gp = _vec_to_dict(xx, spec)
                     if len(c) > 20000:
                         c.clear()
-                    c[key] = t.fit_term(model, gp, salt)
-                if c[key] is not None:
-                    total += c[key]
+                    c[key] = t.fit_chi2(model, gp, salt)
+                terms.append((t.ID, c[key]))
+            total = _objective(terms)
             if np.isfinite(total) and total < best["f"]:
                 best["f"], best["x"] = total, sub.copy()
             return total
@@ -281,12 +318,7 @@ def _polish_expensive(model, tests, expensive, salt, spec, x, touches):
         xx = x.copy()
         xx[idx] = np.clip(sub, lo_b, hi_b)
         gp = _vec_to_dict(xx, spec)
-        total = 0.0
-        for t in obj_tests:
-            term = t.fit_term(model, gp, salt)
-            if term is not None:
-                total += term
-        return total
+        return _objective([(t.ID, t.fit_chi2(model, gp, salt)) for t in obj_tests])
 
     try:
         src = open(getattr(model, "_source_file", None) or inspect.getfile(type(model))).read()
@@ -295,7 +327,7 @@ def _polish_expensive(model, tests, expensive, salt, spec, x, touches):
     salt_dep = salt if any(t.HIDDEN_SPLIT for t in obj_tests) else ""
     key = hashlib.sha256(json.dumps([model.NAME, src, {k: list(v) for k, v in spec.items()}, names,
                                      list(np.round(x, 8)), [t.ID for t in obj_tests], salt_dep,
-                                     POLISH_MAXFEV]).encode()).hexdigest()[:24]
+                                     POLISH_MAXFEV, sorted(JOINT_IDS)]).encode()).hexdigest()[:24]
     path = os.path.join(_POLISH_DIR, key + ".pkl")
     if os.path.exists(path):
         return pickle.load(open(path, "rb"))

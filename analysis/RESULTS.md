@@ -432,4 +432,131 @@ at 96.6%, and it pays for it in S8.
 across very different observables, but it distorts *parameter inference*
 when tests differ greatly in size. The cosmology constants should be fitted
 on the summed χ² of the cosmology tests (a proper joint likelihood), with
-equal weighting kept for scoring. Not yet changed.
+equal weighting kept for scoring. **Changed later the same day:** the
+cosmology data sets now form one summed χ² block in the fit
+(`ubench/core.py`, `JOINT_IDS`).
+
+## Idea 7 (user): fermionic keV dark matter with a quantum core instead of Sgr A*'s black hole (12 Oct 2026)
+
+Script: `analysis/fermion_core.py`; data: `data/sgr_a/sgra_constraints.csv`
+(GRAVITY 2018, 2020). For each fermion mass, the structure equations of
+general relativity (TOV) for a fully degenerate spin-½ Fermi gas holding Sgr
+A*'s 4.26 million solar masses. Zero temperature is the most compact case on
+the stable branch, so this is the best case for the idea.
+
+| Fermion mass | Core radius | Mass inside the flare orbit (8 r_g) | Flare period (obs. 45 ± 15 min) |
+|---|---|---|---|
+| 56 keV (proponents' favourite) | 115 AU (just inside S2's 120 AU pericentre) | 1.5 × 10⁻⁷ | 89 days (+8500σ) |
+| 300 keV (Crespi+ 2025 "high compactness") | 1.1 AU | 14% | 131 min (+5.7σ) |
+| 345 keV | 0.69 AU | 47% | 73 min (+1.8σ) |
+| 360 keV | 0.58 AU | 65% | 62 min (+1.1σ) |
+| ≥ 383 keV | — | — | core cannot exist: collapses to a black hole |
+
+**Verdict: excluded except in a narrow window (~345–383 keV) where the core
+sits at the edge of collapse.** S2 cannot tell (every core is inside its
+orbit, which is why S2-based papers find the models indistinguishable), but
+GRAVITY's flares orbiting at 6–10 gravitational radii need almost all the
+mass inside ~8 r_g. No configuration has a photon sphere (the most compact
+degenerate ball is still ~9 r_g across), so none casts a black-hole shadow;
+reproducing the EHT image would need the accretion flow to mimic one.
+Fine-tuning plus the missing shadow make this < 1%.
+
+## Idea 9 (user): cosmologically coupled black holes as dark energy (12 Oct 2026)
+
+Model: `candidates/coupled_bh.py`; data: `data/star_formation/madau_dickinson2014.csv`.
+With coupling k = 3, each generation of stellar black holes adds a constant
+physical density from its birth, so the dark-energy history follows from the
+cosmic star-formation history with no free shape (Croker+ 2024). The black
+holes' birth mass comes out of the baryons: with Madau–Dickinson, **46% of
+baryons are converted by today** (Croker+ fit ~30% with a higher early
+star-formation rate). Net effect: the dark energy grows with time, i.e.
+phantom, w = −1.03 today, −1.21 at z = 1, −1.41 at z = 2. For CLASS, the
+CPL (w0, wa) = (−1.003, −0.361) matching H(z) to 0.3%.
+
+Cosmology tests, split 0, same constants as ΛCDM (old equal-weight fit):
+
+| | ΛCDM | Coupled BHs |
+|---|---|---|
+| H0 | 67.7 | 69.7 |
+| Cluster counts | 75 | 100 |
+| χ² CMB / BAO / SN | 592.3 / 19.6 / 698.9 | 596.4 / 18.7 / 711.6 |
+| **χ² sum** | **1310.9** | **1326.6** |
+
+**Verdict: disfavoured** (Δχ² = +16 at equal constants, mostly supernovae,
+which dislike phantom dark energy), on top of gravitational-wave population
+bounds k < 1.1–2.1 at 2σ (arXiv:2307.02474) and the need for a large
+missing-baryon fraction.
+
+## Inverse design: what thermal state must dark matter have in each galaxy? (12 Oct 2026)
+
+Scripts: `analysis/inverse_design.py`, `inverse_design_laws.py`,
+`inverse_design_laws2.py`, `inverse_eos.py` (87 quality-1 SPARC galaxies).
+
+1. **No dark matter with one universal equation of state can make the
+   galaxy relation.** Scaling argument: a self-gravitating P = Kρ^γ halo
+   gives v⁴ ∝ M only for γ = 0. With data: requiring the RAR exactly, the
+   dark-matter "temperature" P/ρ each galaxy needs scatters by 0.45 dex at
+   fixed density. A local coupling to the baryonic field alone: 0.36 dex.
+2. **What the data want is a per-galaxy thermostat:** nearly isothermal
+   (0.10 dex variation within a galaxy), temperature set by the galaxy's
+   baryonic mass, σ² ∝ M_b^0.57 (MOND: 0.5), 0.073 dex between galaxies
+   (0.051 adding the local field). Caveat: the outer boundary condition
+   (isothermal tail) builds part of this in.
+3. **The thermostat alone fails.** Isothermal halos in each galaxy's own
+   baryonic potential with σ⁴ = G M_b a0/4 and simple rules for the central
+   density (constant, power law, core at the MOND radius, core ∝ disc size,
+   no core) give χ² 25,000–37,000 against MOND's 9,200 with no free
+   constants, and 0.10–0.20 dex scatter. The halo must also respond to the
+   baryons locally in its inner parts.
+
+## Is the tightness of the galaxy relation really a problem for cold dark matter? (12 Oct 2026)
+
+Course check: the leading hypothesis (cold dark matter + galaxy formation)
+had never faced the scatter test. Literature (all values idealised, no mock
+observational errors added to the simulations):
+
+| Simulation | Intrinsic RAR scatter |
+|---|---|
+| MUGS2 (Keller & Wadsley 2017) | 0.06 dex |
+| ZOMG centrals (Garaldi+ 2018) | 0.048 (satellites 0.19) |
+| NIHAO (Dutton+ 2019) | 0.079 overall; ≈ 0.04 for M* 10⁹–10¹¹, ≈ 0.11 below |
+| EAGLE/APOSTLE (Ludlow+ 2017) | 0.09, but a0 ≈ 3 × 10⁻¹⁰ (2.5× too high) |
+| MassiveBlack-II (Tenneti+ 2018) | ≈ 0.1 |
+| Semi-analytic (Paranjape & Sheth 2021) | 0.06 spirals; 0.03–0.04 at fixed halo mass and concentration |
+
+Observed intrinsic estimates: 0.06 (Dutton+ 2019, 90% range 0–0.09), 0.034 ±
+0.014 (Desmond 2023, → 0 with a 10% baryonic systematic). Ours, robustness
+(`analysis/rar_scatter_robustness.py`, same estimator, one assumption at a time):
+
+| Variation | τ (dex) |
+|---|---|
+| Baseline, quality 1 (68% bootstrap) | 0.058 (0.039–0.069) |
+| Distance errors ×0.5 / ×1.5 | 0.081 / 0.047 |
+| M/L uncertainty 0.05 / 0.15 dex | 0.068 / 0.050 |
+| +5% / +10% baryonic-velocity systematic | 0.052 / 0.025 |
+| a0 1.0 or 1.4; M/L 0.4 or 0.6 | 0.057–0.059 |
+| Quality 1 with direct distances (n = 37) | 0.070 (0.047–0.087) |
+| Quality 2 only | 0.169 |
+
+Our own halo models, same galaxies, noise-free (`analysis/sidm_scatter.py`):
+NFW halos from abundance matching give 0.068 between galaxies with no halo
+scatter and ~0.10 with 0.15 dex halo-mass + 0.11 dex concentration scatter;
+cSIDM is the same (0.10). Pooled point-by-point widths: NFW 0.11, cSIDM 0.13.
+
+**Verdict: the scatter is not (yet) a discriminator.** The observed intrinsic
+scatter is uncertain by about a factor of two (0.03–0.08 dex under
+reasonable error models), and full hydrodynamic CDM simulations land at
+0.04–0.09 because galaxy formation narrows the halos a given galaxy can live
+in. What our simple halo models lacked was that narrowing, not new physics.
+The sharper CDM problems in this literature are the **normalisation and shape**
+(EAGLE's a0 2.5× too high, MB-II preferring a power law), the absence of
+residual correlations with galaxy size in the data (Stiskalek & Desmond
+2023), and dwarfs. The decisive missing analysis is a like-for-like one:
+mock-observed simulated galaxies (SPARC-like errors and selection) through
+the same estimator.
+
+**Lensing (Brouwer+ 2021, KiDS-1000):** the relation continues MOND-like to
+g_bar ~ 10⁻¹⁵ m/s² for isolated lenses; MICE (dark-matter-only plus halo
+occupation) also reproduces it, BAHAMAS (hydro) is offset; early- and
+late-type galaxies differ at ≥ 6σ, which a single force law struggles with
+and CDM expects. Not a clean MOND-vs-CDM discriminator either.

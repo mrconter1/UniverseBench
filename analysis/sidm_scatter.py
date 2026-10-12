@@ -52,6 +52,7 @@ def run(dm_scatter, dc_scatter, seed, sidm=True):
     res = np.log10(gm) - np.log10(rar(a0))
     offs = np.array([np.median(res[gi == j]) for j in range(len(GALS)) if np.any(gi == j)])
     within = np.sqrt(np.mean([np.mean((res[gi == j] - np.median(res[gi == j])) ** 2) for j in range(len(GALS)) if np.any(gi == j)]))
+    run.pooled = float(np.std(res))      # point-by-point pooled width (what simulation papers quote)
     return np.std(offs), within, a0 * 1e6 / 3.0857e19     # (km/s)^2/kpc -> m/s^2
 
 print(f"{len(GALS)} quality-1 galaxies (inclination >= 30)")
@@ -59,7 +60,10 @@ print("observed (data): between-galaxy intrinsic scatter 0.058 dex\n")
 for lab, sidm in [("cSIDM", True), ("plain NFW (CDM)", False)]:
     s0, w0, a0 = run(0, 0, 0, sidm)
     print(f"{lab:16s} no halo scatter:        between {s0:.3f} dex, within-galaxy {w0:.3f}, a0 {a0:.2e}")
-    vals = [run(0.15, 0.11, s, sidm) for s in (1, 2, 3)]
+    vals, pooled = [], []
+    for s in (1, 2, 3):
+        vals.append(run(0.15, 0.11, s, sidm)); pooled.append(run.pooled)
+    print(f"{lab:16s} realistic halo scatter: pooled point-by-point width {np.mean(pooled):.3f} dex")
     print(f"{lab:16s} realistic halo scatter: between {np.mean([v[0] for v in vals]):.3f} dex "
           f"(realisations {', '.join(f'{v[0]:.3f}' for v in vals)}), within-galaxy {np.mean([v[1] for v in vals]):.3f}")
     vals = [run(0.0, 0.11, s, sidm) for s in (1, 2)]
