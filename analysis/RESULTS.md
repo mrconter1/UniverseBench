@@ -21,9 +21,39 @@ it. Within galaxies, which is immune to those errors, less evolved galaxies
 show **no** intrinsic scatter. The evolved ones show some, most likely from a
 fixed stellar M/L in bulge+disc systems.
 
-**Verdict: not supported, not ruled out.** Deciding test: marginalise
-per-galaxy distance and inclination uncertainties (SPARC Table 1; Li et al.
-2018 method) and repeat the between-galaxy comparison.
+First pass verdict: not supported, not ruled out; needed per-galaxy distance
+and inclination uncertainties.
+
+### A, decisive version with SPARC Table 1
+
+Script: `analysis/rar_age_v2.py`. Each galaxy's offset gets its own error
+budget from Table 1: distance (median 0.060 dex), inclination (0.028), stellar
+M/L (0.1 dex on the stellar share) and statistics. The intrinsic
+between-galaxy scatter τ is a maximum-likelihood fit. 156 galaxies with
+inclination ≥ 30°.
+
+| Split | Less evolved τ | More evolved τ | Difference (95% CI) |
+|---|---|---|---|
+| All galaxies | | | τ = 0.152 dex overall |
+| Baryonic mass | 0.210 | 0.011 | +0.19 (+0.12..+0.25) |
+| Hubble type | 0.200 | 0.068 | +0.13 (+0.05..+0.21) |
+| Surface brightness | 0.185 | 0.081 | +0.10 (+0.03..+0.18) |
+| Gas fraction | 0.171 | 0.129 | +0.05 (−0.05..+0.16) |
+| **Quality-1 galaxies only** | | | **τ = 0.058 dex overall** |
+| Q1: baryonic mass | 0.078 | 0.000 | +0.07 (0.00..+0.11) |
+| Q1: Hubble type | 0.064 | 0.043 | +0.02 (−0.05..+0.09) |
+| Q1: surface brightness | 0.065 | 0.049 | +0.02 (−0.06..+0.09) |
+| Q1: gas fraction | 0.070 | 0.031 | +0.04 (−0.03..+0.10) |
+
+Low-mass galaxies are only half quality-1 (38 of 78), against 55 of 78 for
+massive ones. The signal in the full sample is driven by kinematic data
+quality (non-circular motions, pressure support, asymmetries) that the error
+bars do not capture. Among the best data the relation is very tight (about
+0.06 dex intrinsic) and depends at most marginally on evolutionary state.
+
+**Verdict: not supported.** The tightness itself is a hard target for any
+emergent explanation: a model must produce ≤ 0.06 dex of intrinsic scatter
+for well-measured galaxies, whatever their history.
 
 ## I. Does an "age clock" make a0 rise with redshift? (12 Oct 2026)
 

@@ -17,7 +17,7 @@ and add up to 100 across the main list.
 | 7 | Gravity with memory (nonlocal gravity, Mashhoon) | 2% | Galaxy relation for free; likely killed by the CMB |
 | 8 | Something on no one's list | 12% | Historically, the answer is often not among the candidates argued about |
 
-Cross-cutting: given particle dark matter, ~40% that the galaxy relation is best
+Cross-cutting (before test A; now ~15%, see table): given particle dark matter, ~40% that the galaxy relation is best
 understood as a **relaxation attractor**, with a0 set by cosmic age. Dark
 energy: ~60% a cosmological constant, 35% an evolving field, 5% linked to
 dark matter.
@@ -31,7 +31,7 @@ D within #7, E and F within #5).
 
 | # | Assumption denied | Idea | Status | Gut | Cheap to test here? |
 |---|---|---|---|---|---|
-| A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | **Tested: not supported, not ruled out** (needs per-galaxy distance/inclination errors), see analysis/RESULTS.md | ~25% given particle DM | Partly done |
+| A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | **Tested with SPARC Table 1: not supported** (the signal was data quality; best data give 0.06 dex intrinsic scatter, nearly independent of evolution), see analysis/RESULTS.md | ~15% given particle DM | Done |
 | B | Dark matter and dark energy are unrelated | Coupled quintessence / interacting dark energy | **Tested: mildly favoured** (ξ ≈ −0.07; BAO 85→92, cluster counts 75→100, median 90→95; not significant) | 5% | Done (approximate growth) |
 | C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | **Proxy tested: lowest 0** (MOND + CDM cosmology). The full theory is untested: where does the medium go in a collision? | 1.5% | Proxy done; collision check open |
 | D | Gravity acts on the present only | Nonlocal gravity with memory | Exists (Mashhoon); Bullet Cluster lag is distinctive | 1.5% | Partly |
