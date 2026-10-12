@@ -9,13 +9,13 @@ and add up to 100 across the main list.
 | # | Explanation | Gut | Why |
 |---|---|---|---|
 | 1 | Cold dark matter; the galaxy regularity comes from galaxy formation (feedback, gas) | 30% | Simplest story that fits cosmology, clusters and dwarfs; nobody has shown it gives such a tight galaxy relation |
-| 2 | A dark sector with its own forces; self-interaction is the first symptom (cSIDM) | 25% | Matches MOND on galaxies and passes everything else with no per-galaxy freedom (submissions/solver_claude) |
+| 2 | A dark sector with its own forces; self-interaction is the first symptom (cSIDM) | 20% | Matches MOND on galaxies and passes everything else with no per-galaxy freedom (submissions/solver_claude) |
 | 3 | A different particle: ultra-light (wave) dark matter, warm, or a mixture | 10% | Untested here; wave dark matter naturally gives dense dwarf cores |
 | 4 | Hybrid: real dark matter plus a medium or force acting in some conditions (superfluid, "two horizons") | 12% | Explains why galaxies "know" about the cosmic horizon (a0 ≈ cH0); dwarfs showed no sign of the superfluid switch |
 | 5 | Modified gravity alone (MOND, relativistic MOND) | 6% | Excellent on galaxies; clusters, the Bullet Cluster, the CMB and dwarf halos count against it |
 | 6 | Emergent or horizon-based gravity (Verlinde-like) | 3% | Explains a0 ≈ cH0; behaves like MOND where it fails |
 | 7 | Gravity with memory (nonlocal gravity, Mashhoon) | 2% | Galaxy relation for free; likely killed by the CMB |
-| 8 | Something on no one's list | 12% | Historically, the answer is often not among the candidates argued about |
+| 8 | Something on no one's list | 17% | Historically, the answer is often not among the candidates argued about |
 
 Cross-cutting (before test A; now ~15%, see table): given particle dark matter, ~40% that the galaxy relation is best
 understood as a **relaxation attractor**, with a0 set by cosmic age. Dark

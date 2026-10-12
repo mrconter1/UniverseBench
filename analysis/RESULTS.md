@@ -140,3 +140,30 @@ in-sample (‡), so every split fits exactly the same data. The model also
 sides with cluster counts against weak lensing on S8, worsening a tension
 that is already a sore point for ΛCDM. Its significance (Δχ² against the
 extra constant) was not assessed, and the growth equation is approximate.
+
+## Idea 1: can collapsing SIDM be as tight as the real relation? (12 Oct 2026)
+
+Script: `analysis/sidm_scatter.py`. The frozen cSIDM model on the 93 SPARC
+quality-1 galaxies (inclination ≥ 30°), with realistic, uncorrelated halo
+diversity: 0.15 dex in halo mass at fixed baryonic mass, 0.11 dex in
+concentration. Scatter of per-galaxy offsets from one RAR fitted to the
+model:
+
+| Model | Between-galaxy scatter |
+|---|---|
+| Observed (intrinsic, after errors) | **0.058 dex** |
+| cSIDM, every galaxy gets the average halo | 0.056 |
+| cSIDM, realistic halo scatter (3 draws) | **0.102** (0.093–0.111) |
+| cSIDM, concentration scatter only | 0.096 |
+| Plain NFW, realistic halo scatter | 0.103 |
+
+**Verdict: as built, cSIDM fails the tightness test.** Self-interactions do
+not erase halo diversity here: with realistic scatter the model scatters as
+much as plain cold dark matter, nearly twice what is observed. Its
+benchmark-level agreement relied on assigning every galaxy the mean halo.
+Escape routes, to be tested rather than assumed: halo scatter smaller for disc
+galaxies than for halos in general, or scatter correlated with the baryons
+(compact discs in concentrated halos), which some galaxy-formation
+simulations report. MOND predicts the observed tightness with no extra
+assumption, and this is now the strongest single point in its favour from
+this project.
