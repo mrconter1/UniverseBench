@@ -24,13 +24,16 @@ dark matter.
 
 ## Assumption-breaking list
 
-Each row denies one assumption behind the standard picture.
+Each row denies one assumption behind the standard picture. Its percentages
+are **not additive** with the main list above (which sums to 100): most rows
+are sub-cases of a main-list entry (B lies within #2, C and O within #4,
+D within #7, E and F within #5).
 
 | # | Assumption denied | Idea | Status | Gut | Cheap to test here? |
 |---|---|---|---|---|---|
 | A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | **Tested: not supported, not ruled out** (needs per-galaxy distance/inclination errors), see analysis/RESULTS.md | ~25% given particle DM | Partly done |
 | B | Dark matter and dark energy are unrelated | Coupled quintessence / interacting dark energy | **Tested: mildly favoured** (ξ ≈ −0.07; BAO 85→92, cluster counts 75→100, median 90→95; not significant) | 5% | Done (approximate growth) |
-| C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | **Tested: lowest 0** (fails clusters and Bullet Cluster despite correct cosmology) | 1% | Done |
+| C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | **Proxy tested: lowest 0** (MOND + CDM cosmology). The full theory is untested: where does the medium go in a collision? | 1.5% | Proxy done; collision check open |
 | D | Gravity acts on the present only | Nonlocal gravity with memory | Exists (Mashhoon); Bullet Cluster lag is distinctive | 1.5% | Partly |
 | E | G is the same at all scales | Running G from quantum-gravity renormalization | Exists; **fails the Bullet Cluster by construction** (extra gravity follows present baryons) | 0.5% | Closed by C |
 | F | Inertia is fixed | Inertia set by Unruh vs horizon temperature | Exists; **same Bullet Cluster failure** | 0.5% | Closed by C |
@@ -41,6 +44,7 @@ Each row denies one assumption behind the standard picture.
 | K | Mass is positive | Negative-mass fluid (Farnes 2018) | Tested and widely criticized | <0.5% | Partly |
 | L | Spacetime is smooth | Topological defects as dark matter | Established, constrained | <0.5% | Hard |
 | M | Dark matter is particles | Primordial black holes (as a fraction) | Established, constrained | minor | Partly |
+| O | Dark matter is cold | MOND plus a hot dark component (~11 eV sterile neutrinos, Angus 2009): real mass in clusters, MOND in galaxies | Established, a known Bullet Cluster escape route | 1% | Yes (cheap) |
 | N | There is one universe | Gravity leaking from parallel branches | No worked theory found | ~0 | No |
 
 About 22 candidates in total, of which about 10 can be tested in an afternoon.

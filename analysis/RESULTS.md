@@ -43,7 +43,18 @@ scaling argued beforehand. **Verdict: the clock idea fails as an explanation
 of a rising a0.** It does give a falsifiable discriminator: a0(z=1)/a0(0) is
 1.0 for MOND, about 1.1–1.2 for cSIDM, about 1.8 for horizon-type theories
 (a0 ∝ H), and about 2.5 as measured by MUSE-DARK III. Nothing tested predicts
-2.5, so stellar-mass systematics at high redshift are the first suspect.
+2.5, so systematics in the measurement are the first suspect.
+
+**How robust is MUSE-DARK's ~2.5×?** (A&A 2026, doi:10.1051/0004-6361/202659230;
+79 galaxies, 0.33 < z < 1.44.) Their linear fit gives a0(0) = 1.0 and a slope
+of 1.59 per unit redshift (×10⁻¹⁰ m/s²), so about 2.6× at z = 1. Two
+systematics both push the inferred a0 upward. Gas masses at z ~ 1 are not
+measured directly (no HI that far), so they come from scaling relations. And
+the stellar M/L adopted is lower than locally. Both lower g_bar and so raise
+a0. The paper's intrinsic scatter (0.17 dex) is 1.5× SPARC's, and inclination
+and gas-mass systematics are not discussed. Treat 2.5× as not yet decisive.
+A direct check would refit their galaxies with gas fractions raised by the
+z ~ 1 range from molecular-gas surveys.
 
 ## C (and E, F): can a MOND-family theory be rescued? (12 Oct 2026)
 
@@ -59,13 +70,21 @@ cold-dark-matter cosmology. Five demo splits:
 | Clusters / Bullet Cluster | 11 / 0 | 11 / 0 | 96 / 100 |
 
 A correct cosmology lifts MOND from 3 to 8 passes but cannot fix clusters or
-the Bullet Cluster. General result: **any theory whose extra gravity is a
-function of where the ordinary matter is now fails the Bullet Cluster by
-construction** (the lensing mass follows the galaxies, not the gas that holds
-most of the baryons). That covers MOND, dipolar DM, running G (E),
-horizon-set inertia (F) and emergent gravity, so E and F were not built
-separately. The one exception in the family is gravity with memory (D),
-whose field follows where matter *was*.
+the Bullet Cluster.
+
+**Bullet Cluster filter (corrected wording).** A theory whose extra gravity
+is a direct function of where the ordinary matter is *now* fails the Bullet
+Cluster: the lensing mass follows the galaxies, not the gas that holds most
+of the baryons. This applies to MOND, running G (E), horizon-set inertia (F)
+and Verlinde-style emergent gravity, so E and F were not built separately.
+It is a strong filter, not a theorem for every MOND-like theory. Escape
+routes to test rather than count as casualties:
+* **dipolar dark matter (C) proper:** its polarizable medium can in
+  principle end up away from the gas after a collision. Only the MOND-plus-
+  CDM-cosmology *proxy* was tested here, not where the medium goes;
+* **MOND plus a hot dark component** (e.g. ~11 eV sterile neutrinos,
+  Angus 2009), which carries real collisionless mass in clusters;
+* **gravity with memory (D),** whose field follows where matter *was*.
 
 ## B. Dark matter interacting with dark energy (12 Oct 2026)
 
@@ -76,7 +95,7 @@ cluster physics as the ΛCDM baseline. Five demo splits:
 
 | | Interacting DE | ΛCDM |
 |---|---|---|
-| Fitted ξ | −0.072 on every split (dark matter → dark energy) | 0 |
+| Fitted ξ | −0.072 (dark matter → dark energy) | 0 |
 | BAO (DESI DR2) | **92** | 85 |
 | Cluster counts | **100** | 75 |
 | Microwave background, supernovae, growth rate | 100, 99, 100 | 100, 99, 100 |
@@ -85,7 +104,9 @@ cluster physics as the ΛCDM baseline. Five demo splits:
 | Open question Lyman-α | 33 | 67 |
 
 **Verdict: mildly favoured, not significant.** One extra constant buys one
-more BAO point inside 2σ and removes the cluster-count tension, but it sides
-with cluster counts against weak lensing on S8, and the cosmology tests are
-in-sample. Its significance (Δχ² against the extra constant) was not
-assessed; the growth equation is approximate.
+more BAO point inside 2σ and removes the cluster-count tension. Note that ξ
+being identical on every split is **not** evidence: the cosmology tests are
+in-sample (‡), so every split fits exactly the same data. The model also
+sides with cluster counts against weak lensing on S8, worsening a tension
+that is already a sore point for ΛCDM. Its significance (Δχ² against the
+extra constant) was not assessed, and the growth equation is approximate.
