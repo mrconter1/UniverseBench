@@ -13,7 +13,7 @@ this benchmark, from visible matter and a small set of universal constants.
 
 ## How you are scored
 
-* **27 scored tests** (settled data) spanning galaxies, clusters, precision
+* **28 scored tests** (settled data) spanning galaxies, clusters, precision
   gravity, black holes, the early universe and cosmic expansion. The score for
   each is the % of data points you predict within 2 sigma (a perfect theory
   scores about 95; 100% would mean you fitted the noise).
@@ -83,6 +83,7 @@ matter only, pure Newtonian gravity) and ROADMAP.md for what each test is.
 | `predict_bullet_offset(s, gp)` | 09 | lensing-peak position between galaxies (0) and gas (1), given `s.M_gas`, `s.M_star` |
 | `predict_gravity(quantity, gp)` | 11–14, 26, 27, 34 | value of a precision-gravity quantity (see `data/gravity/measurements.csv`); inherit `models.common.GeneralRelativity` for GR |
 | `cosmology(gp)` | 15–23, 28–35 | an object with the interface of `ubench.cosmology.Cosmology` (distances, sound horizon, θ*, growth, power spectrum, σ8, halo mass function, BBN yields, curvature, r, f_NL, N_eff, neutrino masses). Subclass it to change the physics |
+| `ACTION` (class attribute) | 37 | your theory's action: `{"type": "GR+minimal"}` for particle dark matter in general relativity, or `{"type": "horndeski", "G2"…"G5": SymPy strings in phi and X (8πG = 1, GR is G4 = 1/2), "backgrounds": [{z, H, dH, phi, dphi, ddphi, rho_matter, p_matter}, …]}` computed by your own cosmology. Checked for ghosts, gradient instabilities, GW speed and consistency of the backgrounds with the action's Friedmann constraint. No checkable action = no prediction. Your predictions must come from this action |
 | `class_params(gp)` | 15 | dict of CLASS input parameters (classy) for your cosmology; `CosmologyMixin` provides the standard one (CDM, massive neutrino, CPL dark energy, curvature). Override it to express other physics CLASS supports (extra or sterile neutrinos, dark radiation, interacting dark matter–radiation, …). List the constants it uses in `CLASS_DEPENDS` |
 | `predict_bbn(gp)` (optional) | 16 | dict of Yp, D_H, Li_H if you have no full cosmology |
 | `dm_particle(gp)` | 22, 24, 25 | dict (`mass_GeV`, `sigma_SI_cm2`, `sigma_v_cm3s`, `wdm_mass_keV`) or `None` for "no dark matter particle" |

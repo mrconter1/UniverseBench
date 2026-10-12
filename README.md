@@ -8,12 +8,12 @@ with **one set of constants for everything** and hidden data where datasets
 are large. It is built for AI agents: propose a theory, implement its
 predictions, and see where it holds and where it breaks.
 
-**38 tests: 27 scored, 11 open questions.**
+**39 tests: 28 scored, 11 open questions** (plus one fit aid).
 
 | Stage | Scored tests | Open questions (reported, not scored) |
 |---|---|---|
 | 1 Galaxies and clusters | 01 rotation curves (predict), 02 rotation curves (extrapolate), 03 cluster masses, 04 Milky Way, 05 dwarf galaxies, 07 lensing around galaxies, 08 lensing ellipticals, 09 Bullet Cluster | 06 wide binary stars, 10 galaxies lacking dark matter |
-| 2 Precision gravity | 11 solar system, 12 binary pulsars, 13 gravitational waves, 14 laboratory gravity, 26 black holes, 27 clocks | |
+| 2 Precision gravity | 11 solar system, 12 binary pulsars, 13 gravitational waves, 14 laboratory gravity, 26 black holes, 27 clocks, 37 healthy action | |
 | 3 Cosmology | 15 microwave background, 16 nucleosynthesis, 17 BAO (DESI DR2), 18 supernovae (Pantheon+), 21 cluster counts, 28 inflation, 29 neutrinos, 30 curvature and topology, 31 growth rate, 34 standard sirens | 16b lithium, 19 Hubble tension, 20 S8, 22 Lyman-alpha, 23 JWST early galaxies, 29b neutrino-mass squeeze, 32 cosmic dipole, 33 dark flow, 35 early supermassive black holes |
 | 4 Particle searches | 24 direct detection, 25 indirect detection, 36 cosmic antimatter | |
 
@@ -67,6 +67,7 @@ ubench/physics.py       constants, disc gravity, halos, MOND interpolation
 ubench/cosmology.py     fast cosmology engine (validated against Planck 2018 to <=0.03%)
 ubench/class_engine.py  cached wrapper around CLASS (full CMB spectra for test 15)
 ubench/cmb_lite.py      Planck 2018 plik-lite likelihood (own implementation)
+ubench/action_check.py  action health check (ghosts, instabilities, GW speed, background consistency)
 ubench/tests/           one module per test family
 ubench/models/          baseline theories
 data/<test>/            data with source notes
@@ -76,7 +77,7 @@ CANDIDATES.md           candidate theories still to test, with gut-feeling odds
 
 ## Workflow
 
-    pip install numpy scipy classy numba     # classy = CLASS Boltzmann code (test 15); numba optional, speeds up some models
+    pip install numpy scipy classy sympy numba     # classy = CLASS Boltzmann code (test 15); numba optional, speeds up some models
     export BENCH_SALT='your-private-secret'    # decides the hidden half
     python make_agent_bundle.py                # give agent_bundle/ to an agent
     # ...agent writes my_model.py, scoring itself on a practice split...

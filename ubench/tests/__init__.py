@@ -4,6 +4,7 @@ its data source and the model method it requires.
 STATUS == "settled" tests make up the scored benchmark; "contested" ones are
 open questions: reported, never scored, never used to fit constants;
 "fit_aid" tests steer fitting but are never scored or reported."""
+from .action_health import ActionHealth
 from .bullet_cluster import BulletCluster
 from .clusters import ClusterMasses
 from .cmb_spectra import CMBSpectra
@@ -31,6 +32,7 @@ def all_tests():
         DMDeficientGalaxies(),
         # Stage 2: precision gravity
         SolarSystem(), BinaryPulsars(), GravitationalWaves(), LabGravity(), BlackHoles(), Clocks(),
+        ActionHealth(),
         # Stage 3: cosmology
         CMBSpectra(), CMB(), BBN(), Lithium(), BAO(), Supernovae(), HubbleTension(), S8Tension(),
         ClusterCounts(), LymanAlpha(), JWSTEarlyGalaxies(),

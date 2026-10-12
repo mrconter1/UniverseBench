@@ -17,6 +17,7 @@ from .common import COSMO, COSMO_CDM, CosmologyMixin, ELL, GeneralRelativity, LO
 
 
 class LCDM(GeneralRelativity, CosmologyMixin):
+    ACTION = {"type": "GR+minimal"}   # GR + cold dark matter + Lambda: test 37
     NAME = "Cold dark matter (ΛCDM)"
     GLOBAL_PARAMS = {**UPS, **ELL, **COSMO, **COSMO_CDM,
                      "f_b_cluster": (0.13, 0.03, 0.3),     # at r500, 1e13 Msun of baryons

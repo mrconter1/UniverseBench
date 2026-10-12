@@ -86,6 +86,9 @@ class IDECosmology(Cosmology):
 
 class InteractingDE(LCDM):
     NAME = "Interacting dark energy (dark matter <-> dark energy)"
+    # coupled quintessence has a known action, but its dark matter-dark energy
+    # coupling is outside what test 37 can check yet (minimal coupling only)
+    ACTION = {"type": "other", "note": "coupled quintessence (non-minimal DM coupling), not yet checkable"}
     GLOBAL_PARAMS = {**LCDM.GLOBAL_PARAMS, "xi": (0.0, -0.6, 0.6)}
 
     def class_params(self, gp):

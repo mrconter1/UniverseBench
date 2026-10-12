@@ -8,6 +8,7 @@ from .common import COSMO, CosmologyMixin, ELL, GeneralRelativity, LOCAL_UPS, UP
 
 
 class VisibleOnly(GeneralRelativity, CosmologyMixin):
+    ACTION = {"type": "GR+minimal"}   # GR + ordinary matter: test 37
     """Cosmology: general relativity with baryons, radiation, neutrinos and a
     cosmological constant, but no cold dark matter (omch2 = 0)."""
     NAME = "Standard gravity, visible matter only"

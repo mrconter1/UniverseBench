@@ -30,6 +30,7 @@ NEWTON_VALUES = {
 
 
 class Newtonian(VisibleOnly):
+    ACTION = None                      # no relativistic theory: no prediction for test 37
     NAME = "Pure Newtonian gravity, visible matter only"
     GLOBAL_PARAMS = {**UPS, **ELL}
     LOCAL_PARAMS = dict(LOCAL_UPS)

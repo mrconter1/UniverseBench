@@ -1,6 +1,6 @@
 # Roadmap: every test in UniverseBench
 
-All 38 tests are implemented. **Scored** tests use settled data a correct
+All 39 tests are implemented (38 plus the action check, Oct 2026). **Scored** tests use settled data a correct
 theory could pass; **open questions** use disputed or mutually contradictory
 data and are reported but never scored or used to fit constants. One rule
 holds everywhere: a theory gets one set of global constants for all tests.
@@ -38,6 +38,7 @@ noise ceiling (what a perfect theory would score).
 | 14 | Laboratory gravity | MICROSCOPE, Eot-Wash | Equivalence principle, inverse-square law | Scored ‡ |
 | 26 | Black holes | EHT shadows of Sgr A* and M87*, star S2 (GRAVITY) | Strongest-field tests | Scored ‡ |
 | 27 | Clocks | Galileo satellites, Tokyo Skytree optical clocks | Gravitational time dilation | Scored ‡ |
+| 37 | Healthy action | The model's declared action: no ghosts or gradient instabilities, GW speed = c (GW170817), declared backgrounds obey the Friedmann constraint derived from the action | Ties a theory to a consistent field theory; stops scale-by-scale stitching | Scored ‡ (guard rail) |
 
 ## Stage 3: cosmology
 
