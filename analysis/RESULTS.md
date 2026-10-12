@@ -24,3 +24,23 @@ fixed stellar M/L in bulge+disc systems.
 **Verdict: not supported, not ruled out.** Deciding test: marginalise
 per-galaxy distance and inclination uncertainties (SPARC Table 1; Li et al.
 2018 method) and repeat the between-galaxy comparison.
+
+## I. Does an "age clock" make a0 rise with redshift? (12 Oct 2026)
+
+Script: `analysis/a0_redshift.py`. The frozen cSIDM model on all SPARC baryon
+distributions, halos placed at redshift 1 (galaxy–halo connection held
+fixed, an assumption); effective a0 fitted to the model's own accelerations.
+
+| Case | Effective a0 | Ratio to z = 0 |
+|---|---|---|
+| z = 0 reference | 0.86×10⁻¹⁰ m/s² | 1.00 |
+| Clock only (halo age 10 → 4.3 Gyr) | 0.76×10⁻¹⁰ | 0.88 |
+| Density only (r200 at ρ_crit(z), Dutton & Maccio c(z)) | 1.04×10⁻¹⁰ | 1.21 |
+| Clock + density (redshift 1) | 0.98×10⁻¹⁰ | **1.14** |
+
+The clock pushes a0 *down* (less time to scatter), the opposite of the rough
+scaling argued beforehand. **Verdict: the clock idea fails as an explanation
+of a rising a0.** It does give a falsifiable discriminator: a0(z=1)/a0(0) is
+1.0 for MOND, about 1.1–1.2 for cSIDM, about 1.8 for horizon-type theories
+(a0 ∝ H), and about 2.5 as measured by MUSE-DARK III. Nothing tested predicts
+2.5, so stellar-mass systematics at high redshift are the first suspect.

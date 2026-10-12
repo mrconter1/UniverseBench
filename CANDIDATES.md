@@ -28,7 +28,7 @@ Each row denies one assumption behind the standard picture.
 
 | # | Assumption denied | Idea | Status | Gut | Cheap to test here? |
 |---|---|---|---|---|---|
-| A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | New framing (within particle dark matter) | ~40% given particle DM | Yes: RAR scatter vs galaxy age on SPARC |
+| A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | **Tested: not supported, not ruled out** (needs per-galaxy distance/inclination errors), see analysis/RESULTS.md | ~25% given particle DM | Partly done |
 | B | Dark matter and dark energy are unrelated | Coupled quintessence (dark matter mass changes as dark energy evolves) | Established, revived by DESI | 4% | Partly (cosmology engine) |
 | C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | Established | 2% | Yes |
 | D | Gravity acts on the present only | Nonlocal gravity with memory | Exists (Mashhoon); Bullet Cluster lag is distinctive | 1.5% | Partly |
@@ -36,7 +36,7 @@ Each row denies one assumption behind the standard picture.
 | F | Inertia is fixed | Inertia set by Unruh vs horizon temperature | Exists (Smolin 2017; fringe variants) | 1% | Yes (MOND family) |
 | G | Three space dimensions at all scales | Extra dimensions, braneworld or mirror sectors | Established, mostly constrained | 1.5% | Partly |
 | H | The universe is smooth on average | Backreaction or local void (dark energy, Hubble tension) | Established, contested | 3% (dark-energy side) | Partly |
-| I | Galaxies' clocks are cosmic time | SIDM relaxation sets a0 through halo age; a0 rises with redshift | New-ish | inside A | Yes: a0(z) in the cSIDM model |
+| I | Galaxies' clocks are cosmic time | SIDM relaxation sets a0 through halo age; a0 rises with redshift | **Tested: fails** (clock lowers a0; cSIDM predicts 1.1–1.2× at z=1), see analysis/RESULTS.md | — | Done |
 | J | The cosmic horizon doesn't act locally | Transition radius = √(r_Schwarzschild × R_Hubble) | Partly in Verlinde-type work | 1% | Yes |
 | K | Mass is positive | Negative-mass fluid (Farnes 2018) | Tested and widely criticized | <0.5% | Partly |
 | L | Spacetime is smooth | Topological defects as dark matter | Established, constrained | <0.5% | Hard |
