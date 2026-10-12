@@ -52,6 +52,16 @@ The radical ones need a full CMB calculation, which the benchmark lacks: it
 uses compressed summaries that assume near-standard physics. Closing that gap
 would let them be judged fairly.
 
+## Second set (user, 12 Oct 2026)
+
+| # | Idea | Status |
+|---|---|---|
+| 6 | Dark matter heated by baryons (Famaey, Khoury & Penco 2017/2019) | queued: scatter test + direct-detection limits |
+| 7 | Fermionic (keV) dark matter with dense quantum cores replacing central black holes (Argüelles, Ruffini et al.) | queued: S2 orbit and EHT shadow tests, Lyman-α |
+| 8 | Heavier electron at recombination (Hubble tension) | **tested**: H0 → 70.6 with the CMB intact, but summed χ² worse than ΛCDM (+14); the apparent preference came from equal test weighting |
+| 9 | Cosmologically coupled black holes as dark energy | queued: background from the star-formation history |
+| 10 | One rolling field drives dark energy and DM self-interaction (user's own) | **tested**: a0 responds weakly (d ln a0/d ln σ ≈ 0.2–0.3); not a sharp test in this model |
+
 ## Test queue (cheapest and most informative first)
 
 1. **A:** does the scatter around the galaxy relation shrink for older,

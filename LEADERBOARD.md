@@ -18,9 +18,10 @@
 | 14 | Laboratory gravity ◆ ‡ | 95 (50–100) | 100 | 100 | 100 | 100 | 100 |
 | 26 | Black holes ◆ ‡ | 96 (75–100) | 100 | 100 | 100 | 100 | — |
 | 27 | Clocks and time dilation ◆ ‡ | 95 (50–100) | 100 | 100 | 100 | 100 | 0 |
-| 15 | Microwave background ‡ | 96 (67–100) | 100 | — | — | 0 | — |
+| 37 | Healthy action ◆ | 100 | 100 | — | — | 100 | — |
+| 15 | Microwave background (Planck spectra) ‡ | 96 (94–97) | 96 | — | — | 0 | — |
 | 16 | Big Bang nucleosynthesis ‡ | 95 (50–100) | 100 | 100 | 100 | 0 | — |
-| 17 | Baryon acoustic oscillations ‡ | 96 (85–100) | 85 | — | — | 8 | — |
+| 17 | Baryon acoustic oscillations ‡ | 96 (85–100) | 92 | — | — | 8 | — |
 | 18 | Supernova distances | 95 (94–97) | 99 | — | — | 98 | — |
 | 21 | Galaxy cluster counts ‡ | 96 (75–100) | 75 | — | — | 0 | — |
 | 28 | Inflation signatures ◆ ‡ | 98 | 100 | — | — | 100 | — |
@@ -33,9 +34,9 @@
 | 36 | Cosmic antimatter ◆ ‡ | 100 | 100 | 100 | 100 | 100 | 100 |
 | | **Lowest** | | **37** | **0** | **0** | **0** | **0** |
 | | **Substantive tests passed** (of 14) | | **9** | **3** | **2** | **1** | **0** |
-| | Median (excl. guard rails) | | 90 | 26 | 33 | 0 | 0 |
+| | Median (excl. guard rails) | | 93 | 26 | 33 | 0 | 0 |
 | | Highest | | 100 | 100 | 100 | 100 | 100 |
-| | Knobs | | 10 global, 3 per galaxy | 3 global, 1 per galaxy | 4 global, 1 per galaxy | 6 global, 1 per galaxy | 2 global, 1 per galaxy |
+| | Knobs | | 11 global, 3 per galaxy | 3 global, 1 per galaxy | 4 global, 1 per galaxy | 7 global, 1 per galaxy | 2 global, 1 per galaxy |
 | | **Rank** | | 1 | 2 | 3 | 4 | 5 |
 
 Scores: % of data points predicted within 2 sigma. 'Perfect theory' is the noise ceiling: the expected score of the true laws of nature given each test's error bars (with the 5th-95th percentile range for small tests). A test is passed when the score reaches the 5th percentile of that range. The benchmark uses settled tests only; models are ranked by their lowest score (a theory is only as good as its worst failure), then substantive tests passed, then median. ◆ = guard rail: a gate every viable theory must pass, counted in the lowest score but not the median. § = simplified test (09: mass-weighted peak position from aperture masses, not a fit to the lensing map; a faithful model should compute where its lensing mass sits). '—' = no prediction (counts as 0). ‡ = too few numbers to hide: fitted and scored in-sample. Averaged over 5 random public/hidden splits.

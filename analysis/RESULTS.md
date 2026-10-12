@@ -381,3 +381,55 @@ motivated the upgrade.
 Interacting dark energy (candidate B) is not expressible in vanilla CLASS; it
 now makes no prediction for test 15 until an interacting-DE CLASS fork is
 wired in (rather than silently being scored as ΛCDM).
+
+## Idea 10 (user): one light field behind evolving dark energy and DM self-interactions (12 Oct 2026)
+
+Script: `analysis/idea10_sigma_drift.py`. If the self-interaction strength
+drifts as the field rolls, does the emergent a0 drift with it? Frozen cSIDM,
+abundance-matched halo link:
+
+| σ/m × | 0.1 | 0.3 | 0.5 | 1 | 2 | 3 | 10 |
+|---|---|---|---|---|---|---|---|
+| emergent a0 (10⁻¹⁰ m/s²) | 0.94 | 0.82 | 0.80 | 0.95 | 1.18 | 1.29 | 1.33 |
+
+Near the fitted value, d ln a0 / d ln(σ/m) ≈ 0.2–0.3, and the response is not
+monotonic. A 30% drift in the interaction strength shifts a0 by ~7%, which is
+small against the halo-density effect (×1.14 by z = 1, idea I) and far below
+what current a0(z) measurements resolve. **Verdict: the predicted signal
+exists but is weak in this model; a0(z) is not a sharp test of it.** Sharper
+consequences of such a field are a long-range fifth force between dark matter
+particles (constrained by tidal streams, e.g. Sagittarius) and a DM–DE
+energy exchange (candidate B).
+
+## Idea 8: a heavier electron at recombination (Hubble tension) (12 Oct 2026)
+
+Model: `candidates/varying_me.py`. ΛCDM plus m_e(early)/m_e(today), switching
+at z = 50. Test 15 uses CLASS's varying-constants module exactly; the fast
+engine rescales z* ∝ m_e and r_d ∝ m_e^−0.617 (calibrated with CLASS,
+exponent −0.61 to −0.63 across cosmologies). Cosmology tests only, split 0.
+**No local H0 data were used in the fit** (the Hubble tension is an open
+question).
+
+| | ΛCDM | varying m_e |
+|---|---|---|
+| fitted m_e ratio | — | **1.024** |
+| H0 | 67.7 | **70.6** |
+| CMB spectra within 2σ | 96.3% | 96.6% |
+| BAO / supernovae | 92 / 99 | 92 / 99 |
+| Open question 19 (SH0ES 73.0, CCHP 70.4) | 1 of 2 | 1 of 2 (now at CCHP) |
+| S8 (open) | 67 | 0 (ω_c rises to 0.127) |
+| **χ² CMB + BAO + SN** | **1310.9** | **1325.2** (CMB 613 vs 592, BAO 10.5 vs 19.6) |
+
+**Verdict: no real preference. The benchmark's fitting rule creates one.**
+Every test counts equally in the fit (mean χ² per point), so DESI's 13 BAO
+numbers weigh as much as Planck's 616 spectral points, and the fit trades
+21 units of CMB χ² for 9 of BAO. On the summed likelihood, a heavier early
+electron is disfavoured (Δχ² = +14 with an extra constant). It remains a
+working mechanism: it does raise H0 to the CCHP value while keeping the CMB
+at 96.6%, and it pays for it in S8.
+
+**Benchmark lesson:** per-test equal weighting is right for *ranking* theories
+across very different observables, but it distorts *parameter inference*
+when tests differ greatly in size. The cosmology constants should be fitted
+on the summed χ² of the cosmology tests (a proper joint likelihood), with
+equal weighting kept for scoring. Not yet changed.
