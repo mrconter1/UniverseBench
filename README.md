@@ -155,6 +155,17 @@ be tested cheaply: CANDIDATES.md.
 | Pilot agent | Two-phase superfluid dark matter | lowest 33 on a fresh split (rank 2) | submissions/superfluid_dm |
 | Claude (solver) | Collapsing self-interacting dark matter | lowest 56, rank 1 (pre-registered split) | submissions/solver_claude |
 
+## Data credits
+
+All data are public and are redistributed here with their sources cited in
+each `data/<test>/` file. Main sources: SPARC (Lelli, McGaugh & Schombert
+2016), the Local Volume Database (Pace 2024, CC0), Gaia/APOGEE Milky Way
+curve (Eilers et al. 2019), Chandra clusters (Vikhlinin et al. 2006), SLACS
+(Auger et al. 2009), KiDS lensing (Mistele et al. 2024), Planck 2018, DESI
+DR2, Pantheon+, SDSS/eBOSS, eROSITA and SPT, and the precision-gravity, black
+hole, clock and particle-search papers listed per test. Please cite the
+original papers when using these data.
+
 ## Related work
 
 - Gravity-Bench (Koblischke et al., ICML 2025, arXiv:2501.18411): agents
