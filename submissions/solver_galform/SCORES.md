@@ -104,3 +104,23 @@ Scores: % of data points predicted within 2 sigma. 'Perfect theory' is the noise
 | 35 | Early supermassive black holes | 0 | 0 | 0 | — | — | 100 | — |
 
 Open questions: tests whose data are disputed or contradict each other, so even a correct theory could not pass them all. Reported, never scored, never used to fit constants.
+
+## Addendum: rescored with the new test 01b (post-hoc, same frozen models and salt)
+
+Test 01b (whole-galaxy offsets with each galaxy's error budget) was added
+after the hidden run, prompted by this model's post-mortem. It is used in
+fitting, so every model's constants were refitted:
+
+| | New model | cSIDM | ΛCDM | MOND (published) |
+|---|---|---|---|---|
+| 01b Whole-galaxy offsets | 83 | 87 | 89 | **94** |
+| 01 Rotation curves, predict | 64 | 58 | 56 | 59 |
+| 04 Milky Way | **5** | 100 | 87 | 100 |
+| Passed / median | 9 / 87 | 10 / 88 | 9 / 89 | 4 / 36 |
+
+Fitting the halo connection to the whole-galaxy offsets pushes the Milky Way
+prediction from 53 to 5: the DC14 recipe cannot fit SPARC's galaxy-to-galaxy
+pattern and our galaxy with one halo connection. **Verdict on solver model 2:
+the benchmark tie was an artefact of a weak rotation-curve test; with a
+proper error model, simulation-calibrated feedback halos do worse than plain
+NFW halos (89) and worse than cSIDM (87).**

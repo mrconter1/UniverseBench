@@ -154,10 +154,26 @@ submissions/solver_claude/).
 including ones outside established ideas, with gut-feeling odds and which can
 be tested cheaply: CANDIDATES.md.
 
+**12 Oct, evening: course check and a second solver model.** Ideas 6–10 from
+the user were tested (fermionic cores excluded by GRAVITY's flares, coupled
+black holes and a heavier early electron disfavoured once cosmology is
+fitted as one summed likelihood, 2188c70). Inverse design showed that no dark
+matter with one equation of state can produce the galaxy relation. A course
+check then found the relation's tightness is softer than assumed (0.03–0.08
+dex) and roughly matched by hydrodynamic CDM simulations. A pre-registered
+second solver model, cold dark matter with simulation-calibrated halo shapes
+(DC14), tied cSIDM on the hidden split (5a213f7, c5d5b24). Its post-mortem
+showed the tie was an artefact: test 01 treats points as independent while
+distance and inclination errors move whole curves. New test 01b scores one
+offset per galaxy with its own error budget (5533d61); there the feedback
+halos fall behind (83 vs cSIDM 87, ΛCDM 89, MOND 94) and the Milky Way drops
+to 5.
+
 | Submission | Idea | Hidden-split result | Folder |
 |---|---|---|---|
 | Pilot agent | Two-phase superfluid dark matter | lowest 33 on a fresh split (rank 2) | submissions/superfluid_dm |
 | Claude (solver) | Collapsing self-interacting dark matter | lowest 56, rank 1 (pre-registered split) | submissions/solver_claude |
+| Claude (solver 2) | Cold dark matter + DC14 galaxy-formation halos | tied cSIDM on galaxies, Milky Way 53; after test 01b: Milky Way 5 | submissions/solver_galform |
 
 ## Data credits
 
