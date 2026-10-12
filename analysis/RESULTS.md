@@ -167,3 +167,29 @@ galaxies than for halos in general, or scatter correlated with the baryons
 simulations report. MOND predicts the observed tightness with no extra
 assumption, and this is now the strongest single point in its favour from
 this project.
+
+## Idea 2: is there an isolated ultra-faint dwarf with measured kinematics? (12 Oct 2026)
+
+Literature search: **no isolated ultra-faint dwarf has a published velocity
+dispersion yet.** The best target is **Tucana B** (Sand et al. 2022, ApJL 935,
+L17). It is quenched and isolated (nearest galaxy ~500 kpc), at D ≈ 1.4 Mpc,
+with L_V = 5(+4/−2)×10⁴ L☉ and R_half = 80 ± 40 pc. No spectroscopy has been
+reported. The ultra-faint dwarfs used against MOND so far (e.g. "The Challenge
+to MOND from Ultra-faint Dwarf Galaxies", ApJL 2021) are Milky Way
+satellites, where the external field effect complicates the test.
+
+**Pre-registered predictions** (script `analysis/tucana_b.py`; stellar
+M/L_V 1.5–2.5):
+
+| Picture | σ, central values (km/s) | range over L, M/L, R_half |
+|---|---|---|
+| MOND, isolated deep regime | 3.0 | 2.4–3.6 |
+| cSIDM (frozen model) | 4.5 | 3.2–5.4 |
+| CDM, 10⁹ M☉ NFW halo | 4.9 | 3.6–5.8 |
+| Stars alone, Newtonian | 0.8 | 0.4–1.7 |
+
+Correction to earlier statements (and to THEORY.md prediction 1, "6–8 km/s"):
+for Tucana B specifically, dark matter predicts about 4.5–5 km/s against
+MOND's 3. A ~1 km/s measurement with multi-epoch binary correction decides it
+at the central size. A sharper half-light radius (space imaging) would remove
+the 3.2–3.6 km/s overlap.

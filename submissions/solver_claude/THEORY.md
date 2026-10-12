@@ -151,7 +151,10 @@ See SCORES.md (practice split and the one-shot pre-registered hidden split).
 ## New predictions (checkable with future data)
 
 1. **Isolated ultra-faint dwarfs** (e.g. found by Rubin far from any host)
-   have dispersions of about **6–8 km/s** for 10³–10⁵ Msun of stars,
+   have dispersions of about **6–8 km/s** for 10³–10⁵ Msun of stars
+   *(post-freeze correction, 12 Oct: this range was too generic; for the
+   isolated dwarf Tucana B the model predicts 4.5 km/s (3.2–5.4) against
+   MOND's 3.0 (2.4–3.6); see analysis/RESULTS.md. The model file is unchanged)*,
    because their halos sit at the halo-mass floor and have collapsed. MOND
    predicts 2–3 km/s; this is the cleanest test of the two.
 2. **Core size grows with halo speed up to about 150 km/s, then shrinks.**
