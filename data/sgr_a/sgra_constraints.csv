@@ -1,0 +1,12 @@
+# Sgr A* constraints used by analysis/fermion_core.py (idea 7)
+# mass_Msun: GRAVITY Collaboration 2020, A&A 636, L5 (arXiv:2004.07187): M = 4.261e6 Msun (R0 = 8.2467 kpc)
+# s2_pericenter_AU: GRAVITY Collaboration 2018, A&A 615, L15 (arXiv:1807.09409): pericentre 120 AU (~1400 Schwarzschild radii)
+# flare_radius_rg_lo/hi, flare_period_min, flare_period_err_min: GRAVITY Collaboration 2018, A&A 618, L10
+#   (arXiv:1810.12641): hot-spot orbits at 6-10 gravitational radii of a 4e6 Msun black hole, period 45 +/- 15 min
+quantity,value
+mass_Msun,4.261e6
+s2_pericenter_AU,120
+flare_radius_rg_lo,6
+flare_radius_rg_hi,10
+flare_period_min,45
+flare_period_err_min,15

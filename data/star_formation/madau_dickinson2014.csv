@@ -1,0 +1,7 @@
+# Cosmic star-formation rate density fit, Madau & Dickinson 2014, ARA&A 52, 415
+# (arXiv:1403.0007), eq. 15: psi(z) = g0 (1+z)^g1 / (1 + ((1+z)/g2)^g3)
+# units Msun / yr / Mpc^3 (comoving), Salpeter IMF 0.1-100 Msun,
+# cosmology (Om, OL, h) = (0.3, 0.7, 0.7). Values as quoted in
+# Hopkins et al. arXiv:1711.03416, eq. 1.
+g0,g1,g2,g3
+0.015,2.7,2.9,5.6
