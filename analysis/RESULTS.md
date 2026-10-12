@@ -225,3 +225,31 @@ struggled with the cluster population. The Lyman-α warm-dark-matter bound
 Tremaine–Gunn may be violated in cluster cores at small radii.
 **Benchmark gap:** structure growth for non-CDM models needs either full
 Boltzmann-code power spectra or a simulation-calibrated recipe.
+
+## Idea 4 (candidate D): gravity with memory vs the Bullet Cluster (12 Oct 2026)
+
+Order-of-magnitude test, no model fitting. If gravity responds to where
+matter *was*, weighted over a memory time τ, the lensing peak of a moving
+sub-cluster trails its galaxies by about v τ. Inputs: no significant offset
+between the Bullet sub-cluster's mass peak and its galaxies (Randall et al.
+2008, arXiv:0704.0261, quoted from memory as roughly 25 ± 29 kpc; they
+derive σ/m < 1.25 cm²/g from this non-detection), sub-cluster speed
+~3000 km/s, core passage ~150 Myr ago.
+
+The test traps the idea from both sides:
+* **long memory** (Gyr, needed to tie a0 to cH0): the lensing source sits
+  where the matter was over the past Gyr, near the collision centre, i.e.
+  hundreds of kpc behind the galaxies, near the gas. Contradicted by the
+  observed alignment of mass and galaxies;
+* **short memory:** keeping the peak within ~85 kpc (2σ) of the galaxies
+  needs τ < 85 kpc / 3000 km/s ≈ 30 Myr. But then gravity effectively follows
+  the matter's present position, which places the lensing peak on the gas
+  (most of the baryons), the class already excluded.
+
+**Verdict: ruled out for any memory time.** Mashhoon's nonlocal gravity
+reduces in its Newtonian limit, as understood here, to a spatial
+(instantaneous) kernel, so it falls in the present-matter class and does not
+escape either. This removes the last no-dark-matter escape route from the
+Bullet filter, leaving only theories with real collisionless mass (dark
+matter of any temperature, MOND + hot DM, dipolar medium if it separates
+from the gas).

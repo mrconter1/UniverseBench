@@ -14,8 +14,8 @@ and add up to 100 across the main list.
 | 4 | Hybrid: real dark matter plus a medium or force acting in some conditions (superfluid, "two horizons", MOND + hot DM) | 13% | Explains why galaxies "know" about the cosmic horizon (a0 ≈ cH0); dwarfs showed no sign of the superfluid switch |
 | 5 | Modified gravity alone (MOND, relativistic MOND) | 6% | Excellent on galaxies; clusters, the Bullet Cluster, the CMB and dwarf halos count against it |
 | 6 | Emergent or horizon-based gravity (Verlinde-like) | 3% | Explains a0 ≈ cH0; behaves like MOND where it fails |
-| 7 | Gravity with memory (nonlocal gravity, Mashhoon) | 2% | Galaxy relation for free; likely killed by the CMB |
-| 8 | Something on no one's list | 16% | Historically, the answer is often not among the candidates argued about |
+| 7 | Gravity with memory (nonlocal gravity, Mashhoon) | 0.5% | Galaxy relation for free; likely killed by the CMB |
+| 8 | Something on no one's list | 17.5% | Historically, the answer is often not among the candidates argued about |
 
 Cross-cutting (before test A; now ~15%, see table): given particle dark matter, ~40% that the galaxy relation is best
 understood as a **relaxation attractor**, with a0 set by cosmic age. Dark
@@ -34,7 +34,7 @@ D within #7, E and F within #5).
 | A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | **Tested with SPARC Table 1: not supported** (the signal was data quality; best data give 0.06 dex intrinsic scatter, nearly independent of evolution), see analysis/RESULTS.md | ~15% given particle DM | Done |
 | B | Dark matter and dark energy are unrelated | Coupled quintessence / interacting dark energy | **Tested: mildly favoured** (ξ ≈ −0.07; BAO 85→92, cluster counts 75→100, median 90→95; not significant) | 5% | Done (approximate growth) |
 | C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | **Proxy tested: lowest 0** (MOND + CDM cosmology). The full theory is untested: where does the medium go in a collision? | 1.5% | Proxy done; collision check open |
-| D | Gravity acts on the present only | Nonlocal gravity with memory | Exists (Mashhoon); Bullet Cluster lag is distinctive | 1.5% | Partly |
+| D | Gravity acts on the present only | Nonlocal gravity with memory | **Ruled out** by the Bullet Cluster for any memory time (long: peak lags galaxies; short: follows gas), see analysis/RESULTS.md | <0.5% | Done |
 | E | G is the same at all scales | Running G from quantum-gravity renormalization | Exists; **fails the Bullet Cluster by construction** (extra gravity follows present baryons) | 0.5% | Closed by C |
 | F | Inertia is fixed | Inertia set by Unruh vs horizon temperature | Exists; **same Bullet Cluster failure** | 0.5% | Closed by C |
 | G | Three space dimensions at all scales | Extra dimensions, braneworld or mirror sectors | Established, mostly constrained | 1.5% | Partly |
