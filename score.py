@@ -6,14 +6,26 @@ Scorecard: every model on every test.
     python score.py --splits 5 --write      # average over 5 public demo splits,
                                             # write LEADERBOARD.md
     python score.py --tests 01,03,05        # only some tests (by number)
+    python score.py --salts a,b,c           # score on these named salts
+    python score.py --only-model "MOND"     # fill the run cache for one model
+
+Each (model, split) run is cached in .runs/, keyed by a hash of the
+benchmark code and the model's file, so a scorecard can be built up in
+several calls and re-scoring only repeats what changed.
 
 Scores: % of hidden data points predicted within 2 sigma (a perfect theory
 scores about 95). Models are summarized by lowest / median / highest score
 across tests and ranked by lowest, then median.
 """
 import argparse
+import hashlib
 import importlib.util
+import inspect
 import json
+import os
+import pathlib
+import pickle
+import sys
 import time
 
 import numpy as np
@@ -27,13 +39,34 @@ ap.add_argument("candidates", nargs="*")
 ap.add_argument("--splits", type=int, default=1)
 ap.add_argument("--write", action="store_true")
 ap.add_argument("--tests", default="")
+ap.add_argument("--salts", default="", help="comma-separated split salts (overrides --splits)")
+ap.add_argument("--only-model", default="", help="run just models whose name contains this")
+ap.add_argument("--no-cache", action="store_true")
 args = ap.parse_args()
+
+_code = hashlib.sha256()
+for f in sorted(pathlib.Path(__file__).parent.joinpath("ubench").rglob("*.py")):
+    _code.update(f.read_bytes())
+
+
+def _run_cached(m, tests, salt):
+    h = _code.copy()
+    h.update(pathlib.Path(getattr(m, "_source_file", None) or inspect.getfile(type(m))).read_bytes())
+    h.update(("|".join(t.ID for t in tests) + "|" + salt + "|" + m.NAME).encode())
+    path = pathlib.Path(".runs") / (h.hexdigest()[:24] + ".pkl")
+    if path.exists() and not args.no_cache:
+        return pickle.loads(path.read_bytes())
+    r = core.run(m, tests, salt=salt)
+    path.parent.mkdir(exist_ok=True)
+    path.write_bytes(pickle.dumps(r))
+    return r
 
 models = baselines()
 for path in args.candidates:
     spec = importlib.util.spec_from_file_location("candidate", path)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
+    mod.MODEL._source_file = path
     models.append(mod.MODEL)
 
 tests = all_tests()
@@ -41,11 +74,15 @@ if args.tests:
     keep = {s.zfill(2) for s in args.tests.split(",")}
     tests = [t for t in tests if t.ID[:2] in keep]
 salts = [core.SPLIT_SALT] if args.splits == 1 else [f"public-split-{i}" for i in range(args.splits)]
+if args.salts:
+    salts = args.salts.split(",")
+if args.only_model:
+    models = [m for m in models if args.only_model.lower() in m.NAME.lower()]
 
 rows = []
 for m in models:
     t0 = time.time()
-    runs = [core.run(m, tests, salt=s) for s in salts]
+    runs = [_run_cached(m, tests, s) for s in salts]
     row = {"model": m.NAME, "knobs": f"{runs[0]['n_global_params']} global, "
                                       f"{runs[0]['n_local_params']} per galaxy", "runs": runs}
     for t in tests:
@@ -60,6 +97,8 @@ for m in models:
     row["LOWEST"], row["MEDIAN"], row["HIGHEST"] = min(vals), float(np.median(core_vals)), max(vals)
     rows.append(row)
     print(f"  scored {m.NAME} in {time.time() - t0:.0f}s", flush=True)
+if args.only_model:
+    sys.exit(0)
 # Noise ceiling per test: what a perfect theory would score, given how many
 # points are scored (taken from the runs) and how many are one-sided limits.
 ceil = {}

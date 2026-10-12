@@ -146,63 +146,115 @@ def _vec_to_dict(x, spec):
 def fit_global(model, tests, salt):
     """Fit GLOBAL_PARAMS jointly on the public data of all tests. Each test
     contributes its mean chi^2 per point, so tests weigh equally.
+
     Independent groups of constants (see _param_groups) are fitted
-    separately, which is exact and much faster."""
+    separately, which is exact and much faster. Within a group, each test's
+    term is cached by the values of the constants it responds to, so moving
+    one constant only re-runs the tests that depend on it.
+
+    The search is robust to step-like, multi-modal objectives (e.g. a
+    threshold radius): every constant is scanned across its range, Powell
+    runs from the model's start and from the scan's best points, and the
+    answer is the best point evaluated anywhere. (scipy's bounded Powell
+    line search never re-evaluates its current point, so on its own it can
+    end WORSE than it started.)"""
     spec = getattr(model, "GLOBAL_PARAMS", {})
     if not spec:
         return {}
     tests = [t for t in tests if t.USED_IN_FIT]
     x = np.array([v[0] for v in spec.values()], dtype=float)
     bounds_all = [(lo, hi) for (_, lo, hi) in spec.values()]
+    groups, touches = _param_groups(model, tests, salt, spec, x, return_touches=True)
 
-    for idx, group_tests in _param_groups(model, tests, salt, spec, x):
+    for idx, group_tests in groups:
         if not group_tests:
             continue
+        bounds = [bounds_all[i] for i in idx]
+        lo_b = np.array([b[0] for b in bounds])
+        hi_b = np.array([b[1] for b in bounds])
+        # positions (within idx) of the constants each test responds to
+        deps = {t.ID: [j for j, i in enumerate(idx) if t.ID in touches[i]] for t in group_tests}
+        cache = {t.ID: {} for t in group_tests}
+        best = {"f": np.inf, "x": None}
 
-        def f(sub, idx=idx, group_tests=group_tests):
+        def f(sub, idx=idx, group_tests=group_tests, deps=deps, cache=cache, best=best,
+              lo_b=lo_b, hi_b=hi_b):
+            sub = np.clip(np.asarray(sub, dtype=float), lo_b, hi_b)
             xx = x.copy()
             xx[idx] = sub
-            gp = _vec_to_dict(xx, spec)
+            gp = None
             total = 0.0
             for t in group_tests:
-                term = t.fit_term(model, gp, salt)
-                if term is not None:
-                    total += term
+                key = tuple(np.round(sub[deps[t.ID]], 12))
+                c = cache[t.ID]
+                if key not in c:
+                    if gp is None:
+                        gp = _vec_to_dict(xx, spec)
+                    if len(c) > 20000:
+                        c.clear()
+                    c[key] = t.fit_term(model, gp, salt)
+                if c[key] is not None:
+                    total += c[key]
+            if np.isfinite(total) and total < best["f"]:
+                best["f"], best["x"] = total, sub.copy()
             return total
 
-        bounds = [bounds_all[i] for i in idx]
-        # Start from the model's own starting values, then also from a coarse
-        # scan of each constant over its range (cheap per group), so step-like
-        # objectives and flat regions don't trap the local optimizer.
-        starts = [x[idx].copy()]
+        x0 = np.clip(x[idx].copy(), lo_b, hi_b)
+        f0 = f(x0)
+        # scan each constant across its range (others at their starts)
+        scan_best, combined = [], x0.copy()
         for j, (lo, hi) in enumerate(bounds):
             grid = lo + (hi - lo) * np.linspace(0.05, 0.95, 7)
             vals = []
             for g in grid:
-                trial = starts[0].copy()
+                trial = x0.copy()
                 trial[j] = g
                 vals.append(f(trial))
-            if np.isfinite(vals).any():
-                trial = starts[0].copy()
-                trial[j] = grid[int(np.nanargmin(vals))]
-                starts.append(trial)
-        best_x, best_f = None, np.inf
+            vals = np.array(vals, dtype=float)
+            if np.isfinite(vals).any() and np.nanmin(vals) < f0 - 1e-6:
+                k = int(np.nanargmin(vals))
+                combined[j] = grid[k]
+                scan_best.append((vals[k], j, grid[k]))
+        starts = [x0]
+        if scan_best:
+            v, j, g = min(scan_best)
+            single = x0.copy()
+            single[j] = g
+            starts.append(single)
+            if len(scan_best) > 1:
+                starts.append(combined)
         for x_start in starts:
-            res = minimize(f, x_start, method="Powell", bounds=bounds,
-                           options={"maxfev": 6000, "xtol": 1e-4, "ftol": 1e-7})
-            if res.fun < best_f:
-                best_x, best_f = res.x, res.fun
-        # polish with Nelder-Mead from the best answer
-        nm = minimize(f, best_x, method="Nelder-Mead",
-                      options={"maxfev": 3000, "xatol": 1e-5, "fatol": 1e-8})
-        x[idx] = nm.x if nm.fun < best_f else best_x
+            minimize(f, x_start, method="Powell", bounds=bounds,
+                     options={"maxfev": 4000, "xtol": 1e-4, "ftol": 1e-7})
+        # coordinate sweeps: scan each constant finely across its whole range
+        # with the others at the best point so far, then re-run Powell. This
+        # finds narrow basins of step-like constants (a threshold radius
+        # crossing individual objects) that line searches step over. Cheap,
+        # because only the tests depending on that constant are re-run.
+        for _ in range(2):
+            before = best["f"]
+            for j, (lo, hi) in enumerate(bounds):
+                for g in np.linspace(lo, hi, 41):
+                    trial = best["x"].copy()
+                    trial[j] = g
+                    f(trial)
+            if best["f"] < before - 1e-6:
+                minimize(f, best["x"], method="Powell", bounds=bounds,
+                         options={"maxfev": 4000, "xtol": 1e-4, "ftol": 1e-7})
+            else:
+                break
+        # polish with Nelder-Mead from the best point found
+        minimize(f, best["x"], method="Nelder-Mead",
+                 options={"maxfev": 3000, "xatol": 1e-5, "fatol": 1e-8})
+        x[idx] = best["x"]
     return _vec_to_dict(x, spec)
 
 
-def _param_groups(model, tests, salt, spec, x0):
+def _param_groups(model, tests, salt, spec, x0, return_touches=False):
     """Split the global constants into independent groups: two constants
     belong together if some test responds to both. Detected by nudging each
     constant and recording which tests' fit terms change."""
+
     base_gp = _vec_to_dict(x0, spec)
     base = {t.ID: t.fit_term(model, base_gp, salt) for t in tests}
     touches = []
@@ -238,8 +290,9 @@ def _param_groups(model, tests, salt, spec, x0):
     groups = {}
     for i in range(len(touches)):
         groups.setdefault(find(i), []).append(i)
-    return [(idx, [t for t in tests if t.ID in set().union(*(touches[i] for i in idx))])
-            for idx in groups.values()]
+    out = [(idx, [t for t in tests if t.ID in set().union(*(touches[i] for i in idx))])
+           for idx in groups.values()]
+    return (out, touches) if return_touches else out
 
 
 def run(model, tests, salt=SPLIT_SALT, verbose=False):
