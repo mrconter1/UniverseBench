@@ -29,7 +29,7 @@ Each row denies one assumption behind the standard picture.
 | # | Assumption denied | Idea | Status | Gut | Cheap to test here? |
 |---|---|---|---|---|---|
 | A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | **Tested: not supported, not ruled out** (needs per-galaxy distance/inclination errors), see analysis/RESULTS.md | ~25% given particle DM | Partly done |
-| B | Dark matter and dark energy are unrelated | Coupled quintessence (dark matter mass changes as dark energy evolves) | Established, revived by DESI | 4% | Partly (cosmology engine) |
+| B | Dark matter and dark energy are unrelated | Coupled quintessence / interacting dark energy | **Tested: mildly favoured** (ξ ≈ −0.07; BAO 85→92, cluster counts 75→100, median 90→95; not significant) | 5% | Done (approximate growth) |
 | C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | **Tested: lowest 0** (fails clusters and Bullet Cluster despite correct cosmology) | 1% | Done |
 | D | Gravity acts on the present only | Nonlocal gravity with memory | Exists (Mashhoon); Bullet Cluster lag is distinctive | 1.5% | Partly |
 | E | G is the same at all scales | Running G from quantum-gravity renormalization | Exists; **fails the Bullet Cluster by construction** (extra gravity follows present baryons) | 0.5% | Closed by C |

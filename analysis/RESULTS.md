@@ -66,3 +66,26 @@ most of the baryons). That covers MOND, dipolar DM, running G (E),
 horizon-set inertia (F) and emergent gravity, so E and F were not built
 separately. The one exception in the family is gravity with memory (D),
 whose field follows where matter *was*.
+
+## B. Dark matter interacting with dark energy (12 Oct 2026)
+
+Model: `candidates/interacting_de.py`. Energy transfer Q = ξ H ρ_DE, w = −1,
+exact background, drag-only growth approximation; ξ = 0 reproduces ΛCDM
+exactly (checked: E(z), θ*, CMB priors, σ8). One extra constant. Galaxy and
+cluster physics as the ΛCDM baseline. Five demo splits:
+
+| | Interacting DE | ΛCDM |
+|---|---|---|
+| Fitted ξ | −0.072 on every split (dark matter → dark energy) | 0 |
+| BAO (DESI DR2) | **92** | 85 |
+| Cluster counts | **100** | 75 |
+| Microwave background, supernovae, growth rate | 100, 99, 100 | 100, 99, 100 |
+| Lowest / passed / median | 37 / 9 / **95** | 37 / 9 / 90 |
+| Open question S8 (lensing) | 33 | 67 |
+| Open question Lyman-α | 33 | 67 |
+
+**Verdict: mildly favoured, not significant.** One extra constant buys one
+more BAO point inside 2σ and removes the cluster-count tension, but it sides
+with cluster counts against weak lensing on S8, and the cosmology tests are
+in-sample. Its significance (Δχ² against the extra constant) was not
+assessed; the growth equation is approximate.
