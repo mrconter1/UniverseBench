@@ -67,7 +67,7 @@ al. 2015) as a new open question.
 ## Sources
 
 - IAC, [Can a negative-mass cosmology explain dark matter and dark energy?](https://iac.es/en/science-and-technology/publications/can-negative-mass-cosmology-explain-dark-matter-and-dark-energy)
-- Blanchet & Heisenberg, [Dipolar dark matter and cosmology](https://ar5iv.arxiv.org/html/1312.6991)
+- Blanchet et al., [Dipolar dark matter and cosmology](https://ar5iv.arxiv.org/html/1312.6991)
 - Famaey & McGaugh, [MOND phenomenology and the concordance cosmological scenario](https://arxiv.org/pdf/0807.1200)
 - Smolin, [MOND as a regime of quantum gravity](https://arxiv.org/pdf/1704.00780)
 - Rodrigues et al., [Galaxy rotation curves from GR with renormalization-group corrections](https://ar5iv.arxiv.org/html/0911.4967)
