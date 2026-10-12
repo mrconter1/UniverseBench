@@ -253,3 +253,26 @@ escape either. This removes the last no-dark-matter escape route from the
 Bullet filter, leaving only theories with real collisionless mass (dark
 matter of any temperature, MOND + hot DM, dipolar medium if it separates
 from the gas).
+
+## Idea 5: which well-measured galaxies break the relation? (12 Oct 2026)
+
+Script: `analysis/rar_outliers.py` (93 SPARC quality-1 galaxies, same
+per-galaxy error budget as rar_age_v2.py).
+
+* **Mundane outliers:** three of the five largest outliers (UGC06667 +4.3σ,
+  UGC08286 +2.5σ, UGC07125 −2.4σ) are edge-on (89–90°), where integrating
+  through the disc biases rotation curves. Notable non-edge-on outliers:
+  D631-7 (−3.8σ, gas-dominated dwarf, TRGB distance) and NGC0024 (+3.3σ).
+* **By distance method:** galaxies with Hubble-flow distances (n=56) show
+  intrinsic τ = 0.000 dex (their large distance errors absorb everything);
+  galaxies with direct distances (TRGB, Cepheid, Ursa Major cluster,
+  supernova; n=37) show **τ = 0.070 dex**.
+* 3% of quality-1 galaxies are beyond 3σ (0.3% expected for pure noise).
+
+**Interpretation:** with the most accurate distances the relation is *not*
+scatter-free. About 0.07 dex remains, unless stellar M/L varies by more than
+the 0.1 dex allowed here, or thick-disc and non-circular-motion corrections
+are larger than assumed. The realistic target for any theory is 0.06–0.07 dex,
+not zero. Pure MOND needs that much extra galaxy-to-galaxy variation from
+systematics; cSIDM with realistic halo scatter (0.10 dex, idea 1) is still
+too broad, but less dramatically.
