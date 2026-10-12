@@ -1,0 +1,6 @@
+# Mean HI-to-stellar mass relation and baryonic mass definition.
+# Papastergis et al. 2012, ApJ 759, 138, "A direct measurement of the baryonic mass function of galaxies"
+# arXiv:1208.5229: log10(M_HI/M_star) = slope * log10(M_star/Msun) + intercept; M_b = M_star + helium_factor * M_HI
+# (molecular gas excluded, <~10% of M_b above M_star ~ 1e8.5). H0 = 70. Verified against the paper on 12 Oct 2026.
+slope,intercept,helium_factor
+-0.43,3.75,1.4

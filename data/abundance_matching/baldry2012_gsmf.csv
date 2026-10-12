@@ -1,0 +1,6 @@
+# Galaxy stellar mass function, z < 0.06, double Schechter fit.
+# Baldry et al. 2012, MNRAS 421, 621, "Galaxy And Mass Assembly (GAMA): the galaxy stellar mass function at z < 0.06"
+# arXiv:1111.5707 (abstract). H0 = 70 km/s/Mpc. phi in Mpc^-3 (per unit ln M in the Schechter form, used per dex with ln 10).
+# Verified against the paper on 12 Oct 2026.
+log10_Mstar_char,phi1,alpha1,phi2,alpha2
+10.66,3.96e-3,-0.35,0.79e-3,-1.47

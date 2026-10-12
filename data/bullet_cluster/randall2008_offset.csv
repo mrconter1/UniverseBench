@@ -1,0 +1,7 @@
+# Offset between the Bullet sub-cluster's galaxy centroid and its weak-lensing mass peak.
+# Randall, Markevitch, Clowe, Gonzalez & Bradac 2008, ApJ 679, 1173, arXiv:0704.0261:
+# "galaxy centroid lies (25 +- 29 kpc) west of the corresponding weak lensing mass peak";
+# shock (and bullet) velocity 4700 +- 630 km/s. Used for sigma/m < 1.25 cm^2/g (68%).
+# Verified against the paper on 12 Oct 2026. Analysis use only (not a scored test).
+offset_kpc,offset_err_kpc,velocity_kms,velocity_err_kms
+25,29,4700,630

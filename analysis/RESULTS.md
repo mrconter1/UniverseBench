@@ -230,19 +230,19 @@ Boltzmann-code power spectra or a simulation-calibrated recipe.
 
 Order-of-magnitude test, no model fitting. If gravity responds to where
 matter *was*, weighted over a memory time τ, the lensing peak of a moving
-sub-cluster trails its galaxies by about v τ. Inputs: no significant offset
-between the Bullet sub-cluster's mass peak and its galaxies (Randall et al.
-2008, arXiv:0704.0261, quoted from memory as roughly 25 ± 29 kpc; they
-derive σ/m < 1.25 cm²/g from this non-detection), sub-cluster speed
-~3000 km/s, core passage ~150 Myr ago.
+sub-cluster trails its galaxies by about v τ. Inputs from
+`data/bullet_cluster/randall2008_offset.csv` (verified against Randall et al.
+2008, arXiv:0704.0261): galaxy centroid 25 ± 29 kpc from the mass peak,
+bullet velocity 4700 ± 630 km/s. Script: `analysis/bullet_memory.py`.
 
 The test traps the idea from both sides:
 * **long memory** (Gyr, needed to tie a0 to cH0): the lensing source sits
   where the matter was over the past Gyr, near the collision centre, i.e.
   hundreds of kpc behind the galaxies, near the gas. Contradicted by the
   observed alignment of mass and galaxies;
-* **short memory:** keeping the peak within ~85 kpc (2σ) of the galaxies
-  needs τ < 85 kpc / 3000 km/s ≈ 30 Myr. But then gravity effectively follows
+* **short memory:** keeping the peak within 83 kpc (2σ) of the galaxies
+  needs τ < 17 Myr at 4700 km/s (< 20 Myr at 4070 km/s; an earlier version
+  assumed 3000 km/s and got < 30 Myr). But then gravity effectively follows
   the matter's present position, which places the lensing peak on the gas
   (most of the baryons), the class already excluded.
 
@@ -281,9 +281,9 @@ too broad, but less dramatically.
 
 Script: `analysis/a0_derived.py`. The fitted galaxy–halo link of cSIDM (A, B,
 floor) is replaced by **abundance matching with zero fitted constants**:
-GAMA stellar mass function (Baldry et al. 2012 double Schechter, values
-quoted from memory) plus Papastergis et al. 2012 gas fractions (M_b = M* +
-1.4 M_HI), matched to the Sheth–Tormen halo mass function of the
+GAMA stellar mass function (Baldry et al. 2012 double Schechter) plus
+Papastergis et al. 2012 gas fractions (M_b = M* + 1.4 M_HI), both now in
+`data/abundance_matching/` with citations and verified against the papers, matched to the Sheth–Tormen halo mass function of the
 benchmark's Planck-like cosmology (centrals, no scatter). The abundance-matched
 link agrees with the fitted one within ~50% for M_b = 10⁸–10¹¹ M☉.
 
@@ -291,22 +291,29 @@ link agrees with the fitted one within ~50% for M_b = 10⁸–10¹¹ M☉.
 |---|---|---|
 | Data (same M/L) | **1.06** | — |
 | Fitted link (frozen cSIDM) | 0.86 | 57.9% |
-| **Abundance-matched link (no fit)** | **0.95** | 56.9% |
+| Abundance-matched link, **concentration offset still fitted (−0.12 dex)** | 0.95 | 56.9% |
 | … cross-section ÷10 | 0.94 | 57.8% |
 | … cross-section ×3 | 1.29 | 56.8% |
 | … concentration −0.2 dex | 0.36 | 44.7% |
 | … concentration +0.2 dex | 2.40 | 48.2% |
-| … standard ΛCDM concentrations (no offset) | **1.68** | 54.4% |
+| **… standard ΛCDM concentrations: nothing fitted to galaxies** | **1.68** | 54.4% |
 
 For comparison, cH0/2π = 1.04 and the standard MOND value is 1.2.
 
 **Findings.**
-1. **The scale of the galaxy relation emerges from cosmology to within a factor
-   of ~1.6** with no fitted galaxy–halo link and standard ΛCDM halo
-   concentrations, and to ~10% with the fitted concentration offset
-   (−0.12 dex). The near-equality a0 ≈ cH0/2π is then not a coincidence
-   to be explained by new physics: halo densities, set by the cosmic density
-   when halos formed, put a cosmological acceleration into galaxies.
+1. **With nothing fitted to galaxies (abundance matching + standard ΛCDM
+   concentrations) the emergent a0 is 1.68×10⁻¹⁰, about 60% above the
+   1.06 measured in the same galaxies.** The 0.95 agreement needs the
+   concentration offset fitted to rotation curves, so it is not a
+   derivation. What this does show is that the *order of magnitude* of a0
+   has an ordinary cosmological origin: halo densities are set by the cosmic
+   density when halos formed. It does not explain the precise value or the
+   2π in a0 ≈ cH0/2π; any acceleration built from cosmic densities lands
+   near cH0 within a small factor.
+   This is essentially a **cold-dark-matter result, not an SIDM one**: the
+   frozen model's cores barely reach the measured radii, so the cross-section
+   hardly matters (÷10 changes a0 by 1%). Once cores grow (×3), it starts to
+   (a0 = 1.29).
 2. **a0 is nearly independent of the self-interaction cross-section**
    (÷10 changes it by 1%) but **scales steeply with halo concentration**
    (about ×2.5 per +0.2 dex). This is the same lever that broke the
@@ -315,3 +322,36 @@ For comparison, cH0/2π = 1.04 and the standard MOND value is 1.2.
    relation is as tight as halo concentrations are uniform. The open
    question becomes why disc galaxies' halos would be more uniform in
    concentration than simulations predict.
+
+
+## Correlated halo–baryon scatter: does it rescue the tightness? (12 Oct 2026)
+
+Script: `analysis/sidm_scatter_corr.py`. As idea 1, but each galaxy's
+concentration offset (0.11 dex) is correlated, with coefficient ρ, with its
+disc compactness: the residual of log R_disk (SPARC Table 1) at fixed
+baryonic mass. ρ > 0 means compact discs sit in more concentrated halos (the
+simulation claim). Halo-mass scatter 0.15 dex, independent. 93 quality-1
+galaxies, two draws each.
+
+| ρ | frozen cross-section | cross-section ×3 |
+|---|---|---|
+| −0.9 | 0.107 | 0.126 |
+| −0.5 | 0.106 | 0.121 |
+| 0 | 0.105 | 0.113 |
+| +0.5 | 0.109 | 0.105 |
+| +0.9 | 0.111 | 0.107 |
+| +1.0 | 0.110 | 0.105 |
+| +1.0, no halo-mass scatter | 0.101 | 0.096 |
+| no halo scatter at all | 0.056 | 0.059 |
+| **target (observed intrinsic)** | **0.058–0.070** | |
+
+**Verdict: correlated scatter does not rescue it in this model.** Even a
+perfect correlation with disc compactness leaves ~0.10 dex. With the larger
+cross-section, the simulation-motivated sign helps slightly (0.113 → 0.105),
+far from enough. Reaching the observed tightness needs concentration scatter
+below roughly 0.05 dex for disc galaxies, about half the ΛCDM prediction.
+Caveat: disc scale length is the only compactness proxy available;
+correlation with formation history (not in SPARC) could behave differently,
+and real simulations include feedback effects not in this model. **The
+tightness of the galaxy relation remains a genuine clue** against the
+simplest dark-matter accounts, including this one.
