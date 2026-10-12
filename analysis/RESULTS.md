@@ -560,3 +560,25 @@ g_bar ~ 10⁻¹⁵ m/s² for isolated lenses; MICE (dark-matter-only plus halo
 occupation) also reproduces it, BAHAMAS (hydro) is offset; early- and
 late-type galaxies differ at ≥ 6σ, which a single force law struggles with
 and CDM expects. Not a clean MOND-vs-CDM discriminator either.
+
+## New model: a dark force tied to dark energy (12 Oct 2026), stopped on paper
+
+Proposal: the field driving dark energy exerts a k-mouflage-type force with
+a nonlinear kinetic term whose scale is set by its cosmological rolling, so
+an acceleration scale appears, a0 ≈ β √(3(1+w)Ω_DE) cH0 (β ≈ 0.25 for
+w ≈ −0.75). Before building it, the inverse-design result was applied:
+* **Force on dark matter only:** the baryons still reach the dark matter only
+  through ordinary gravity, so the halo cannot know each galaxy's baryonic
+  mass any better than a cold or self-interacting halo does. Same class as
+  cSIDM: it can reshape halos but not supply the per-galaxy link.
+* **Force on baryons too, conformal coupling:** a scalar force of this kind
+  does not bend light, so lensing would see only the dark matter while
+  rotation curves see the extra force. KiDS lensing (Brouwer+ 2021) and
+  rotation curves agree on the same relation, which rules this out.
+* **Coupled so that it also lenses:** this is relativistic MOND (AeST-like),
+  whose extra pull follows the baryons, so it meets the Bullet Cluster filter.
+
+**Verdict: no viable coupling, so it was not built.** What survives is the
+a0–w relation as a curiosity. And since the scatter turned out not to be a
+discriminator (previous section), the motivation for this kind of mechanism
+is weaker than it looked this morning.

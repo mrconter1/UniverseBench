@@ -2,20 +2,20 @@
 
 Written 12 Oct 2026 after the first solver run. Percentages are **gut
 feelings** (Claude's), not results. They answer "what is actually going on?"
-and add up to 100 across the main list.
+and add up to 100 across the main list (updated the evening of 12 Oct, see below).
 
 ## Main list
 
 | # | Explanation | Gut | Why |
 |---|---|---|---|
-| 1 | Cold dark matter; the galaxy regularity comes from galaxy formation (feedback, gas) | 30% | Simplest story that fits cosmology, clusters and dwarfs; nobody has shown it gives such a tight galaxy relation |
-| 2 | A dark sector with its own forces; self-interaction is the first symptom (cSIDM) | 20% | Matches MOND on galaxies and passes everything else with no per-galaxy freedom (submissions/solver_claude) |
+| 1 | Cold dark matter; the galaxy regularity comes from galaxy formation (feedback, gas) | 40% | Simplest story that fits cosmology, clusters and dwarfs; nobody has shown it gives such a tight galaxy relation |
+| 2 | A dark sector with its own forces; self-interaction is the first symptom (cSIDM) | 15% | Matches MOND on galaxies and passes everything else with no per-galaxy freedom (submissions/solver_claude) |
 | 3 | A different particle: ultra-light (wave) dark matter, warm, or a mixture | 10% | Untested here; wave dark matter naturally gives dense dwarf cores |
-| 4 | Hybrid: real dark matter plus a medium or force acting in some conditions (superfluid, "two horizons", MOND + hot DM) | 11.5% | Explains why galaxies "know" about the cosmic horizon (a0 ≈ cH0); dwarfs showed no sign of the superfluid switch |
-| 5 | Modified gravity alone (MOND, relativistic MOND) | 6% | Excellent on galaxies; clusters, the Bullet Cluster, the CMB and dwarf halos count against it |
+| 4 | Hybrid: real dark matter plus a medium or force acting in some conditions (superfluid, "two horizons", MOND + hot DM) | 8% | Explains why galaxies "know" about the cosmic horizon (a0 ≈ cH0); dwarfs showed no sign of the superfluid switch |
+| 5 | Modified gravity alone (MOND, relativistic MOND) | 5.5% | Excellent on galaxies; clusters, the Bullet Cluster, the CMB and dwarf halos count against it |
 | 6 | Emergent or horizon-based gravity (Verlinde-like) | 3% | Explains a0 ≈ cH0; behaves like MOND where it fails |
 | 7 | Gravity with memory (nonlocal gravity, Mashhoon) | 0.5% | Galaxy relation for free; likely killed by the CMB |
-| 8 | Something on no one's list | 19% | Historically, the answer is often not among the candidates argued about |
+| 8 | Something on no one's list | 18% | Historically, the answer is often not among the candidates argued about |
 
 Cross-cutting (before test A; now ~15%, see table): given particle dark matter, ~40% that the galaxy relation is best
 understood as a **relaxation attractor**, with a0 set by cosmic age. Dark
@@ -56,11 +56,22 @@ would let them be judged fairly.
 
 | # | Idea | Status |
 |---|---|---|
-| 6 | Dark matter heated by baryons (Famaey, Khoury & Penco 2017/2019) | queued: scatter test + direct-detection limits |
-| 7 | Fermionic (keV) dark matter with dense quantum cores replacing central black holes (Argüelles, Ruffini et al.) | queued: S2 orbit and EHT shadow tests, Lyman-α |
+| 6 | Dark matter heated by baryons (Famaey, Khoury & Penco 2017/2019) | **examined**: a0 is an input and the scatter is not predicted; benchmark proxy = MOND in equilibrated discs, CDM elsewhere (best case) |
+| 7 | Fermionic (keV) dark matter with dense quantum cores replacing central black holes (Argüelles, Ruffini et al.) | **tested: excluded** except 345–383 keV at the edge of collapse (GRAVITY flares need the mass inside 8 r_g; 56 keV gives 1.5e-7 of it); no photon sphere for any mass |
 | 8 | Heavier electron at recombination (Hubble tension) | **tested**: H0 → 70.6 with the CMB intact, but summed χ² worse than ΛCDM (+14); the apparent preference came from equal test weighting |
-| 9 | Cosmologically coupled black holes as dark energy | queued: background from the star-formation history |
+| 9 | Cosmologically coupled black holes as dark energy | **tested: disfavoured** (phantom history, Δχ² ≈ +16 at equal constants, mostly supernovae; GW bounds k < 2; 46% of baryons consumed) |
 | 10 | One rolling field drives dark energy and DM self-interaction (user's own) | **tested**: a0 responds weakly (d ln a0/d ln σ ≈ 0.2–0.3); not a sharp test in this model |
+
+## Evening update (12 Oct 2026)
+
+Inverse design showed no dark matter with one universal equation of state can
+produce the galaxy relation; a per-galaxy link to the baryonic mass is
+needed. But the tightness itself proved softer than assumed: the observed
+intrinsic scatter is 0.03–0.08 dex depending on the error model, and full
+hydrodynamic cold-dark-matter simulations give 0.04–0.09 (analysis/RESULTS.md).
+Gut update: #1 (CDM + galaxy formation) 30 → 40%, #2 (cSIDM) 20 → 15%,
+#4 (hybrids) 11.5 → 8%, #5 (modified gravity) 6 → 5.5%, #8 (unknown) 19 → 18%. The
+dark-energy-tied dark force was stopped on paper (no viable coupling).
 
 ## Test queue (cheapest and most informative first)
 
