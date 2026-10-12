@@ -6,11 +6,11 @@
 |---|---|---|---|---|---|---|---|
 | 01 | Rotation curves: predict | 95 (95–96) | 57 | 65 | 57 | 29 | 29 |
 | 02 | Rotation curves: extrapolate | 95 (94–97) | 37 | 79 | 66 | 19 | 19 |
-| 03 | Galaxy clusters | 96 (82–100) | 96 | 11 | 42 | 0 | 0 |
-| 04 | Milky Way | 96 (90–100) | 87 | 100 | 16 | 0 | 0 |
-| 05 | Dwarf galaxies | 95 (83–100) | 47 | 37 | 38 | 14 | 14 |
+| 03 | Galaxy clusters | 96 (82–100) | 96 | 11 | 46 | 0 | 0 |
+| 04 | Milky Way | 96 (90–100) | 87 | 100 | 23 | 0 | 0 |
+| 05 | Dwarf galaxies | 96 (90–100) | 50 | 41 | 43 | 12 | 12 |
 | 07 | Lensing around galaxies ‡ | 95 (88–100) | 50 | 100 | 100 | 0 | 0 |
-| 08 | Elliptical galaxies (lensing) | 96 (88–100) | 93 | 73 | 80 | 71 | 71 |
+| 08 | Elliptical galaxies (lensing) | 96 (88–100) | 93 | 73 | 81 | 71 | 71 |
 | 09 | Bullet Cluster § ‡ | 95 (50–100) | 100 | 0 | 0 | 0 | 0 |
 | 11 | Solar system ◆ ‡ | 96 (75–100) | 100 | 100 | 100 | 100 | 25 |
 | 12 | Binary pulsars ◆ ‡ | 95 (50–100) | 100 | 100 | 100 | 100 | 0 |
@@ -33,7 +33,7 @@
 | 36 | Cosmic antimatter ◆ ‡ | 100 | 100 | 100 | 100 | 100 | 100 |
 | | **Lowest** | | **37** | **0** | **0** | **0** | **0** |
 | | **Substantive tests passed** (of 14) | | **9** | **3** | **2** | **1** | **0** |
-| | Median (excl. guard rails) | | 90 | 24 | 27 | 0 | 0 |
+| | Median (excl. guard rails) | | 90 | 26 | 33 | 0 | 0 |
 | | Highest | | 100 | 100 | 100 | 100 | 100 |
 | | Knobs | | 10 global, 3 per galaxy | 3 global, 1 per galaxy | 4 global, 1 per galaxy | 6 global, 1 per galaxy | 2 global, 1 per galaxy |
 | | **Rank** | | 1 | 2 | 3 | 4 | 5 |
@@ -44,7 +44,7 @@ Scores: % of data points predicted within 2 sigma. 'Perfect theory' is the noise
 
 | # | Open question (not scored) | Cold dark matter (ΛCDM) | MOND (a0 fixed at 1.2, as published) | MOND (a0 fitted to all tests) | Standard gravity, visible matter only | Pure Newtonian gravity, visible matter only |
 |---|---|---|---|---|---|---|
-| 06 | Wide binary stars | 50 | 50 | 10 | 50 | 50 |
+| 06 | Wide binary stars | 50 | 50 | 20 | 50 | 50 |
 | 10 | Galaxies lacking dark matter | 0 | 50 | 0 | 100 | 100 |
 | 16b | Lithium problem | 0 | 0 | 0 | 0 | — |
 | 19 | Hubble constant (local) | 50 | — | — | 0 | — |

@@ -21,7 +21,7 @@ noise ceiling (what a perfect theory would score).
 | 02 | Rotation curves: extrapolate | SPARC; fit inner 60%, predict outer 40% | Punishes per-galaxy overfitting | Scored |
 | 03 | Galaxy cluster masses | 13 Chandra clusters (Vikhlinin+ 2006) | MOND falls short by ~2x | Scored |
 | 04 | Milky Way | Gaia/APOGEE curve (Eilers+ 2019), McMillan 2017 baryons | Pure out-of-sample galaxy | Scored ‡ |
-| 05 | Dwarf spheroidals | 25 Local Group dwarfs (McGaugh & Wolf 2010) | Dark-matter-dominated; MOND external field effect | Scored |
+| 05 | Dwarf spheroidals | 78 dwarfs from the Local Volume Database (Pace 2024): 66 satellites, 12 field; 9 upper limits | Dark-matter-dominated; MOND external field effect | Scored |
 | 06 | Wide binary stars | Chae 2023 vs Banik+ 2024 (Gaia DR3) | Gravity at ultra-low acceleration | Open question |
 | 07 | Weak lensing around galaxies | KiDS lensing (Mistele+ 2024), flat to ~1 Mpc | Gravity far outside galaxies | Scored ‡ |
 | 08 | Strong-lensing ellipticals | 70 SLACS lenses (Auger+ 2009) | Mass in other galaxy types | Scored |

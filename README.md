@@ -84,6 +84,9 @@ A full five-split scorecard takes about 15 minutes on two CPU cores.
 
 - Galaxies: no SPARC quality cuts; ΛCDM halos are plain NFW without baryonic
   feedback or tidal stripping; abundance matching uses Moster+ 2013.
+- Dwarfs: single-epoch dispersions of the faintest systems may be inflated by
+  binary stars; gas-rich field dwarfs also rotate a little, and the test uses
+  their dispersions. Host fields assume flat host rotation curves.
 - Clusters: stellar mass is 15% of the gas mass; the ΛCDM cluster model uses an
   empirical baryon fraction with mass and radius trends.
 - The Bullet Cluster test is a crude mass-weighted peak position, not a lensing

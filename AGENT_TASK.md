@@ -76,7 +76,7 @@ matter only, pure Newtonian gravity) and ROADMAP.md for what each test is.
 |---|---|---|
 | `predict(g, R, gp, lp)` | 01, 02, 04 | rotation speed (km/s) at radii R (kpc) for galaxy `g` (`Vgas`, `Vdisk`, `Vbul` = Newtonian speeds of the visible parts for mass-to-light 1; `ups_fixed` means masses are already real; `stellar_mass(ups)`) |
 | `predict_cluster_mass(c, gp)` | 03 | total mass (Msun) inside `c.r_kpc`, given visible mass `c.M_bar`, `c.z`, `c.delta` |
-| `predict_dwarf_dispersion(d, gp)` | 05, 10 | stellar velocity dispersion (km/s) given `d.M_bar`, `d.r_half` (3D, kpc), host field `d.g_ext` ((km/s)²/kpc), `d.D_host` |
+| `predict_dwarf_dispersion(d, gp)` | 05, 10 | stellar velocity dispersion (km/s) given stellar mass `d.M_bar`, gas `d.M_gas` (mostly outside r_half), `d.r_half` (3D, kpc), host field `d.g_ext` ((km/s)²/kpc), `d.D_host`, `d.host` (MW, M31 or field) |
 | `predict_wide_binary_boost(gN_si, g_ext_si, gp)` | 06 | g_observed / g_Newton for a wide binary star |
 | `predict_lensing_vcirc(M_bar, R_kpc, gp)` | 07 | circular speed (km/s) around an isolated galaxy, 50–1000 kpc |
 | `predict_lens_mass(L, gp)` | 08 | projected mass (Msun) inside `L.r_Ein` given stars `L.Mstar_proj_chab`, `L.Mstar_chab` |

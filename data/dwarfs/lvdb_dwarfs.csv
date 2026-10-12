@@ -1,0 +1,84 @@
+# Local Volume Database (Pace 2024, OJAp 7, 111; CC0), commit 640faec620bcfa44cfe0ebc5c6df7bf618d7b123
+# Built by build_lvdb.py; see its docstring for the selection. sigma = stellar line-of-sight
+# velocity dispersion (km/s) with errors em/ep, or sigma_ul = 95% upper limit (one-sided).
+# r_half_pc = 3D half-light radius = 4/3 x projected (Wolf+ 2010). log_MHI = HI mass if detected.
+# D_host = distance to host (satellites) or to the nearest giant (field dwarfs), kpc.
+name,host,nearest_giant,D_host,sigma,sigma_em,sigma_ep,sigma_ul,log_Mstar,log_MHI,r_half_pc,ref_vlos
+Aquarius II,MW,MW,105.1,4.7,1.2,1.8,,3.98,,164.9,Bruce2023ApJ...950..167B
+Aquarius III,MW,MW,85.8,,,,3.5,3.23,,48.4,Cerny2025ApJ...979..164C
+Bootes I,MW,MW,64.0,4.0,0.3,0.4,,4.64,,214.5,Sandford2026ApJ...998...47S
+Bootes II,MW,MW,39.5,1.92,0.6,0.77,,3.41,,44.0,Geha2026ApJ...999..140G
+Canes Venatici I,MW,MW,210.6,7.66,0.41,0.44,,5.73,,435.3,Geha2026ApJ...999..140G
+Canes Venatici II,MW,MW,160.6,5.28,0.96,1.25,,4.3,,72.1,Geha2026ApJ...999..140G
+Carina,MW,MW,107.2,6.6,1.2,1.2,,6.01,,330.8,Walker2009AJ....137.3100W
+Carina II,MW,MW,18.6,3.4,0.8,1.2,,4.06,,102.0,Li2018ApJ...857..145L
+Centaurus I,MW,MW,114.1,4.2,0.5,0.6,,4.37,,94.6,Heiger2024ApJ...961..234H
+Columba I,MW,MW,187.3,5.96,1.81,2.78,,3.91,,129.8,Geha2026ApJ...999..140G
+Coma Berenices,MW,MW,43.5,3.33,0.46,0.58,,3.95,,73.3,Geha2026ApJ...999..140G
+Draco,MW,MW,81.5,9.55,0.25,0.26,,5.78,,257.6,Geha2026ApJ...999..140G
+Draco II,MW,MW,23.9,,,,2.6,2.55,,21.5,Cerny2026arXiv260217652C
+Eridanus II,MW,MW,371.6,6.9,0.9,1.2,,5.08,,238.6,Li2017ApJ...838....8L
+Eridanus IV,MW,MW,76.2,6.1,0.9,1.2,,3.65,,74.9,Heiger2024ApJ...961..234H
+Fornax,MW,MW,144.6,12.1,0.2,0.2,,7.59,,927.1,Walker2009AJ....137.3100W
+Grus I,MW,MW,122.7,2.5,0.8,1.3,,3.89,,151.2,Chiti2022ApJ...939...41C
+Grus II,MW,MW,50.7,,,,2.0,3.91,,125.6,Simon2020ApJ...892..137S
+Horologium I,MW,MW,38.2,4.9,0.9,2.8,,3.59,,42.2,Koposov2015ApJ...811...62K
+Hydra II,MW,MW,148.5,,,,4.11,4.27,,75.6,Geha2026ApJ...999..140G
+Hydrus I,MW,MW,23.9,2.7,0.43,0.51,,4.12,,69.9,Koposov2018MNRAS.479.5343K
+Leo I,MW,MW,262.0,9.29,0.26,0.26,,6.96,,305.5,Geha2026ApJ...999..140G
+Leo II,MW,MW,211.5,7.53,0.36,0.39,,6.03,,196.9,Geha2026ApJ...999..140G
+Leo IV,MW,MW,151.9,3.29,0.66,0.89,,4.21,,134.8,Geha2026ApJ...999..140G
+Leo V,MW,MW,169.8,3.37,1.04,1.72,,3.99,,47.0,Geha2026ApJ...999..140G
+Pegasus III,MW,MW,212.8,2.76,0.91,1.24,,3.9,,109.5,Geha2026ApJ...999..140G
+Pegasus IV,MW,MW,89.1,3.33,0.86,1.19,,3.93,,55.5,Geha2026ApJ...999..140G
+Phoenix II,MW,MW,54.1,,,,21.2,3.27,,35.8,Fritz2019A&A...623A.129F
+Pictor II,MW,MW,11.8,3.5,0.9,1.1,,3.29,,42.5,Pace2025OJAp....8E.112P
+Pisces II,MW,MW,181.9,3.72,1.33,1.98,,3.95,,75.1,Geha2026ApJ...999..140G
+Reticulum II,MW,MW,22.2,3.6,0.7,1.0,,3.47,,48.6,Walker2015ApJ...808..108W
+Reticulum III,MW,MW,91.6,,,,8.3,3.55,,82.9,Fritz2019A&A...623A.129F
+Sculptor,MW,MW,84.0,9.2,1.1,1.1,,6.54,,297.6,Walker2009AJ....137.3100W
+Segue 1,MW,MW,27.8,3.97,0.86,0.97,,2.75,,26.0,Geha2026ApJ...999..140G
+Sextans,MW,MW,88.9,7.9,1.3,1.3,,5.72,,647.9,Walker2009AJ....137.3100W
+Triangulum II,MW,MW,34.7,,,,3.5,2.75,,22.9,Buttry2022MNRAS.514.1706B
+Tucana II,MW,MW,52.5,3.8,0.7,1.1,,3.73,,215.6,Chiti2023AJ....165...55C
+Tucana IV,MW,MW,44.5,4.3,1.0,1.7,,3.43,,130.8,Simon2020ApJ...892..137S
+Ursa Major I,MW,MW,101.9,7.16,1.04,1.21,,4.29,,200.2,Geha2026ApJ...999..140G
+Ursa Minor,MW,MW,72.1,8.86,0.24,0.27,,5.78,,333.9,Geha2026ApJ...999..140G
+Andromeda I,M31,M31,44.4,10.2,1.9,1.9,,6.77,,995.5,Tollerud2012ApJ...752...45T
+Andromeda II,M31,M31,169.2,7.8,1.1,1.1,,6.92,,1255.4,Ho2012ApJ...758..124H
+Andromeda III,M31,M31,85.1,9.3,1.4,1.4,,6.03,,356.9,Tollerud2012ApJ...752...45T
+Andromeda V,M31,M31,109.0,10.5,1.1,1.1,,5.95,,403.3,Tollerud2012ApJ...752...45T
+Andromeda VI,M31,M31,281.4,13.2,1.3,1.4,,6.75,,532.2,Pickett2025MNRAS.540.1701P
+Andromeda VII,M31,M31,230.0,13.0,1.0,1.0,,7.35,,1033.5,Tollerud2012ApJ...752...45T
+Andromeda IX,M31,M31,82.5,10.9,2.0,2.0,,5.69,,524.5,Tollerud2012ApJ...752...45T
+Andromeda X,M31,M31,160.7,6.4,1.4,1.4,,5.15,,233.8,Tollerud2012ApJ...752...45T
+Andromeda XI,M31,M31,102.9,7.6,2.8,4.0,,4.79,,145.1,Collins2013ApJ...768..172C
+Andromeda XII,M31,M31,107.7,,,,4.0,4.87,,298.0,Collins2013ApJ...768..172C
+Andromeda XIII,M31,M31,125.7,5.8,2.0,2.0,,4.94,,151.0,Tollerud2012ApJ...752...45T
+Andromeda XIV,M31,M31,158.1,5.3,1.0,1.0,,5.69,,395.1,Tollerud2012ApJ...752...45T
+Andromeda XV,M31,M31,95.1,4.0,1.4,1.4,,5.58,,327.2,Tollerud2012ApJ...752...45T
+Andromeda XVIII,M31,M31,427.2,9.9,1.0,1.1,,5.9,,313.9,Kvasova2024ApJ...972..180K
+Andromeda XIX,M31,M31,112.8,7.8,1.5,1.7,,6.25,,2867.2,Collins2020MNRAS.491.3496C
+Andromeda XX,M31,M31,127.1,7.1,2.5,3.9,,4.77,,96.6,Collins2013ApJ...768..172C
+Andromeda XXI,M31,M31,121.5,6.1,0.9,1.0,,5.81,,973.6,Collins2021MNRAS.505.5686C
+Andromeda XXIII,M31,M31,126.9,6.8,1.3,1.5,,6.14,,1194.3,Pickett2025MNRAS.540.1701P
+Andromeda XXIV,M31,M31,194.9,,,,7.3,5.28,,537.1,Collins2013ApJ...768..172C
+Andromeda XXV,M31,M31,84.1,3.7,1.1,1.2,,5.87,,748.7,Charles2023MNRAS.521.3527C
+Andromeda XXVI,M31,M31,102.2,8.6,2.2,2.8,,4.63,,219.6,Collins2013ApJ...768..172C
+Andromeda XXVIII,M31,M31,367.7,4.9,1.6,1.6,,5.64,,303.0,Tollerud2013ApJ...768...50T
+Andromeda XXIX,M31,M31,189.1,5.7,1.2,1.2,,5.5,,322.5,Tollerud2013ApJ...768...50T
+Cassiopeia III,M31,M31,144.7,8.4,0.6,0.6,,7.19,,1229.8,Martin2014ApJ...793L..14M
+Lacerta I,M31,M31,260.2,10.3,0.9,0.9,,6.72,,694.0,Martin2014ApJ...793L..14M
+NGC 185,M31,M31,154.9,24.0,1.0,1.0,,8.47,5.09,653.0,McConnachie2012AJ....144....4M
+Antlia B,field,ngc_3109,88.4,8.0,1.4,1.6,,6.15,5.49,314.3,Zoutendijk2021arXiv211209374Z
+Aquarius,field,MW,980.5,7.8,1.1,1.8,,6.42,6.54,426.2,Kirby2017ApJ...834....9K
+Cetus,field,M31,677.0,8.3,1.0,1.0,,6.71,,766.0,Kirby2014MNRAS.439.1015K
+IC 1613,field,M31,510.7,10.8,0.9,1.0,,8.28,7.79,1919.7,Kirby2014MNRAS.439.1015K
+Leo A,field,MW,802.8,9.0,0.6,0.8,,7.08,7.04,541.0,Kirby2017ApJ...834....9K
+Leo T,field,MW,417.9,6.05,0.86,1.07,,5.43,5.6,206.7,Geha2026ApJ...999..140G
+Pegasus dIrr,field,M31,457.4,12.3,1.1,1.2,,7.09,6.74,869.2,Kirby2014MNRAS.439.1015K
+Phoenix,field,MW,409.2,9.3,0.7,0.7,,6.18,5.07,322.7,Kacharov2017MNRAS.466.2006K
+Sagittarius dIrr,field,MW,1189.5,9.4,1.1,1.5,,6.95,7.04,344.6,Kirby2017ApJ...834....9K
+Tucana,field,MW,882.8,6.2,1.3,1.6,,6.05,,271.5,Taibi2020A&A...635A.152T
+UGC 4879,field,MW,1224.7,9.6,1.2,1.3,,7.13,5.88,402.0,Kirby2014MNRAS.439.1015K
+WLM,field,M31,869.7,17.5,2.0,2.0,,7.98,7.84,1065.5,Leaman2012ApJ...750...33L

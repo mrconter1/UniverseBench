@@ -31,6 +31,7 @@ class UDG:
     def __init__(self, r):
         self.name, self.host = r["name"], "NGC1052"
         self.M_bar = float(r["M_star"])
+        self.M_gas = 0.0          # gas-poor (ultra-diffuse, no HI detected)
         self.log_Mb_err = float(r["log_M_err"])
         self.r_half = float(r["r_half_kpc"])
         self.D_host = float(r["D_host_kpc"])
