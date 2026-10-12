@@ -171,12 +171,31 @@ def fit_global(model, tests, salt):
             return total
 
         bounds = [bounds_all[i] for i in idx]
-        best = minimize(f, x[idx], method="Powell", bounds=bounds,
-                        options={"maxfev": 6000, "xtol": 1e-4, "ftol": 1e-7})
-        # polish with Nelder-Mead from Powell's answer
-        nm = minimize(f, best.x, method="Nelder-Mead",
+        # Start from the model's own starting values, then also from a coarse
+        # scan of each constant over its range (cheap per group), so step-like
+        # objectives and flat regions don't trap the local optimizer.
+        starts = [x[idx].copy()]
+        for j, (lo, hi) in enumerate(bounds):
+            grid = lo + (hi - lo) * np.linspace(0.05, 0.95, 7)
+            vals = []
+            for g in grid:
+                trial = starts[0].copy()
+                trial[j] = g
+                vals.append(f(trial))
+            if np.isfinite(vals).any():
+                trial = starts[0].copy()
+                trial[j] = grid[int(np.nanargmin(vals))]
+                starts.append(trial)
+        best_x, best_f = None, np.inf
+        for x_start in starts:
+            res = minimize(f, x_start, method="Powell", bounds=bounds,
+                           options={"maxfev": 6000, "xtol": 1e-4, "ftol": 1e-7})
+            if res.fun < best_f:
+                best_x, best_f = res.x, res.fun
+        # polish with Nelder-Mead from the best answer
+        nm = minimize(f, best_x, method="Nelder-Mead",
                       options={"maxfev": 3000, "xatol": 1e-5, "fatol": 1e-8})
-        x[idx] = nm.x if nm.fun < best.fun else best.x
+        x[idx] = nm.x if nm.fun < best_f else best_x
     return _vec_to_dict(x, spec)
 
 
@@ -188,15 +207,22 @@ def _param_groups(model, tests, salt, spec, x0):
     base = {t.ID: t.fit_term(model, base_gp, salt) for t in tests}
     touches = []
     for i, (_, lo, hi) in enumerate(spec.values()):
-        step = 0.013 * (hi - lo)
-        x = np.array(x0, dtype=float)
-        x[i] = x0[i] + step if x0[i] + step <= hi else x0[i] - step
-        gp = _vec_to_dict(x, spec)
+        # probe a small nudge AND points spread across the whole range, so
+        # threshold-like constants (which only matter when they cross an
+        # object) are still detected
+        probes = [x0[i] + 0.013 * (hi - lo) if x0[i] + 0.013 * (hi - lo) <= hi else x0[i] - 0.013 * (hi - lo)]
+        probes += list(lo + (hi - lo) * np.array([0.1, 0.35, 0.65, 0.9]))
         hit = set()
-        for t in tests:
-            b, v = base[t.ID], t.fit_term(model, gp, salt)
-            if (b is None) != (v is None) or (b is not None and abs(v - b) > 1e-12 * max(1.0, abs(b))):
-                hit.add(t.ID)
+        for val in probes:
+            x = np.array(x0, dtype=float)
+            x[i] = val
+            gp = _vec_to_dict(x, spec)
+            for t in tests:
+                if t.ID in hit:
+                    continue
+                b, v = base[t.ID], t.fit_term(model, gp, salt)
+                if (b is None) != (v is None) or (b is not None and abs(v - b) > 1e-12 * max(1.0, abs(b))):
+                    hit.add(t.ID)
         touches.append(hit)
     parent = list(range(len(touches)))
 

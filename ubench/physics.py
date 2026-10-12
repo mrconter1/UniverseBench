@@ -10,7 +10,7 @@ G = 4.30091e-6                      # kpc (km/s)^2 / Msun
 G_SI = 6.674e-11                    # m^3 kg^-1 s^-2
 C_KMS = 299792.458                  # speed of light, km/s
 KPC_M = 3.0857e19                   # metres per kpc
-A0_SI_TO_KPC = 1.0 / 3.0857e-14     # (m/s^2) -> (km/s)^2/kpc
+A0_SI_TO_KPC = KPC_M / 1e6           # (m/s^2) -> (km/s)^2/kpc: 1 (km/s)^2/kpc = 3.2408e-14 m/s^2
 
 
 def v2_exponential_disc(R, S0, Rd):
