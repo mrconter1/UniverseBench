@@ -42,11 +42,12 @@ class _Cosmo(Test):
 
 
 class CMB(_Cosmo):
-    """The primordial-spectrum points (n_s, A_s) are used when fitting
-    constants, since they set the amplitude of structure for later tests,
-    but are not scored: any model with those two constants matches them
-    trivially."""
-    ID, LABEL = "15_cmb", "Microwave background"
+    """Compressed CMB summary (theta*, R, omega_b, n_s, A_s). Since Oct 2026
+    a FIT AID only: it steers the fast first fitting stage but is never
+    scored, because the compression assumes LCDM-like perturbations. The
+    scored CMB test is 15 (full Planck spectra through CLASS)."""
+    ID, LABEL = "15a_cmb_compressed", "CMB compressed summary (fit aid)"
+    STATUS = "fit_aid"
     DATA_DIRS = ("cmb",)
     FIT_ONLY = ("n_s", "ln10As")
 

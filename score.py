@@ -118,7 +118,7 @@ mark = lambda t: t.LABEL + (" ◆" if t.GUARD_RAIL else "") + (" §" if t.SIMPLI
     (" ‡" if not t.HIDDEN_SPLIT and t.USED_IN_FIT else "")
 cfmt = lambda c: f"{c['expected']:.0f}" + (f" ({c['p5']:.0f}–{c['p95']:.0f})" if c["p5"] != c["p95"] else "")
 settled = [t for t in tests if t.STATUS == "settled"]
-contested = [t for t in tests if t.STATUS != "settled"]
+contested = [t for t in tests if t.STATUS == "contested"]
 
 # Wide table: tests as rows, models as columns (reads better with many tests)
 head = ["#", "Test", "Perfect theory"] + [r["model"] for r in rows]

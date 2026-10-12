@@ -3,3 +3,5 @@ __pycache__/
 agent_bundle/
 results.json
 .runs/
+.class_cache/
+.polish_cache/

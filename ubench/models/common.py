@@ -33,7 +33,8 @@ class GeneralRelativity:
 COSMO = {"H0": (67.4, 50.0, 90.0),
          "ombh2": (0.0224, 0.010, 0.040),
          "ns": (0.965, 0.85, 1.10),
-         "ln10As": (3.044, 2.0, 4.0)}
+         "ln10As": (3.044, 2.0, 4.0),
+         "tau_reio": (0.0544, 0.01, 0.15)}     # reionisation optical depth (CMB spectra only)
 COSMO_CDM = {"omch2": (0.120, 0.01, 0.40)}
 
 
@@ -41,6 +42,27 @@ class CosmologyMixin:
     """Builds (and caches) a Cosmology from the global parameters. Subclasses
     set COSMO_FIXED for parameters they hold fixed (e.g. omch2 = 0)."""
     COSMO_FIXED = {}
+
+    # constants that reach CLASS (test 15); models may extend this
+    CLASS_DEPENDS = ("H0", "ombh2", "omch2", "ns", "ln10As", "tau_reio", "w0", "wa", "mnu", "omk")
+
+    def class_params(self, gp):
+        """CLASS input parameters for this model's cosmology (test 15).
+        Standard: CDM, one massive neutrino (mnu, default 0.06 eV), optional
+        CPL dark energy and curvature. Override for other physics."""
+        g = dict(gp)
+        g.update(self.COSMO_FIXED)
+        if "H0" not in g or "ombh2" not in g:
+            return None                     # no cosmology (e.g. pure Newtonian gravity)
+        p = {"h": g["H0"] / 100.0, "omega_b": g["ombh2"], "omega_cdm": max(g.get("omch2", 0.12), 1e-6),
+             "n_s": g["ns"], "ln_A_s_1e10": g["ln10As"], "tau_reio": g.get("tau_reio", 0.0544),
+             "N_ur": 2.0328, "N_ncdm": 1, "m_ncdm": g.get("mnu", 0.06)}
+        if g.get("omk", 0.0):
+            p["Omega_k"] = g["omk"]
+        if g.get("w0", -1.0) != -1.0 or g.get("wa", 0.0) != 0.0:
+            p.update({"Omega_Lambda": 0.0, "w0_fld": g.get("w0", -1.0), "wa_fld": g.get("wa", 0.0),
+                      "use_ppf": "yes"})
+        return p
 
     def cosmology(self, gp):
         from ..cosmology import Cosmology

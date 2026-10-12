@@ -162,6 +162,8 @@ def fit_global(model, tests, salt):
     if not spec:
         return {}
     tests = [t for t in tests if t.USED_IN_FIT]
+    expensive = [t for t in tests if getattr(t, "EXPENSIVE", False)]
+    tests = [t for t in tests if not getattr(t, "EXPENSIVE", False)]
     x = np.array([v[0] for v in spec.values()], dtype=float)
     bounds_all = [(lo, hi) for (_, lo, hi) in spec.values()]
     groups, touches = _param_groups(model, tests, salt, spec, x, return_touches=True)
@@ -247,7 +249,69 @@ def fit_global(model, tests, salt):
         minimize(f, best["x"], method="Nelder-Mead",
                  options={"maxfev": 3000, "xatol": 1e-5, "fatol": 1e-8})
         x[idx] = best["x"]
+    if expensive:
+        x = _polish_expensive(model, tests, expensive, salt, spec, x, touches)
     return _vec_to_dict(x, spec)
+
+
+POLISH_MAXFEV = int(os.environ.get("UBENCH_POLISH_MAXFEV", 120))
+_POLISH_DIR = os.path.join(ROOT, ".polish_cache")
+
+
+def _polish_expensive(model, tests, expensive, salt, spec, x, touches):
+    """Second fitting stage for EXPENSIVE tests (e.g. the CLASS-based CMB
+    spectra, ~4 s per evaluation). Only the constants such a test depends on
+    (model.CLASS_DEPENDS) are moved, by a short Nelder-Mead starting from the
+    stage-one fit, with the expensive test added to every fast test those
+    constants affect. Accepted only if it improves the joint objective.
+    Results are cached on disk: the cosmology fit is the same for every
+    split unless a hidden-split test shares its constants."""
+    import hashlib, inspect, json, pickle
+    keys = list(spec)
+    names = [k for k in keys if k in getattr(model, "CLASS_DEPENDS", ())]
+    if not names:
+        return x
+    idx = [keys.index(k) for k in names]
+    touched = set().union(*(touches[i] for i in idx))
+    obj_tests = [t for t in tests if t.ID in touched] + list(expensive)
+    lo_b = np.array([spec[k][1] for k in names])
+    hi_b = np.array([spec[k][2] for k in names])
+
+    def f(sub):
+        xx = x.copy()
+        xx[idx] = np.clip(sub, lo_b, hi_b)
+        gp = _vec_to_dict(xx, spec)
+        total = 0.0
+        for t in obj_tests:
+            term = t.fit_term(model, gp, salt)
+            if term is not None:
+                total += term
+        return total
+
+    try:
+        src = open(getattr(model, "_source_file", None) or inspect.getfile(type(model))).read()
+    except (TypeError, OSError):
+        src = model.NAME
+    salt_dep = salt if any(t.HIDDEN_SPLIT for t in obj_tests) else ""
+    key = hashlib.sha256(json.dumps([model.NAME, src, {k: list(v) for k, v in spec.items()}, names,
+                                     list(np.round(x, 8)), [t.ID for t in obj_tests], salt_dep,
+                                     POLISH_MAXFEV]).encode()).hexdigest()[:24]
+    path = os.path.join(_POLISH_DIR, key + ".pkl")
+    if os.path.exists(path):
+        return pickle.load(open(path, "rb"))
+    x0 = x[idx].copy()
+    f0 = f(x0)
+    steps = 0.015 * (hi_b - lo_b)
+    simplex = [x0] + [np.clip(x0 + np.eye(len(x0))[i] * steps[i], lo_b, hi_b) for i in range(len(x0))]
+    res = minimize(f, x0, method="Nelder-Mead",
+                   options={"maxfev": POLISH_MAXFEV, "xatol": 1e-5, "fatol": 1e-3,
+                            "initial_simplex": np.array(simplex)})
+    out = x.copy()
+    if res.fun < f0:
+        out[idx] = np.clip(res.x, lo_b, hi_b)
+    os.makedirs(_POLISH_DIR, exist_ok=True)
+    pickle.dump(out, open(path, "wb"))
+    return out
 
 
 def _param_groups(model, tests, salt, spec, x0, return_touches=False):

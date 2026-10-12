@@ -43,7 +43,7 @@ noise ceiling (what a perfect theory would score).
 
 | # | Test | Data | Role | Scored? |
 |---|---|---|---|---|
-| 15 | Cosmic microwave background | Planck 2018 (theta*, R, omega_b, n_s, A_s) | Strongest evidence for non-baryonic matter | Scored ‡ |
+| 15 | Cosmic microwave background | Planck 2018 plik-lite TT/TE/EE spectra (616 decorrelated points) through the CLASS Boltzmann code; the old compressed summary (theta*, R, ...) is now a fit aid only | Strongest evidence for non-baryonic matter; no longer presupposes ΛCDM perturbations | Scored ‡ |
 | 16 | Big Bang nucleosynthesis | PDG 2025: helium, deuterium | Independent count of ordinary matter | Scored ‡ |
 | 16b | Lithium problem | PDG 2025 lithium-7 | Standard BBN overpredicts ~3x | Open question |
 | 17 | Baryon acoustic oscillations | DESI DR2 (13 numbers + covariance) | Expansion history | Scored ‡ |

@@ -2,9 +2,11 @@
 its data source and the model method it requires.
 
 STATUS == "settled" tests make up the scored benchmark; "contested" ones are
-open questions: reported, never scored, never used to fit constants."""
+open questions: reported, never scored, never used to fit constants;
+"fit_aid" tests steer fitting but are never scored or reported."""
 from .bullet_cluster import BulletCluster
 from .clusters import ClusterMasses
+from .cmb_spectra import CMBSpectra
 from .cosmo import (BAO, BBN, CMB, ClusterCounts, HubbleTension, JWSTEarlyGalaxies, Lithium,
                     LymanAlpha, S8Tension, Supernovae)
 from .cosmo_ext import Curvature, GrowthRate, Inflation, Neutrinos, NeutrinoSqueeze, StandardSirens
@@ -30,7 +32,7 @@ def all_tests():
         # Stage 2: precision gravity
         SolarSystem(), BinaryPulsars(), GravitationalWaves(), LabGravity(), BlackHoles(), Clocks(),
         # Stage 3: cosmology
-        CMB(), BBN(), Lithium(), BAO(), Supernovae(), HubbleTension(), S8Tension(),
+        CMBSpectra(), CMB(), BBN(), Lithium(), BAO(), Supernovae(), HubbleTension(), S8Tension(),
         ClusterCounts(), LymanAlpha(), JWSTEarlyGalaxies(),
         # Stage 3b: extended cosmology
         Inflation(), Neutrinos(), NeutrinoSqueeze(), Curvature(), GrowthRate(), CosmicDipole(),

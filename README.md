@@ -64,7 +64,9 @@ ROADMAP.md              every test: data, role, status
 LEADERBOARD.md          latest baseline scores
 ubench/core.py          hidden splits, Test base class, joint fitting, run()
 ubench/physics.py       constants, disc gravity, halos, MOND interpolation
-ubench/cosmology.py     cosmology engine (validated against Planck 2018 to <=0.03%)
+ubench/cosmology.py     fast cosmology engine (validated against Planck 2018 to <=0.03%)
+ubench/class_engine.py  cached wrapper around CLASS (full CMB spectra for test 15)
+ubench/cmb_lite.py      Planck 2018 plik-lite likelihood (own implementation)
 ubench/tests/           one module per test family
 ubench/models/          baseline theories
 data/<test>/            data with source notes
@@ -74,7 +76,7 @@ CANDIDATES.md           candidate theories still to test, with gut-feeling odds
 
 ## Workflow
 
-    pip install numpy scipy
+    pip install numpy scipy classy numba     # classy = CLASS Boltzmann code (test 15); numba optional, speeds up some models
     export BENCH_SALT='your-private-secret'    # decides the hidden half
     python make_agent_bundle.py                # give agent_bundle/ to an agent
     # ...agent writes my_model.py, scoring itself on a practice split...
@@ -93,8 +95,9 @@ A full five-split scorecard takes about 15 minutes on two CPU cores.
   empirical baryon fraction with mass and radius trends.
 - The Bullet Cluster test is a crude mass-weighted peak position, not a lensing
   map. The Milky Way's stellar masses come from a fit that included a halo.
-- Cosmology uses compressed summaries (CMB distance priors, fσ8, S8) derived
-  assuming near-standard physics, an Eisenstein–Hu power spectrum (σ8 within
+- The CMB is scored on Planck's full binned spectra through CLASS (since
+  12 Oct 2026). Other cosmology tests still use compressed summaries (fσ8, S8)
+  derived assuming near-standard physics, an Eisenstein–Hu power spectrum (σ8 within
   0.5% of Planck) and fitting formulas for recombination and BBN. A radically
   different theory may need the full likelihoods.
 - Several conversions of bounds to uncertainties are ours; each is noted in the
