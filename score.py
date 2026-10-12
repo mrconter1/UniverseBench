@@ -103,6 +103,7 @@ if args.only_model:
 # points are scored (taken from the runs) and how many are one-sided limits.
 ceil = {}
 for t in tests:
+    t.ensure_loaded()          # cached runs skip loading
     n = max(int(np.mean([x["tests"][t.ID].get("n_points", 0) for x in r["runs"]])) for r in rows)
     ceil[t.ID] = t.noise_ceiling(n)
 # A test is passed when the score reaches what a perfect theory gets 95% of the time.
