@@ -64,7 +64,8 @@ would let them be judged fairly.
    link. (about 1 h)
 
 Also queued from the solver run: an independent check by a fresh agent that has
-not seen the data, deriving a0 by abundance matching instead of fitting it,
+not seen the data, deriving a0 by abundance matching instead of fitting it
+(**done**: a0 emerges within a factor 1.6 from cosmology, see analysis/RESULTS.md),
 scoring over 20 or more splits, and group-scale lensing (KiDS-GAMA, Viola et
 al. 2015) as a new open question.
 
