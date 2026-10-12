@@ -603,3 +603,45 @@ galaxy), not at the dark matter.
 Joint-likelihood refits, CMB + BAO + SN summed χ²: ΛCDM 1315.1, coupled black
 holes 1322.6 (+7.5), heavier early electron 1323.4 (+8.3, m_e ratio 1.016,
 H0 69.2). Both stay disfavoured.
+
+## Post-mortem of solver model 2: what galaxy formation gets wrong (12 Oct 2026, post-hoc)
+
+**The galaxy relation is tilted, not just scattered** (`analysis/galform_rar.py`).
+Noise-free, with the hidden-run constants, the DC14 halos give a0 = 0.86 ×
+10⁻¹⁰ and a between-galaxy scatter of 0.13 dex even with no halo scatter at
+all (0.15 with realistic scatter): more than the observed RAW scatter
+(0.114, errors included). The cause is systematic, by stellar-to-halo ratio:
+
+| X = log M*/M_halo | n | Offset with DC14 | Offset with plain NFW, same halos |
+|---|---|---|---|
+| −3.5 to −2.7 | 5 | −0.12 | +0.08 |
+| −2.7 to −2.2 (cores) | 22 | −0.21 | +0.04 |
+| −2.2 to −1.8 | 25 | −0.10 | −0.02 |
+| −1.8 to −1.5 | 34 | +0.06 | −0.03 |
+| > −1.5 (contraction) | 7 | +0.12 | −0.01 |
+
+Feedback cores drop dwarf-mass galaxies 0.1–0.2 dex below the relation and
+contraction lifts giants above it. Full hydrodynamic simulations report
+0.04–0.08 dex, so the problem is the one-parameter DC14 recipe, which
+responds to the stellar-to-halo ratio and not to where the baryons are.
+
+**Why the benchmark missed it:** test 01 treats every point as independent
+with a 5% floor, while distance, inclination and M/L errors move whole
+curves; every model scores 55–58 there. New **test 01b** scores one offset
+per galaxy with its own Table-1 error budget: MOND 92.5, cSIDM 89, DC14 72
+(quality 1, all galaxies; `analysis/galaxy_offset_test.py`).
+
+**Milky Way:** the fitted halo connection gives our galaxy 1.9 × 10¹² Msun
+(X = −1.54, contracted). With the DC14 shape the rotation curve fits at
+0.8 × 10¹² (100%), close to independent Milky Way mass estimates
+(~1 × 10¹²); with a plain NFW shape no mass up to 1.8 × 10¹² exceeds 47%.
+So the Milky Way is lighter than the halo connection learned from SPARC
+spirals predicts, a known tension for abundance matching.
+
+**Dwarfs** (`analysis/dwarf_failures.py`, 69 with measured dispersions):
+both models miss in both directions, mostly satellites: too high for the
+diffuse M31 satellites (And XIX, XXI, XXV) and Boötes I, too low for dense
+Leo I, Sculptor, And VI. That is the known "diversity" of satellites, and
+tidal stripping, which no model here includes, is the obvious missing
+ingredient for the diffuse ones. DC14 also undershoots the brightest dwarfs
+(log M_b ≥ 7: median z −1.4; cSIDM +0.0).

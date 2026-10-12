@@ -1,6 +1,6 @@
 # Roadmap: every test in UniverseBench
 
-All 39 tests are implemented (38 plus the action check, Oct 2026). **Scored** tests use settled data a correct
+All 40 tests are implemented (38 plus the action check and whole-galaxy offsets 01b, Oct 2026). **Scored** tests use settled data a correct
 theory could pass; **open questions** use disputed or mutually contradictory
 data and are reported but never scored or used to fit constants. One rule
 holds everywhere: a theory gets one set of global constants for all tests.
@@ -18,6 +18,7 @@ noise ceiling (what a perfect theory would score).
 | # | Test | Data | Role | Scored? |
 |---|---|---|---|---|
 | 01 | Rotation curves: predict | SPARC, 165 galaxies (Lelli+ 2016) | Core MOND-vs-dark-matter test | Scored |
+| 01b | Rotation curves: whole-galaxy offsets | SPARC quality 1, one offset per galaxy with its distance, inclination and M/L errors (Table 1) | Test 01 treats points as independent and barely discriminates; this scores the error that actually dominates | Scored |
 | 02 | Rotation curves: extrapolate | SPARC; fit inner 60%, predict outer 40% | Punishes per-galaxy overfitting | Scored |
 | 03 | Galaxy cluster masses | 13 Chandra clusters (Vikhlinin+ 2006) | MOND falls short by ~2x | Scored |
 | 04 | Milky Way | Gaia/APOGEE curve (Eilers+ 2019), McMillan 2017 baryons | Pure out-of-sample galaxy | Scored ‡ |

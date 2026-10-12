@@ -8,7 +8,7 @@ with **one set of constants for everything** and hidden data where datasets
 are large. It is built for AI agents: propose a theory, implement its
 predictions, and see where it holds and where it breaks.
 
-**39 tests: 28 scored, 11 open questions** (plus one fit aid).
+**40 tests: 29 scored, 11 open questions** (plus one fit aid).
 
 | Stage | Scored tests | Open questions (reported, not scored) |
 |---|---|---|

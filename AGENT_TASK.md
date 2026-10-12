@@ -13,7 +13,7 @@ this benchmark, from visible matter and a small set of universal constants.
 
 ## How you are scored
 
-* **28 scored tests** (settled data) spanning galaxies, clusters, precision
+* **29 scored tests** (settled data) spanning galaxies, clusters, precision
   gravity, black holes, the early universe and cosmic expansion. The score for
   each is the % of data points you predict within 2 sigma (a perfect theory
   scores about 95; 100% would mean you fitted the noise).
