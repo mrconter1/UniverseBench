@@ -193,3 +193,35 @@ for Tucana B specifically, dark matter predicts about 4.5–5 km/s against
 MOND's 3. A ~1 km/s measurement with multi-epoch binary correction decides it
 at the central size. A sharper half-light radius (space imaging) would remove
 the 3.2–3.6 km/s overlap.
+
+## Idea 3 (candidate O): MOND + ~11 eV sterile neutrinos (12 Oct 2026)
+
+Model: `candidates/mond_hdm.py`. Published-a0 MOND in galaxies (the
+Tremaine–Gunn phase-space bound keeps 11 eV fermions out of galaxies), plus
+neutrino mass in clusters, η × M_baryon with mass and radius trends (three
+knobs, like the ΛCDM baseline's baryon fraction), travelling with the
+galaxies in the Bullet Cluster. Cosmology: ω_ν = m/94 eV mimics CDM in the
+expansion history. A first version filled clusters at the Tremaine–Gunn cap
+with a self-consistent σ; it runs away and was dropped.
+
+Five demo splits, **computable tests only** (structure growth 21 and 31 and
+extended cosmology 28–30, 34 excluded):
+
+| | MOND + 11 eV ν | ΛCDM (same tests) | MOND alone |
+|---|---|---|---|
+| Lowest | **41** | 37 | 0 |
+| Substantive passed | 7 | 7 | 3 |
+| Median | **96** | 93 | 53 |
+| Clusters / Bullet | 81 / 100 | 96 / 100 | 11 / 0 |
+| Fitted m_ν | 11.1 eV | — | — |
+| Neutrino / baryon mass in clusters (η) | ≈3.5 | — | — |
+
+**Verdict: survives everything this benchmark can compute, which is exactly
+what makes it dangerous to over-read.** The tests it skips are where it is
+expected to fail. Structure growth (σ8, growth rate, cluster counts) needs
+MOND N-body simulations; published simulations of this model have reportedly
+struggled with the cluster population. The Lyman-α warm-dark-matter bound
+(keV scale) excludes 11 eV particles as the small-scale dark matter. And
+Tremaine–Gunn may be violated in cluster cores at small radii.
+**Benchmark gap:** structure growth for non-CDM models needs either full
+Boltzmann-code power spectra or a simulation-calibrated recipe.
