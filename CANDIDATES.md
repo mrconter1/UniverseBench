@@ -30,10 +30,10 @@ Each row denies one assumption behind the standard picture.
 |---|---|---|---|---|---|
 | A | Galaxies are equilibrium snapshots | Galaxy relation as relaxation attractor; a0 set by age | **Tested: not supported, not ruled out** (needs per-galaxy distance/inclination errors), see analysis/RESULTS.md | ~25% given particle DM | Partly done |
 | B | Dark matter and dark energy are unrelated | Coupled quintessence (dark matter mass changes as dark energy evolves) | Established, revived by DESI | 4% | Partly (cosmology engine) |
-| C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | Established | 2% | Yes |
+| C | Gravity has no medium | Gravitational polarization / dipolar dark matter (Blanchet) | **Tested: lowest 0** (fails clusters and Bullet Cluster despite correct cosmology) | 1% | Done |
 | D | Gravity acts on the present only | Nonlocal gravity with memory | Exists (Mashhoon); Bullet Cluster lag is distinctive | 1.5% | Partly |
-| E | G is the same at all scales | Running G from quantum-gravity renormalization | Exists (Reuter; Rodrigues et al.) | 1% | Yes (MOND-like) |
-| F | Inertia is fixed | Inertia set by Unruh vs horizon temperature | Exists (Smolin 2017; fringe variants) | 1% | Yes (MOND family) |
+| E | G is the same at all scales | Running G from quantum-gravity renormalization | Exists; **fails the Bullet Cluster by construction** (extra gravity follows present baryons) | 0.5% | Closed by C |
+| F | Inertia is fixed | Inertia set by Unruh vs horizon temperature | Exists; **same Bullet Cluster failure** | 0.5% | Closed by C |
 | G | Three space dimensions at all scales | Extra dimensions, braneworld or mirror sectors | Established, mostly constrained | 1.5% | Partly |
 | H | The universe is smooth on average | Backreaction or local void (dark energy, Hubble tension) | Established, contested | 3% (dark-energy side) | Partly |
 | I | Galaxies' clocks are cosmic time | SIDM relaxation sets a0 through halo age; a0 rises with redshift | **Tested: fails** (clock lowers a0; cSIDM predicts 1.1–1.2× at z=1), see analysis/RESULTS.md | — | Done |

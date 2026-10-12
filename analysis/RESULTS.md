@@ -44,3 +44,25 @@ of a rising a0.** It does give a falsifiable discriminator: a0(z=1)/a0(0) is
 1.0 for MOND, about 1.1–1.2 for cSIDM, about 1.8 for horizon-type theories
 (a0 ∝ H), and about 2.5 as measured by MUSE-DARK III. Nothing tested predicts
 2.5, so stellar-mass systematics at high redshift are the first suspect.
+
+## C (and E, F): can a MOND-family theory be rescued? (12 Oct 2026)
+
+Model: `candidates/dipolar_dm.py`. A proxy for dipolar dark matter
+(gravitational polarization): published-a0 MOND in galaxies and clusters,
+cold-dark-matter cosmology. Five demo splits:
+
+| | Dipolar DM proxy | MOND (published) | ΛCDM |
+|---|---|---|---|
+| Lowest | **0** (Bullet Cluster) | 0 | 37 |
+| Substantive tests passed | 8 | 3 | 9 |
+| Median | 82 | 26 | 90 |
+| Clusters / Bullet Cluster | 11 / 0 | 11 / 0 | 96 / 100 |
+
+A correct cosmology lifts MOND from 3 to 8 passes but cannot fix clusters or
+the Bullet Cluster. General result: **any theory whose extra gravity is a
+function of where the ordinary matter is now fails the Bullet Cluster by
+construction** (the lensing mass follows the galaxies, not the gas that holds
+most of the baryons). That covers MOND, dipolar DM, running G (E),
+horizon-set inertia (F) and emergent gravity, so E and F were not built
+separately. The one exception in the family is gravity with memory (D),
+whose field follows where matter *was*.
