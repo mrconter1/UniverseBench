@@ -16,6 +16,7 @@ from .dm_deficient import DMDeficientGalaxies
 from .dwarfs import DwarfSpheroidals
 from .ellipticals import Ellipticals
 from .galaxy_lensing import GalaxyLensing
+from .galaxy_offsets import GalaxyOffsets
 from .gravity import (BinaryPulsars, BlackHoles, Clocks, GravitationalWaves, LabGravity,
                       SolarSystem)
 from .milkyway import MilkyWayTest
@@ -27,7 +28,7 @@ from .wide_binaries import WideBinaries
 def all_tests():
     tests = [
         # Stage 1: galaxies and clusters
-        RotationPredict(), RotationExtrapolate(), ClusterMasses(), MilkyWayTest(),
+        RotationPredict(), GalaxyOffsets(), RotationExtrapolate(), ClusterMasses(), MilkyWayTest(),
         DwarfSpheroidals(), WideBinaries(), GalaxyLensing(), Ellipticals(), BulletCluster(),
         DMDeficientGalaxies(),
         # Stage 2: precision gravity
