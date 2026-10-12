@@ -355,3 +355,29 @@ correlation with formation history (not in SPARC) could behave differently,
 and real simulations include feedback effects not in this model. **The
 tightness of the galaxy relation remains a genuine clue** against the
 simplest dark-matter accounts, including this one.
+
+## Test 15 upgraded to full Planck spectra via CLASS (12 Oct 2026)
+
+The scored CMB test now compares each model's CLASS-computed lensed TT/TE/EE
+spectra with Planck 2018 plik-lite (616 decorrelated points, own likelihood
+implementation reproducing the reference χ² = 589.28 exactly). The compressed
+summary, which presupposes ΛCDM perturbations, is now a fit aid only.
+
+| Model (split 0) | CMB spectra within 2σ | χ² (616 points) | old compressed test |
+|---|---|---|---|
+| ΛCDM baseline (fitted) | **96.3%** | ≈ 590 | 100 |
+| MOND + 11 eV sterile neutrinos (fitted; m_ν → 11.04 eV) | **74.4%** | **≈ 2580** | 100 |
+| Visible matter only (default constants) | 11.5% | ≈ 2×10⁶ | 0 |
+
+**MOND + hot DM is excluded by the Planck spectra** (Δχ² ≈ 2000), although
+the compressed summary had given it a perfect score. The worst misses are in
+the high-ℓ TT peaks (up to 9.6σ), and τ is pushed 2.8σ above the low-ℓ EE
+value. Caveat: the sterile neutrino is fully thermalised (ΔN_eff ≈ 1); a
+colder, non-thermal variant would add less radiation and should be tested
+before the family is closed. A Δχ² of ~2000 is far beyond what that tweak
+typically buys. This is the ΛCDM bias in compressed CMB summaries that
+motivated the upgrade.
+
+Interacting dark energy (candidate B) is not expressible in vanilla CLASS; it
+now makes no prediction for test 15 until an interacting-DE CLASS fork is
+wired in (rather than silently being scored as ΛCDM).

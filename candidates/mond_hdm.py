@@ -50,6 +50,19 @@ class MONDHotDM(MONDFixed, CosmologyMixin):
                      "snu_mass": (0.0, -0.5, 0.5),
                      "snu_radius": (0.0, -0.5, 0.5)}
 
+    CLASS_DEPENDS = ("H0", "ombh2", "ns", "ln10As", "tau_reio", "m_nu_ev")
+
+    def class_params(self, gp):
+        """Full CMB physics in CLASS: no cold dark matter; two massive
+        neutrino species, the active one (0.06 eV) and a fully thermalised
+        sterile one of mass m_nu_ev (same temperature, so it also adds
+        ~1 to N_eff while relativistic). Linear theory with standard gravity:
+        valid at recombination, where accelerations are far above a0."""
+        return {"h": gp["H0"] / 100.0, "omega_b": gp["ombh2"], "omega_cdm": 1e-6,
+                "n_s": gp["ns"], "ln_A_s_1e10": gp["ln10As"], "tau_reio": gp["tau_reio"],
+                "N_ur": 2.0328, "N_ncdm": 2, "m_ncdm": f"0.06,{gp['m_nu_ev']:.6f}",
+                "T_ncdm": "0.71611,0.71611"}
+
     def cosmology(self, gp):
         gp = dict(gp)
         gp["omch2"] = gp["m_nu_ev"] / 94.1

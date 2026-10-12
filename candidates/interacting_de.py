@@ -88,6 +88,13 @@ class InteractingDE(LCDM):
     NAME = "Interacting dark energy (dark matter <-> dark energy)"
     GLOBAL_PARAMS = {**LCDM.GLOBAL_PARAMS, "xi": (0.0, -0.6, 0.6)}
 
+    def class_params(self, gp):
+        """Vanilla CLASS cannot express a Q = xi H rho_DE energy exchange, so
+        this model makes no prediction for test 15 (full CMB spectra) until a
+        modified CLASS (an interacting-dark-energy fork) is wired in. Returning
+        the LCDM spectra instead would silently score it as LCDM."""
+        return None
+
     def cosmology(self, gp):
         keys = ("H0", "ombh2", "omch2", "ns", "ln10As", "mnu", "xi")
         args = {k: gp[k] for k in keys if k in gp}

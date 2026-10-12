@@ -11,11 +11,11 @@ and add up to 100 across the main list.
 | 1 | Cold dark matter; the galaxy regularity comes from galaxy formation (feedback, gas) | 30% | Simplest story that fits cosmology, clusters and dwarfs; nobody has shown it gives such a tight galaxy relation |
 | 2 | A dark sector with its own forces; self-interaction is the first symptom (cSIDM) | 20% | Matches MOND on galaxies and passes everything else with no per-galaxy freedom (submissions/solver_claude) |
 | 3 | A different particle: ultra-light (wave) dark matter, warm, or a mixture | 10% | Untested here; wave dark matter naturally gives dense dwarf cores |
-| 4 | Hybrid: real dark matter plus a medium or force acting in some conditions (superfluid, "two horizons", MOND + hot DM) | 13% | Explains why galaxies "know" about the cosmic horizon (a0 ≈ cH0); dwarfs showed no sign of the superfluid switch |
+| 4 | Hybrid: real dark matter plus a medium or force acting in some conditions (superfluid, "two horizons", MOND + hot DM) | 11.5% | Explains why galaxies "know" about the cosmic horizon (a0 ≈ cH0); dwarfs showed no sign of the superfluid switch |
 | 5 | Modified gravity alone (MOND, relativistic MOND) | 6% | Excellent on galaxies; clusters, the Bullet Cluster, the CMB and dwarf halos count against it |
 | 6 | Emergent or horizon-based gravity (Verlinde-like) | 3% | Explains a0 ≈ cH0; behaves like MOND where it fails |
 | 7 | Gravity with memory (nonlocal gravity, Mashhoon) | 0.5% | Galaxy relation for free; likely killed by the CMB |
-| 8 | Something on no one's list | 17.5% | Historically, the answer is often not among the candidates argued about |
+| 8 | Something on no one's list | 19% | Historically, the answer is often not among the candidates argued about |
 
 Cross-cutting (before test A; now ~15%, see table): given particle dark matter, ~40% that the galaxy relation is best
 understood as a **relaxation attractor**, with a0 set by cosmic age. Dark
@@ -44,7 +44,7 @@ D within #7, E and F within #5).
 | K | Mass is positive | Negative-mass fluid (Farnes 2018) | Tested and widely criticized | <0.5% | Partly |
 | L | Spacetime is smooth | Topological defects as dark matter | Established, constrained | <0.5% | Hard |
 | M | Dark matter is particles | Primordial black holes (as a fraction) | Established, constrained | minor | Partly |
-| O | Dark matter is cold | MOND plus a hot dark component (~11 eV sterile neutrinos, Angus 2009): real mass in clusters, MOND in galaxies | **Tested: survives all computable tests** (lowest 41, median 96; m_ν fits 11.1 eV); structure growth and Lyman-α untested here and expected to be hard | 2% | Partly (growth not computable) |
+| O | Dark matter is cold | MOND plus a hot dark component (~11 eV sterile neutrinos, Angus 2009): real mass in clusters, MOND in galaxies | Survived the compressed tests (lowest 41), but **the full Planck spectra exclude it** (χ² ≈ 2580 vs ≈ 590 for ΛCDM, 74% vs 96% within 2σ); a non-thermal (colder) sterile variant remains untested | 0.5% | CMB done; non-thermal variant open |
 | N | There is one universe | Gravity leaking from parallel branches | No worked theory found | ~0 | No |
 
 About 22 candidates in total, of which about 10 can be tested in an afternoon.
