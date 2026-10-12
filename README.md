@@ -68,6 +68,8 @@ ubench/cosmology.py     cosmology engine (validated against Planck 2018 to <=0.0
 ubench/tests/           one module per test family
 ubench/models/          baseline theories
 data/<test>/            data with source notes
+submissions/            agent submissions, re-scores, solver run
+CANDIDATES.md           candidate theories still to test, with gut-feeling odds
 ```
 
 ## Workflow
@@ -97,6 +99,61 @@ A full five-split scorecard takes about 15 minutes on two CPU cores.
   different theory may need the full likelihoods.
 - Several conversions of bounds to uncertainties are ours; each is noted in the
   relevant CSV.
+
+## Project timeline
+
+UniverseBench was built and first tried in about 18 hours (11–12 Oct 2026),
+by a person working with Claude, plus a separate Claude session acting as
+the first agent. Commit hashes refer to this repository.
+
+**11 Oct, evening: the benchmark.** The idea grew out of a discussion of
+Terence Tao's "Math 2.0" talk: could real data play the role a proof checker
+plays in mathematics, so that AI agents could attack open physics problems
+and be scored? Starting from galaxy rotation curves and cluster masses
+(bc8503c), tests were added one family at a time: the Milky Way, dwarf
+galaxies, wide binaries, galaxy lensing, elliptical lenses, the Bullet
+Cluster, precision gravity, a cosmology engine validated against Planck 2018,
+supernovae, BAO, black holes, clocks, extended cosmology and particle
+searches. That made 38 tests (c963e24). Contested data became unscored "open
+questions" (3d26276). Noise ceilings and guard-rail gates fixed a ranking
+quirk where visible matter alone outranked MOND (51f525a).
+
+**12 Oct, night: the pilot.** An agent in another session, given only the
+public half of the data, built a two-phase superfluid dark matter model and
+ranked first on the old benchmark. It also found two benchmark bugs: a 5%
+error in the a0 unit conversion, and a fitter that could not handle
+threshold-like constants (683aedd).
+
+**12 Oct, morning: verification.** Re-scoring the frozen pilot model showed
+that scipy's bounded Powell search could end worse than it started; fixed by
+keeping the best point ever evaluated plus coordinate sweeps (fa591dd). With
+the fix, the pilot model scored lowest 64 over five splits but 33 on a fresh
+secret split. The ranking turned on a single hidden cluster, so small hidden
+sets make "lowest score" noisy (25e0d74, submissions/superfluid_dm/RESCORE.md).
+The pilot agent's follow-up on modern dwarf data withdrew its dwarf mechanism.
+It also showed that 5 of the 25 dwarf dispersions in test 05 were outdated,
+so test 05 was rebuilt on the Local Volume Database: 78 dwarfs, upper limits
+kept, tidal systems dropped (47010a3).
+
+**12 Oct, midday: Claude as solver.** Claude pre-registered a secret hidden
+split (hash committed first, 3463747), developed only on its public half, and
+built a collapsing self-interacting dark matter model (cSIDM). One
+speed-dependent cross-section gives three regimes: cored galaxy halos that
+track the baryons, collapsed (cuspy) dwarf halos, and collisionless clusters.
+Scored once on the pre-registered split it ranked first: lowest 56, 10 of 14
+substantive tests passed, median 94. ΛCDM scored 40, 9 and 92 on the same
+split; MOND 0. Caveats: the author had seen all the data, there are 17 fitted
+constants in total, and rotation curves only tie MOND (12d5f6b, 126ffcf,
+submissions/solver_claude/).
+
+**12 Oct, afternoon: what next.** A systematic list of candidate theories,
+including ones outside established ideas, with gut-feeling odds and which can
+be tested cheaply: CANDIDATES.md.
+
+| Submission | Idea | Hidden-split result | Folder |
+|---|---|---|---|
+| Pilot agent | Two-phase superfluid dark matter | lowest 33 on a fresh split (rank 2) | submissions/superfluid_dm |
+| Claude (solver) | Collapsing self-interacting dark matter | lowest 56, rank 1 (pre-registered split) | submissions/solver_claude |
 
 ## Related work
 
