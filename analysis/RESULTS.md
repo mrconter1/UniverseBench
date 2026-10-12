@@ -582,3 +582,24 @@ w ≈ −0.75). Before building it, the inverse-design result was applied:
 a0–w relation as a curiosity. And since the scatter turned out not to be a
 discriminator (previous section), the motivation for this kind of mechanism
 is weaker than it looked this morning.
+
+## Solver model 2: cold dark matter + galaxy formation, one-shot hidden run (12 Oct 2026)
+
+`submissions/solver_galform/` (pre-registered, frozen, salt revealed in
+SCORES.md). Ordinary cold dark matter with halo shapes from hydrodynamic
+simulations (DC14: feedback cores in dwarf-mass galaxies, cusps in
+ultra-faints, contraction near Milky Way mass), fitted halo connection, no
+per-galaxy halo freedom. Hidden split: rotation 58, extrapolation 75, dwarfs
+64, lensing 88, ellipticals 87, Milky Way 53. **It ties the self-interacting
+model on every galaxy test except the Milky Way** (cSIDM 100) and roughly
+doubles standard ΛCDM on extrapolation (36) and lensing (50).
+
+Reading: on this benchmark's galaxy data, new dark-matter physics buys
+nothing over ordinary dark matter once galaxy formation is modelled with
+simulation-calibrated halos. The Milky Way is the one place the two differ,
+and it points at the halo connection (too massive, too contracted for our
+galaxy), not at the dark matter.
+
+Joint-likelihood refits, CMB + BAO + SN summed χ²: ΛCDM 1315.1, coupled black
+holes 1322.6 (+7.5), heavier early electron 1323.4 (+8.3, m_e ratio 1.016,
+H0 69.2). Both stay disfavoured.
